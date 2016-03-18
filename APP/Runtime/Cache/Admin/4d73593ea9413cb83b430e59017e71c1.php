@@ -1,0 +1,39 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>网站后台</title>
+    <link rel="stylesheet" type="text/css" href="/APP/Admin/View/Public/Css/public.css" />
+    <link rel="stylesheet" type="text/css" href="/APP/Admin/View/Public/Css/index.css" />
+    <script type="text/javascript" src="/APP/Admin/View/Public/Js/jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="/APP/Admin/View/Public/Js/index.js"></script>
+    <base target="iframe" />
+</head>
+<body>
+    <div id="top">
+        <div class="menu">
+            <a href="<?php echo U(MODULE_NAME.'/Index/show');?>">系统信息</a>
+            <a href="#">选择按钮</a>
+            <a href="#">选择按钮</a>
+            <a href="#">选择按钮</a>
+            <a href="#">选择按钮</a>
+        </div>
+        <div class="exit">
+            <a href="#" target="_self">退出登录</a>
+        </div>
+    </div>
+    <div id="left">
+        <dl>
+            <dt>标题</dt>
+            <dd><a href="#">选项</a></dd>
+            <dd><a href="#">选项</a></dd>
+            <dd><a href="#">选项</a></dd>
+            <dd><a href="#">选项</a></dd>
+        </dl>
+    </div>
+    <div id="right">
+        <iframe name="iframe" src="<?php echo U(MODULE_NAME.'/Index/show');?>"></iframe>
+    </div>
+</body>
+</html>
