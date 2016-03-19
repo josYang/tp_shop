@@ -10,7 +10,8 @@ use Think\Model;
 class AdminUserModel extends Model{
     public function checkUser ($username){
         $user = M('AdminUser');
-        $user->select();
+        $query = $user->where('`username`="'.$username.'"')->count();
+        return $query;
     }
 }
 ?>

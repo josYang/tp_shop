@@ -6,7 +6,7 @@
     <script type="text/javascript" src="/APP/Admin/View/Public/Js/jquery-1.12.1.min.js"></script>
     <script type="text/javascript">
         var verifyURL = '<?php echo U(MODULE_NAME."/Login/verify","","/");?>';
-        var CONTROL = '<?php echo U(MODULE_NAME."/".CONTROLLER_NAME."/checkusername","","");?>';
+        var CONTROL = '<?php echo U("/".MODULE_NAME."/".CONTROLLER_NAME,"","");?>';
     </script>
     <script type="text/javascript" src="/APP/Admin/View/Public/Js/login.js"></script>
 </head>

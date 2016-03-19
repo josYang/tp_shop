@@ -28,14 +28,24 @@ $(function(){
 			username.parent().find("span").remove().end().append("<span class='error'>用户名不能为空</span>");
 			return ;
 		}
-		$.post(CONTROL,{username:username.val().trim()},function(stat){
-			if(stat==1){
-				validate.username=0;
-				username.parent().find("span").remove();
-			}else{
-				username.parent().find("span").remove().end().append("<span class='error'>用户不存在</span>");
+		$.ajax({
+			url : CONTROL+"/checkusername",
+			type : 'post',
+			data : {
+				username:username.val().trim()
+			},
+			dataType : 'json',
+			success : function(json){
+				if (json['error']){
+					username.parent().find("span").remove().end().append("<span class='error'>" + json['error'] + "</span>");
+				}else if(json['correct']){
+					validate.username=0;
+					username.parent().find("span").remove().end().append("<span class='correct'>" + json['correct'] + "</span>");;
+				}
+			},
+			error : function(xhr,ajaxOptions,thrownError){
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-
 		})
 	})
 	//验证密码
@@ -49,15 +59,6 @@ $(function(){
 			password.parent().find("span").remove().end().append("<span class='error'>密码不能为空</span>");
 			return ;
 		}
-		$.post(CONTROL+"/checkpassword",{password:password.val().trim(),username:username.val().trim()},function(stat){
-			if(stat==1){
-				validate.password=0;
-				password.parent().find("span").remove();
-			}else{
-				password.parent().find("span").remove().end().append("<span class='error'>密码错误</span>");
-			}
-
-		})
 	})
 	//验证验证码
 	$("input[name='code']").blur(function(){
@@ -66,14 +67,24 @@ $(function(){
 			code.parent().find("span").remove().end().append("<span class='error'>验证码不能为空</span>");
 			return ;
 		}
-		$.post(CONTROL+"/checkcode",{code:code.val().trim()},function(stat){
-			if(stat==1){
-				validate.code=0;
-				code.parent().find("span").remove();
-			}else{
-				code.parent().find("span").remove().end().append("<span class='error'>验证码错误</span>");
+		$.ajax({
+			url : CONTROL+"/checkcode",
+			type : 'post',
+			data : {
+				code:code.val().trim()
+			},
+			dataType : 'json',
+			success : function(json){
+				if (json['error']){
+					code.parent().find("span").remove().end().append("<span class='error'>" + json['error'] + "</span>");
+				}else if(json['correct']){
+					validate.username=0;
+					code.parent().find("span").remove().end().append("<span class='correct'>" + json['correct'] + "</span>");;
+				}
+			},
+			error : function(xhr,ajaxOptions,thrownError){
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-
 		})
 	})
 })
