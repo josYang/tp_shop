@@ -20,7 +20,7 @@
             <a href="#">选择按钮</a>
         </div>
         <div class="exit">
-            <a href="<?php echo U(MODULE_NAME.'/Login/index');?>" target="_self">退出登录</a>
+            <a href="<?php echo U(MODULE_NAME.'/Login/logout');?>" target="_self">退出登录</a>
         </div>
     </div>
     <div id="left">

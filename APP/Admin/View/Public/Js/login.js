@@ -19,8 +19,6 @@ $(function(){
 	})
 })
 $(function(){
-	$('#logmit-login').click(function(o){
-	})
 	//验证用户名
 	$("input[name='username']").blur(function(){
 		var username = $("input[name='username']");
@@ -51,14 +49,12 @@ $(function(){
 	//验证密码
 	$("input[name='password']").blur(function(){
 		var password = $("input[name='password']");
-		var username=$("input[name='username']");
-		if(username.val().trim()==''){
-			return;
-		}
 		if(password.val().trim()==''){
 			password.parent().find("span").remove().end().append("<span class='error'>密码不能为空</span>");
 			return ;
 		}
+		password.parent().find('span').remove();
+		validate.password=0;
 	})
 	//验证验证码
 	$("input[name='code']").blur(function(){
@@ -67,24 +63,7 @@ $(function(){
 			code.parent().find("span").remove().end().append("<span class='error'>验证码不能为空</span>");
 			return ;
 		}
-		$.ajax({
-			url : CONTROL+"/checkcode",
-			type : 'post',
-			data : {
-				code:code.val().trim()
-			},
-			dataType : 'json',
-			success : function(json){
-				if (json['error']){
-					code.parent().find("span").remove().end().append("<span class='error'>" + json['error'] + "</span>");
-				}else if(json['correct']){
-					validate.username=0;
-					code.parent().find("span").remove().end().append("<span class='correct'>" + json['correct'] + "</span>");;
-				}
-			},
-			error : function(xhr,ajaxOptions,thrownError){
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		})
+		code.parent().find('span').remove();
+		validate.code=0;
 	})
 })

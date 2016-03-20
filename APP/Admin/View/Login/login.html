@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <title>江东网 | 登录后台</title>
     <link rel="stylesheet" href="__PUBLIC__/Css/login.css" />
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <js file="__PUBLIC__/Js/jquery-1.12.1.min.js" />
@@ -15,9 +16,9 @@
 
 </div>
 <div class="login">
-    <form action="{:U('Admin/Login/login')}" method="post" id="login">
+    <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/login')}" method="post" id="login">
         <div class="title">
-            后盾网 | 登录后台
+            江东网 | 登录后台
         </div>
         <table border="1" width="100%">
             <tr>

@@ -6,19 +6,55 @@
  * Time: 15:51
  */
 namespace Admin\Controller;
+use Org\Util\Rbac;
 use Think\Controller;
 class LoginController extends Controller{
-    /**
-     * 登录页面显示
-     */
-    public function index(){
-        $this->display();
-    }
-
     /**
      * 登陆
      */
     public function login(){
+        if(!IS_POST){
+            $this->display();
+            return;
+        };
+        $verify = new \Think\Verify();
+        $verify->seKey = C('VERIFY.seKey');
+        if($verify->check(I('code',''),'admin_login')){
+            $username = I('post.username','','htmlspecialchars');
+            $password = I('post.password','','md5');
+            $module = D('AdminUser');
+            $admin = $module->getUser($username);
+            if ($admin['status'] == '1'){
+                $this->error('当前管理员已被锁定，无法登陆');
+                return;
+            }
+            if($password != $admin['password']){
+                $this->error('密码错误！');
+                return;
+            }
+            $data = array(
+                'id'=>$admin['id'],
+                'last_time' => date('Y-m-d H:i:s'),
+                'last_ip' => get_client_ip(),
+            );
+            $module->save($data);
+            session(C('USER_AUTH_KEY'),$admin['id']);
+            session('username',$admin['username']);
+            if($username == C('RBAC_SUPERADMIN'))session(C('ADMIN_AUTH_KEY'),true);
+            Rbac::saveAccessList();
+            $this->redirect(MODULE_NAME.'/Index/index');
+        }else{
+            $this->error('验证码输入错误！');
+        }
+    }
+
+    /**
+     * 退出登录
+     */
+    public function logout(){
+        session_unset();
+        session_destroy();
+        $this->redirect(MODULE_NAME.'/Login/login');
     }
 
     /**
@@ -35,28 +71,10 @@ class LoginController extends Controller{
     public function checkusername(){
         if(IS_AJAX){
             $json = array();
-            $admin = D('AdminUser');
-            if($admin->checkUser(I('post.username','','htmlspecialchars')) > 0){
+            if(!empty(D('AdminUser')->getUser(I('post.username','','htmlspecialchars')))){
                 $json['correct'] = '√';
             }else{
                 $json['error'] = '用户不存在';
-            }
-            die(json_encode($json));
-        }
-    }
-
-    /**
-     * 判断验证码是否输入正确
-     */
-    public function checkcode(){
-        if(IS_AJAX){
-            $verify = new \Think\Verify();
-            $verify->seKey = C('VERIFY.seKey');
-            $json = array();
-            if($verify->check(I('code',''),'admin_login')){
-                $json['correct'] = '√';
-            }else{
-                $json['error'] = '验证码错误';
             }
             die(json_encode($json));
         }
