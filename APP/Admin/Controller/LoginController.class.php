@@ -23,26 +23,30 @@ class LoginController extends Controller{
             $username = I('post.username','','htmlspecialchars');
             $password = I('post.password','','md5');
             $module = D('AdminUser');
-            $admin = $module->getUser($username);
-            if ($admin['status'] == '1'){
-                $this->error('当前管理员已被锁定，无法登陆');
+            if(!$admin = $module->checkUserName($username)){
+                $this->error('用户名不存在');
                 return;
+            }else{
+                if ($admin['status'] == '1'){
+                    $this->error('当前管理员已被锁定，无法登陆');
+                    return;
+                }
+                if($password != $admin['password']){
+                    $this->error('密码错误！');
+                    return;
+                }
+                $data = array(
+                    'id'=>$admin['id'],
+                    'last_time' => date('Y-m-d H:i:s'),
+                    'last_ip' => get_client_ip(),
+                );
+                $module->save($data);
+                session(C('USER_AUTH_KEY'),$admin['id']);
+                session('username',$username);
+                if($username == C('RBAC_SUPERADMIN'))session(C('ADMIN_AUTH_KEY'),true);
+                Rbac::saveAccessList();
+                $this->redirect(MODULE_NAME.'/Index/index');
             }
-            if($password != $admin['password']){
-                $this->error('密码错误！');
-                return;
-            }
-            $data = array(
-                'id'=>$admin['id'],
-                'last_time' => date('Y-m-d H:i:s'),
-                'last_ip' => get_client_ip(),
-            );
-            $module->save($data);
-            session(C('USER_AUTH_KEY'),$admin['id']);
-            session('username',$admin['username']);
-            if($username == C('RBAC_SUPERADMIN'))session(C('ADMIN_AUTH_KEY'),true);
-            Rbac::saveAccessList();
-            $this->redirect(MODULE_NAME.'/Index/index');
         }else{
             $this->error('验证码输入错误！');
         }
@@ -54,7 +58,7 @@ class LoginController extends Controller{
     public function logout(){
         session_unset();
         session_destroy();
-        $this->redirect(MODULE_NAME.'/Login/login');
+        $this->redirect(CONTROLLER_NAME.'/login');
     }
 
     /**
@@ -71,7 +75,7 @@ class LoginController extends Controller{
     public function checkusername(){
         if(IS_AJAX){
             $json = array();
-            if(!empty(D('AdminUser')->getUser(I('post.username','','htmlspecialchars')))){
+            if(!empty(D('AdminUser')->checkUserName(I('post.username','','htmlspecialchars')))){
                 $json['correct'] = '√';
             }else{
                 $json['error'] = '用户不存在';

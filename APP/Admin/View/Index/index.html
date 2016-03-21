@@ -13,7 +13,7 @@
 <body>
     <div id="top">
         <div class="menu">
-            <a href="{:U(MODULE_NAME.'/Index/show')}">系统信息</a>
+            <a href="{:U(CONTROLLER_NAME.'/show')}">系统信息</a>
             <a href="#">选择按钮</a>
             <a href="#">选择按钮</a>
             <a href="#">选择按钮</a>
@@ -25,15 +25,15 @@
     </div>
     <div id="left">
         <dl>
-            <dt>标题</dt>
-            <dd><a href="#">选项</a></dd>
+        <dt>RBAC</dt>
+            <dd><a href="{:U(MODULE_NAME.'/AdminUser/index')}">管理员管理</a></dd>
             <dd><a href="#">选项</a></dd>
             <dd><a href="#">选项</a></dd>
             <dd><a href="#">选项</a></dd>
         </dl>
     </div>
     <div id="right">
-        <iframe name="iframe" src="{:U(MODULE_NAME.'/Index/show')}"></iframe>
+        <iframe name="iframe" src="{:U(CONTROLLER_NAME.'/show')}"></iframe>
     </div>
 </body>
 </html>
