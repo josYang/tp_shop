@@ -19,6 +19,15 @@ class AdminUserModel extends RelationModel{
     );
 
     /**
+     * 修改管理员
+     * @param $data
+     * @return bool
+     */
+    public function editUser($data){
+        return $this->save($data);
+    }
+
+    /**
      * 获取管理员信息
      * @param $username     管理员名称
      * @return array        管理员信息
@@ -35,6 +44,15 @@ class AdminUserModel extends RelationModel{
      */
     public function gitUserList(){
         return $this->field('password',true)->relation('role')->select();
+    }
+
+    /**
+     * 获取用户名
+     * @param $user_id
+     * @return string
+     */
+    public function getUserName($user_id){
+        return $this->where(array('id'=>$user_id))->getField('username');
     }
 
     /**

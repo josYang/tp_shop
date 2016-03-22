@@ -41,9 +41,9 @@
                     </ul><?php endif; ?>
             </td>
             <td>
-                [<a href="<?php echo U(CONTROLLER_NAME.'/edit');?>">锁定</a>]
-                [<a href="<?php echo U(CONTROLLER_NAME.'/edit');?>">修改</a>]
-                [<a href="<?php echo U(CONTROLLER_NAME.'/delete');?>" onclick="return confirm('确定删除？')">删除</a>]
+                [<a href="<?php echo U(CONTROLLER_NAME.'/status');?>">锁定</a>]
+                [<a href="<?php echo U(CONTROLLER_NAME.'/edit',array('id'=>$val['id']));?>">修改</a>]
+                [<a href="<?php echo U(CONTROLLER_NAME.'/delete',array('id'=>$val['id']));?>" onclick="return confirm('确定删除？')">删除</a>]
             </td>
         </tr><?php endforeach; endif; ?>
     </tbody>
