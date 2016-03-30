@@ -27,9 +27,8 @@
         <dl>
         <dt>RBAC</dt>
             <dd><a href="<?php echo U(MODULE_NAME.'/AdminUser/index');?>">管理员管理</a></dd>
-            <dd><a href="#">选项</a></dd>
-            <dd><a href="#">选项</a></dd>
-            <dd><a href="#">选项</a></dd>
+            <dd><a href="<?php echo U(MODULE_NAME.'/AdminRole/index');?>">角色管理</a></dd>
+            <dd><a href="<?php echo U(MODULE_NAME.'/AdminNode/index');?>">节点管理</a></dd>
         </dl>
     </div>
     <div id="right">

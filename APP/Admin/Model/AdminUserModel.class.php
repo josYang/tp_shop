@@ -42,7 +42,7 @@ class AdminUserModel extends RelationModel{
      * 获取管理员列表
      * @return array
      */
-    public function gitUserList(){
+    public function getUserList(){
         return $this->field('password',true)->relation('role')->select();
     }
 
@@ -53,6 +53,10 @@ class AdminUserModel extends RelationModel{
      */
     public function getUserName($user_id){
         return $this->where(array('id'=>$user_id))->getField('username');
+    }
+
+    public function getUser($user_id){
+        return $this->where(array('id'=>$user_id))->field('password',true)->find();
     }
 
     /**
