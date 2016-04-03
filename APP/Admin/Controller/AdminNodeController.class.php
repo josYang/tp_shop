@@ -15,8 +15,6 @@ class AdminNodeController extends CommonController{
     public function index(){
         $node = M('node')->field('id,name,title,pid')->order('sort')->select();
         $this->node = node_merge($node);
-//        dump($node);
-//        dump($this->node);
         $this->display();
     }
 
@@ -57,6 +55,20 @@ class AdminNodeController extends CommonController{
         $this->getFrom();
     }
 
+    public function delete(){
+        $nid = I('get.id','','intval');
+        if(!empty($nid) && IS_GET){
+            $model = M('node');
+            if($model->where(array('pid'=>$nid))->select()){
+                $this->error('请先删除子节点');
+            }
+            $model->delete($nid);
+            $this->success('删除成功',U(CONTROLLER_NAME.'/index'));
+        }else{
+            $this->error('操作有误');
+        }
+    }
+
     /**
      * 获取表单
      */
@@ -64,7 +76,7 @@ class AdminNodeController extends CommonController{
         if(ACTION_NAME == 'edit'){
             $id = I('get.id',0,'intval');
             $node_info      = M('node')->find($id);
-            $this->title = '修改节点';
+            $this->title    = '修改节点';
             $this->id       = $node_info['id'];
             $this->name     = $node_info['name'];
             $this->nodetitle= $node_info['title'];
@@ -86,14 +98,14 @@ class AdminNodeController extends CommonController{
                     break;
             }
         }else{
-            $this->title = '增加节点';
+            $this->title    = '增加节点';
             $this->name     = '';
             $this->nodetitle= '';
             $this->status   = 0;
             $this->remark   = '';
             $this->sort     = 50;
-            $this->level = I('level',1,'intval');
-            $this->pid = I('pid',0,'intval');
+            $this->level    = I('level',1,'intval');
+            $this->pid      = I('pid',0,'intval');
             $this->submit   = '保存添加';
             switch ($this->level){
                 case 1:

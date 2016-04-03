@@ -20,7 +20,7 @@
             <th><?php echo ($title); ?></th>
         </tr>
     </thead>
-    <form action="<?php echo U(CONTROLLER_NAME.'/'.ACTION_NAME);?>" method="post" id="user-from">
+    <form action="<?php echo U(CONTROLLER_NAME.'/'.ACTION_NAME);?> " method="post" id="user-from">
     <tbody>
         <tr>
             <th>管理员名称</th>
@@ -37,6 +37,12 @@
                         <?php else: ?>
                             <option value="<?php echo ($k); ?>"><?php echo ($v); ?></option><?php endif; endforeach; endif; ?>
                 </select>
+            </td>
+        </tr>
+        <tr>
+            <th>所属角色</th>
+            <td>
+                <?php if(is_array($roles)): foreach($roles as $key=>$v): ?><label><input type="checkbox" name="role_id[]" value="<?php echo ($v["id"]); ?>" <?php if(in_array($v['id'],$user_role)): ?>checked<?php endif; ?> /><?php echo ($v["name"]); ?></label>&nbsp;<?php endforeach; endif; ?>
             </td>
         </tr>
         <tr>

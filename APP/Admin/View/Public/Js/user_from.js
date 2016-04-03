@@ -50,7 +50,7 @@ $(function(){
     $('input[name="new_password"]').blur(function(){
         var new_pwd = $(this);
         new_pwd.next('span').remove()
-        if (new_pwd.val().trim() != ''){
+        if (action == 'add' || new_pwd.val().trim() != ''){
             if (new_pwd.val().trim().length < 6){
                 new_pwd.after('<span class="error">密码不得小于6位数</span>')
                 validate.new_pwd = 0;

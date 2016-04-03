@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>权限分配</title>
+    <css file="__PUBLIC__/Css/public.css" />
+    <css file="__PUBLIC__/Css/node.css" />
+    <js file="__PUBLIC__/Js/jquery-1.12.1.min.js" />
+    <script type="text/javascript">
+        $(function(){
+            $('input[level="1"]').click(function(){
+                var checkbox = $(this);
+                if (checkbox.attr('checked') == undefined){
+                    checkbox.attr('checked',true)
+                }else {
+                    checkbox.removeAttr('checked')
+                }
+                var inputs = $(this).parents('.app').find('input[type="checkbox"]');
+                checkbox.attr('checked') ? inputs.attr('checked',true):inputs.removeAttr('checked');
+            });
+            $('input[level="2"]').click(function(){
+                var checkbox = $(this);
+                if (checkbox.attr('checked') == undefined){
+                    checkbox.attr('checked',true)
+                }else {
+                    checkbox.removeAttr('checked')
+                }
+                var inputs = $(this).parents('dl').find('input');
+                checkbox.attr('checked') ? inputs.attr('checked',true):inputs.removeAttr('checked');
+            });
+        });
+    </script>
+</head>
+<body>
+<form action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)}" method="post">
+    <div id="wrap">
+        <a class="add-app" href="{:U(MODULE_NAME.'/AdminRole/index')}">返回</a>
+        <foreach name="node" item="app">
+            <div class="app">
+                <p>
+                    <label><strong>{$app.title}{$app.name}</strong>&nbsp;<input type="checkbox" name="access[]" value="{$app.id}_1" level='1' <if condition="$app['access']">checked</if> /></label>
+                </p>
+                <foreach name="app.child" item="action">
+                    <dl>
+                        <dt>
+                            <label><strong>{$action.title}{$action.name}</strong>&nbsp;<input type="checkbox" name="access[]" value="{$action.id}_2" level='2' <if condition="$action['access']">checked</if> /></label>
+                        </dt>
+                        <foreach name="action.child" item="method">
+                            <dd>
+                                <label><span>{$method.title}{$method.name}</span>&nbsp;<input type="checkbox" name="access[]" value="{$method.id}_3" level='3' <if condition="$method['access']">checked</if> /></label>
+                            </dd>
+                        </foreach>
+                    </dl>
+                </foreach>
+            </div>
+        </foreach>
+    </div>
+    <input type="hidden" name="rid" value="{$rid}" />
+    <input type="submit" value="保存修改" style="display: block;margin: 20px auto;cursor: pointer;" />
+</form>
+</body>
+</html>

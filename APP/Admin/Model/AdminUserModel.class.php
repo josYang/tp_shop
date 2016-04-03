@@ -74,6 +74,7 @@ class AdminUserModel extends RelationModel{
      * @return int  删除条数
      */
     public function deleteUser($user_id){
+        M('role_user')->where(array('user_id'=>$user_id))->delete();
         return $this->delete($user_id);
     }
 }

@@ -32,7 +32,16 @@ class AdminUserController extends CommonController{
                 'last_ip' => get_client_ip(),
                 'status' => I('status','','intval')
             );
-            D('AdminUser')->addUser($data);
+            $user_id = D('AdminUser')->addUser($data);
+            //管理员分配角色
+            $role_data = array();
+            foreach ($_POST['role_id'] as $v) {
+                $role_data[] = array(
+                    'user_id' => $user_id,
+                    'role_id' => $v,
+                );
+            }
+            M('role_user')->addAll($role_data);
             $this->success('添加成功',U(CONTROLLER_NAME.'/index'));
             return;
         }
@@ -59,6 +68,17 @@ class AdminUserController extends CommonController{
                 }
             }
             $model->editUser($data);
+            //管理员分配角色
+            $role_data = array();
+            foreach ($_POST['role_id'] as $v) {
+                $role_data[] = array(
+                    'user_id' => $userinfo['id'],
+                    'role_id' => $v,
+                );
+            }
+            $role_user = M('role_user');
+            $role_user->where(array('user_id'=>$userinfo['id']))->delete();
+            $role_user->addAll($role_data);
             $this->success('修改成功',U(CONTROLLER_NAME.'/index'));
             return;
         }
@@ -74,7 +94,7 @@ class AdminUserController extends CommonController{
                 $this->error('不能删除系统超级管理员');
             }else{
                 D('AdminUser')->deleteUser($id);
-                $this->success('删除成功',U(CONTROLLE_NAME.'/index'));
+                $this->success('删除成功',U(CONTROLLER_NAME.'/index'));
                 return;
             }
         }else{
@@ -85,27 +105,30 @@ class AdminUserController extends CommonController{
 
     private function getFrom(){
         if(ACTION_NAME == 'edit'){
-            $userInfo = D('AdminUser')->getUser(I('get.id','','intval'));
-            $this->id = $userInfo['id'];
-            $this->username = $userInfo['username'];
-            $this->add_time = $userInfo['add_time'];
-            $this->last_time = $userInfo['last_time'];
-            $this->last_ip = $userInfo['last_ip'];
-            $this->status = $userInfo['status'];
-            $this->send_submit = '确认修改';
+            $userInfo           = D('AdminUser')->getUser(I('get.id','','intval'));
+            $this->id           = $userInfo['id'];
+            $this->username     = $userInfo['username'];
+            $this->add_time     = $userInfo['add_time'];
+            $this->last_time    = $userInfo['last_time'];
+            $this->last_ip      = $userInfo['last_ip'];
+            $this->status       = $userInfo['status'];
+            $this->send_submit  = '确认修改';
+            $this->user_role    = M('role_user')->where(array('user_id'=>$userInfo['id']))->getField('role_id',true);
         }else{
-            $this->id = '';
-            $this->username = '';
-            $this->add_time = '';
-            $this->last_time = '';
-            $this->last_ip = '';
-            $this->status = '';
-            $this->send_submit = '确认添加';
+            $this->id           = '';
+            $this->username     = '';
+            $this->add_time     = '';
+            $this->last_time    = '';
+            $this->last_ip      = '';
+            $this->status       = '';
+            $this->send_submit  = '确认添加';
+            $this->user_role    = array();
         }
         $this->status_list = array(
             2=>'启用',
             1=>'禁用',
         );
+        $this->roles = M('role')->field('id,name')->select();
         $this->display('user_from');
     }
 }

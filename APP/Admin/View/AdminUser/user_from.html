@@ -20,7 +20,7 @@
             <th>{$title}</th>
         </tr>
     </thead>
-    <form action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)}" method="post" id="user-from">
+    <form action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)} " method="post" id="user-from">
     <tbody>
         <tr>
             <th>管理员名称</th>
@@ -43,6 +43,14 @@
                         </if>
                     </foreach>
                 </select>
+            </td>
+        </tr>
+        <tr>
+            <th>所属角色</th>
+            <td>
+                <foreach name="roles" item="v">
+                    <label><input type="checkbox" name="role_id[]" value="{$v.id}" <if condition="in_array($v['id'],$user_role)">checked</if> />{$v.name}</label>&nbsp;
+                </foreach>
             </td>
         </tr>
         <tr>
