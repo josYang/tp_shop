@@ -5,21 +5,29 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title><?php echo ($title); ?></title>
     <link rel="stylesheet" type="text/css" href="/APP/Admin/View/Public/Css/public.css" />
+    <script type="text/javascript" src="/APP/Admin/View/Public/Js/jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="/APP/Admin/View/Public/Js/user_from.js"></script>
+    <script type="text/javascript">
+        var action = '<?php echo (ACTION_NAME); ?>';
+        var url = '<?php echo U(MODULE_NAME."/Login/checkusername");?>';
+    </script>
 </head>
 <body>
 <table class="table">
     <thead>
         <tr>
-            <th style="text-align: left;"><a href="<?php echo U(CONTROLLER_NAME.'/index');?>">返回列表</a></th>
+            <th style="text-align: left;width: 40%;"><a href="<?php echo U(CONTROLLER_NAME.'/index');?>">返回列表</a></th>
             <th><?php echo ($title); ?></th>
         </tr>
     </thead>
-    <form action="<?php echo ($action); ?>">
-        <input type="hidden" name="id" value="<?php echo ($id); ?>">
+    <form action="<?php echo U(CONTROLLER_NAME.'/'.ACTION_NAME);?>" method="post" id="user-from">
     <tbody>
         <tr>
             <th>管理员名称</th>
-            <td><?php echo ($username); ?></td>
+            <?php if(ACTION_NAME == 'add'): ?><td><input type="text" name="username"></td>
+                <?php else: ?>
+                <input type="hidden" name="id" value="<?php echo ($id); ?>">
+                <td><?php echo ($username); ?></td><?php endif; ?>
         </tr>
         <tr>
             <th>管理员状态</th>
@@ -30,10 +38,6 @@
                             <option value="<?php echo ($k); ?>"><?php echo ($v); ?></option><?php endif; endforeach; endif; ?>
                 </select>
             </td>
-        </tr>
-        <tr>
-            <th>原密码</th>
-            <td><input type="password" name="old_password"></td>
         </tr>
         <tr>
             <th>新密码</th>
@@ -48,13 +52,21 @@
                 <input type="submit" name="send" value="<?php echo ($send_submit); ?>">
             </td>
         </tr>
-        <tr>
+        <?php if(ACTION_NAME == 'edit'): ?><tr>
             <td colspan="2">其他数据：</td>
         </tr>
         <tr>
             <th>添加时间</th>
             <td><?php echo ($add_time); ?></td>
         </tr>
+        <tr>
+            <th>上次登录时间</th>
+            <td><?php echo ($last_time); ?></td>
+        </tr>
+        <tr>
+            <th>上次登录IP</th>
+            <td><?php echo ($last_ip); ?></td>
+        </tr><?php endif; ?>
     </tbody>
     </form>
 </table>

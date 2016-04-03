@@ -18,6 +18,10 @@ class AdminUserModel extends RelationModel{
         ),
     );
 
+    public function addUser($data){
+        return $this->add($data);
+    }
+
     /**
      * 修改管理员
      * @param $data
@@ -34,7 +38,7 @@ class AdminUserModel extends RelationModel{
      */
     public function checkUserName ($username){
         $user = M('AdminUser');
-        $query = $user->field('id,password,status')->where(array('username'=>$username,'status'=>'2'))->find();
+        $query = $user->field('id,password,status')->where(array('username'=>$username))->find();
         return $query;
     }
 
@@ -55,8 +59,13 @@ class AdminUserModel extends RelationModel{
         return $this->where(array('id'=>$user_id))->getField('username');
     }
 
+    /**
+     * 获取管理员信息
+     * @param $user_id
+     * @return mixed
+     */
     public function getUser($user_id){
-        return $this->where(array('id'=>$user_id))->field('password',true)->find();
+        return $this->where(array('id'=>$user_id))->find();
     }
 
     /**

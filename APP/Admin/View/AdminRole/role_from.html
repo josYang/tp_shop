@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>{$title}</title>
+    <css file="__PUBLIC__/Css/public.css" />
+    <js file="__PUBLIC__/Js/jquery-1.12.1.min.js" />
+    <script type="text/javascript">
+        $(function(){
+            $('#role-from').submit(function(){
+                var name = $('input[name="name"]');
+                name.next('span').remove()
+                if (name.val().trim().length < 3){
+                    name.after('<span class="error">角色名不得少于三位数</span>')
+                    return false
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th style="text-align: left;width: 40%"><a href="{:U(CONTROLLER_NAME.'/index')}">返回列表</a></th>
+        <th>{$title}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <form action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)}" method="post" id="role-from">
+        <if condition="ACTION_NAME eq 'edit'">
+            <input type="hidden" name="id" value="{$id}">
+        </if>
+    <tr>
+        <th>角色名称</th>
+        <td><input type="text" name="name" value="{$name}"></td>
+    </tr>
+    <tr>
+        <th>父角色</th>
+        <td>
+            <select name="pid">
+                <option value="0">==请选择==</option>
+                <foreach name="roles" item="v">
+                    <if condition="$v['id'] eq $pid">
+                        <option value="{$v.id}" selected>{$v.name}</option>
+                    <else/>
+                        <option value="{$v.id}">{$v.name}</option>
+                    </if>
+                </foreach>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>角色描述</th>
+        <td><textarea name="remark" cols="40" rows="8">{$remark}</textarea></td>
+    </tr>
+    <tr>
+        <th>角色状态</th>
+        <td>
+            <select name="status">
+                <foreach name="status_list" item="val" key="key">
+                    <if condition="$key eq $status">
+                        <option value="{$key}" selected>{$val}</option>
+                        <else/>
+                        <option value="{$key}">{$val}</option>
+                    </if>
+                </foreach>
+            </select>
+        </td>
+    </tr>
+        <tr>
+            <td colspan="2" align="center"><input type="submit" name="send" value="{$submit}"></td>
+        </tr>
+    </form>
+    </tbody>
+</table>
+</body>
+</html>

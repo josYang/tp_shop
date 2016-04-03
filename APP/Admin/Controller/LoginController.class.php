@@ -25,15 +25,12 @@ class LoginController extends Controller{
             $module = D('AdminUser');
             if(!$admin = $module->checkUserName($username)){
                 $this->error('用户名不存在');
-                return;
             }else{
                 if ($admin['status'] == '1'){
                     $this->error('当前管理员已被锁定，无法登陆');
-                    return;
                 }
                 if($password != $admin['password']){
                     $this->error('密码错误！');
-                    return;
                 }
                 $data = array(
                     'id'=>$admin['id'],

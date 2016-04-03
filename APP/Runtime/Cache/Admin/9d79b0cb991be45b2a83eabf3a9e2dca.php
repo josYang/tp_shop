@@ -10,6 +10,12 @@
 <body>
 <table class="table">
     <thead>
+    <tr>
+        <th colspan="7">管理员列表</th>
+        <th><a href="<?php echo U(CONTROLLER_NAME.'/add');?>">添加管理员</a></th>
+    </tr>
+    </thead>
+    <tbody>
         <tr>
             <th>编号</th>
             <th>名称</th>
@@ -20,8 +26,6 @@
             <th>所属组别</th>
             <th>操作</th>
         </tr>
-    </thead>
-    <tbody>
     <?php if(is_array($admin)): foreach($admin as $key=>$val): ?><tr>
             <td><?php echo ($val["id"]); ?></td>
             <td><?php echo ($val["username"]); ?></td>
@@ -41,7 +45,6 @@
                     </ul><?php endif; ?>
             </td>
             <td>
-                [<a href="<?php echo U(CONTROLLER_NAME.'/status');?>">锁定</a>]
                 [<a href="<?php echo U(CONTROLLER_NAME.'/edit',array('id'=>$val['id']));?>">修改</a>]
                 [<a href="<?php echo U(CONTROLLER_NAME.'/delete',array('id'=>$val['id']));?>" onclick="return confirm('确定删除？')">删除</a>]
             </td>

@@ -5,21 +5,31 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>{$title}</title>
     <css file="__PUBLIC__/Css/public.css" />
+    <js file="__PUBLIC__/Js/jquery-1.12.1.min.js" />
+    <js file="__PUBLIC__/Js/user_from.js" />
+    <script type="text/javascript">
+        var action = '{$Think.ACTION_NAME}';
+        var url = '{:U(MODULE_NAME."/Login/checkusername")}';
+    </script>
 </head>
 <body>
 <table class="table">
     <thead>
         <tr>
-            <th style="text-align: left;"><a href="{:U(CONTROLLER_NAME.'/index')}">返回列表</a></th>
+            <th style="text-align: left;width: 40%;"><a href="{:U(CONTROLLER_NAME.'/index')}">返回列表</a></th>
             <th>{$title}</th>
         </tr>
     </thead>
-    <form action="{$action}">
-        <input type="hidden" name="id" value="{$id}">
+    <form action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)}" method="post" id="user-from">
     <tbody>
         <tr>
             <th>管理员名称</th>
-            <td>{$username}</td>
+            <if condition="ACTION_NAME eq 'add'">
+                <td><input type="text" name="username"></td>
+                <else/>
+                <input type="hidden" name="id" value="{$id}">
+                <td>{$username}</td>
+            </if>
         </tr>
         <tr>
             <th>管理员状态</th>
@@ -36,10 +46,6 @@
             </td>
         </tr>
         <tr>
-            <th>原密码</th>
-            <td><input type="password" name="old_password"></td>
-        </tr>
-        <tr>
             <th>新密码</th>
             <td><input type="password" name="new_password"></td>
         </tr>
@@ -52,6 +58,7 @@
                 <input type="submit" name="send" value="{$send_submit}">
             </td>
         </tr>
+        <if condition="ACTION_NAME eq 'edit'">
         <tr>
             <td colspan="2">其他数据：</td>
         </tr>
@@ -59,6 +66,15 @@
             <th>添加时间</th>
             <td>{$add_time}</td>
         </tr>
+        <tr>
+            <th>上次登录时间</th>
+            <td>{$last_time}</td>
+        </tr>
+        <tr>
+            <th>上次登录IP</th>
+            <td>{$last_ip}</td>
+        </tr>
+        </if>
     </tbody>
     </form>
 </table>
