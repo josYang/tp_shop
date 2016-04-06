@@ -9,7 +9,6 @@
 namespace Admin\Controller;
 use Admin\Controller;
 class AdminUserController extends CommonController{
-    private $error = array();
     public function index(){
         $this->admin = D('AdminUser')->getUserList();
         $this->display();

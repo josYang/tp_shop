@@ -25,6 +25,12 @@
     </div>
     <div id="left">
         <dl>
+        <dt>产品管理</dt>
+            <dd><a href="<?php echo U(MODULE_NAME.'/Category/index');?>">产品分类</a></dd>
+            <dd><a href="<?php echo U(MODULE_NAME.'/Goods/index');?>">产品列表</a></dd>
+            <dd><a href="<?php echo U(MODULE_NAME.'/GoodsType/index');?>">产品类型列表</a></dd>
+        </dl>
+        <dl>
         <dt>RBAC</dt>
             <dd><a href="<?php echo U(MODULE_NAME.'/AdminUser/index');?>">管理员管理</a></dd>
             <dd><a href="<?php echo U(MODULE_NAME.'/AdminRole/index');?>">角色管理</a></dd>

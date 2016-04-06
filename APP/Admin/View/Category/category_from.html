@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>{$title}</title>
+    <css file="__PUBLIC__/Css/public.css" />
+    <js file="__PUBLIC__/Js/jquery-1.12.1.min.js" />
+    <script type="text/javascript">
+        var arr = new Array();
+        var sel_filter_attr = "请选择商品类型";
+        <foreach name="attr_list" item="val" key="att_cat_id">
+            arr[{$att_cat_id}] = new Array();
+            <foreach name="val" item="item" key="i">
+                <foreach name="item" item="attr_val" key="attr_id">
+                arr[{$att_cat_id}][{$i}] = ["{$attr_val}", {$attr_id}];
+                </foreach>
+            </foreach>
+        </foreach>
+    </script>
+    <script type="text/javascript">
+        function changeCat(obj){
+            var key = obj.value;
+            var sel = $(obj).next('select');
+            sel.children('option').remove()
+            sel.append('<option value="0">' + sel_filter_attr + '</option>')
+            if (arr[key] == undefined) {
+                return;
+            }
+            for (var i = 0; i<arr[key].length; i++){
+                sel.append('<option value="' + arr[key][i][1] + '">' + arr[key][i][0] + '</option>')
+            }
+        }
+    </script>
+</head>
+<body>
+<form action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)}" method="post">
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="text-align: left;width: 40%;"><a href="{:U(CONTROLLER_NAME.'/index')}">返回列表</a></th>
+            <th>{$title}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>分类名称</th>
+            <td><input type="text" name="cat_name" value="{$cate.cat_name|default=''}"></td>
+        </tr>
+        <tr>
+            <th>所属分类</th>
+            <td>
+                <select onchange="changeCat(this)">
+                    <option value="0">顶级分类</option>
+                    <foreach name="parent_cate" item="v">
+                        <option value="{$v.cat_id}"<if condition="$cate['parent_id'] eq $v['cat_id']">selected</if>>{$v.html}{$v.cat_name}</option>
+                    </foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>分类状态</th>
+            <td>
+                <select name="status">
+                <foreach name="status_list" item="v">
+                    <option value="{$key}"<if condition="$key eq $cate['status']">selected</if>>{$v}</option>
+                </foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>筛选属性</th>
+            <td>
+                <table width="100%" id="tbody-attr" align="center">
+                    <tbody>
+                    <if condition="$attr_cat_id eq 0">
+                    <tr>
+                        <td>
+                            <a href="javascript:;" onclick="addFilterAttr(this)">[+]</a>
+                            <select onChange="changeCat(this)">
+                                <option value="0">请选择商品类型</option>
+                                {$goods_type_list}
+                            </select>&nbsp;&nbsp;
+                            <select name="filter_attr[]">
+                                <option value="0">请选择商品属性</option>
+                            </select><br />
+                        </td>
+                    </tr>
+                    <else/>
+                    <foreach name="filter_attr_list" item="filter_attr" >
+                    <tr>
+                        <td>
+                            <if condition="$filter_attr['iteration'] eq 1">
+                                <a href="javascript:;" onclick="addFilterAttr(this)">[+]</a>
+                            <else/>
+                                <a href="javascript:;" onclick="removeFilterAttr(this)">[-]&nbsp;</a>
+                            </if>
+                            <select onChange="changeCat(this)">
+                                <option value="0">请选择商品类型</option>
+                                {$filter_attr.goods_type_list}
+                            </select>&nbsp;&nbsp;
+                            <select name="filter_attr[]">
+                                <option value="0">请选择商品属性</option>
+                                <foreach name="filter_attr['option']" item="val">
+                                    <option value="{$key}" <if condition="$filter_attr['filter_attr'] eq $key">selected</if>>{$val}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    </foreach>
+                    </if>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th>价格分级数</th>
+            <td><input type="text" name="grade" value="{$cate.grade|default=0}"></td>
+        </tr>
+        <tr>
+            <th>分类排序</th>
+            <td><input type="text" name="sort_order" value="{$cate.sort_order|default=50}"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="hidden" name="cat_id" value="{$cate.cat_id|default=0}">
+                <input type="submit" name="send"  class="bt2" value="{$submit}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<script type="text/javascript">
+    /**
+     * 添加筛选属性
+     * @param obj
+     */
+    function addFilterAttr(obj){
+        var tr = $(obj).parents('tr').eq(0).clone();
+        var tab = $('#tbody-attr');
+        tr.children().children('a').attr('onclick',"removeFilterAttr(this)").html('[-]&nbsp;')
+        tab.children('tbody').append(tr)
+    }
+    /**
+     * 删除筛选属性
+     * @param obj
+     */
+    function removeFilterAttr(obj){
+        $(obj).parent().remove()
+    }
+</script>
+</body>
+</html>

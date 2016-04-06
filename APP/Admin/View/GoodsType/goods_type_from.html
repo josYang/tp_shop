@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>{$title}</title>
+    <css file="__PUBLIC__/Css/public.css" />
+    <js file="__PUBLIC__/Js/jquery-1.12.1.min.js" />
+    <script type="text/javascript">
+        $(function(){
+            $('#type-form').submit(function () {
+                var cat_name = $('input[name="cat_name"]');
+                cat_name.next('span').remove()
+                if (cat_name.val().trim() == ''){
+                    cat_name.after('<span class="error">类型名称不得为空</span>')
+                    return false;
+                }
+                return false;
+            })
+        })
+    </script>
+</head>
+<body>
+<form action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)}" method="post" id="type-form">
+<table class="table">
+    <thead>
+    <tr>
+        <th style="text-align: left;width: 40%"><a href="{:U(CONTROLLER_NAME.'/index')}">返回列表</a></th>
+        <th>{$title}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>类型名称</th>
+        <td><input type="text" name="cat_name" value="{$type.cat_name|default=''}"></td>
+    </tr>
+    <tr>
+        <th>属性分组</th>
+        <td>
+            <textarea name="attr_group" cols="40" rows="9">{$type.attr_group|default=''}</textarea>
+            ( * 英文,逗号隔开)
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">
+            <input type="hidden" name="cat_id" value="{$type.cat_id|default=0}" />
+            <input type="submit" name="send" class="bt2" value="{$submit}">
+        </td>
+    </tr>
+    </tbody>
+</table>
+</form>
+</body>
+</html>

@@ -18,7 +18,17 @@ return array(
     'RBAC_NODE_TABLE'        => C('DB_PREFIX').'node',       //节点表名称
 
     //模板解析配置
-    'TMPL_PARSE_STRING' => array(
+    'TMPL_PARSE_STRING'     => array(
         '__PUBLIC__' => substr(APP_PATH,1).MODULE_NAME.'/View/Public',
     ),
+
+    //拓展配置
+    'LOAD_EXT_CONFIG' => array(
+        'SYSTEM'=>'system',
+    ),
+
+    //注册命名空间
+//    'AUTOLOAD_NAMESPACE'    => array(
+//        'Class'     => substr(APP_PATH,1).'Class',
+//    ),
 );

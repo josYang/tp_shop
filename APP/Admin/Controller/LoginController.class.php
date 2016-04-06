@@ -77,7 +77,7 @@ class LoginController extends Controller{
             }else{
                 $json['error'] = '用户不存在';
             }
-            die(json_encode($json));
+            $this->ajaxReturn($json);
         }
     }
 }

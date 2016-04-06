@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>{$title}</title>
+    <css file="__PUBLIC__/Css/public.css" />
+    <js file="__PUBLIC__/Js/jquery-1.12.1.min.js" />
+    <script type="text/javascript">
+        var attr_group_number = {$attr.attr_group|default=0};
+        var attr_input_type = {$attr.attr_input_type|default=0};
+        var url = "{:U(MODULE_NAME.'/GoodsType/get_group')}";
+    </script>
+    <js file="__PUBLIC__/Js/attr_from.js" />
+</head>
+<body>
+<form action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)}" method="post" id="attr-from">
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="text-align: left;width: 40%;">
+                    <a href="{:U(CONTROLLER_NAME.'/index',array('cat_id'=>$cat_id))}">返回属性列表</a>
+                </th>
+                <th>{$title}</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>属性名称</th>
+            <td><input type="text" name="attr_name" value="{$attr.attr_name|default=''}"></td>
+        </tr>
+        <tr>
+            <th>所属商品类型</th>
+            <td>
+                <select name="cat_id" id="cat_id">
+                    <option value="0">==请选择==</option>
+                    <foreach name="types" item="val">
+                        <option value="{$val.cat_id}" <if condition="$cat_id eq $val['cat_id']">selected</if> >{$val.cat_name}</option>
+                    </foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>属性分组</th>
+            <td>
+                <select name="attr_group" id="attr_group"></select>
+            </td>
+        </tr>
+        <tr>
+            <th>相同属性值的商品是否关联？</th>
+            <td>
+                <foreach name="linked_list" item="v">
+                    <label><input type="radio" name="is_linked" value="{$key}" <if condition="$attr['is_linked'] eq $key">checked</if>>{$v}</label>&nbsp;
+                </foreach>
+            </td>
+        </tr>
+        <tr>
+            <th>排序</th>
+            <td>
+                <input type="text" name="sort_order" value="{$attr.sort_order|default=50}">
+            </td>
+        </tr>
+        <tr>
+            <th>属性是否可选</th>
+            <td>
+                <foreach name="attr_type_list" item="v">
+                    <label><input type="radio" name="attr_type" value="{$key}" <if condition="$attr['attr_type'] eq $key">checked</if>>{$v}</label>&nbsp;
+                </foreach>
+            </td>
+        </tr>
+        <tr>
+            <th>该属性值的录入方式</th>
+            <td>
+                <foreach name="input_type_list" item="v">
+                    <label><input type="radio" name="attr_input_type" value="{$key}" <if condition="$attr['attr_input_type'] eq $key">checked</if>>{$v}</label>&nbsp;
+                </foreach>
+            </td>
+        </tr>
+        <tr>
+            <th>可选值列表</th>
+            <td>
+                <textarea name="attr_values" id="attr_values" cols="40" rows="9">{$attr.attr_values|default=''}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="hidden" name="attr_id" value="{$attr.attr_id|default=0}">
+                <input type="submit" name="send" class="bt2" value="{$submit}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>
