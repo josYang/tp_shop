@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>品牌列表</title>
+    <css file="__PUBLIC__/Css/public.css" />
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th colspan="4">品牌列表</th>
+        <th><a href="{:U(CONTROLLER_NAME.'/add')}">添加品牌</a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>品牌名称</th>
+        <th>LOGO</th>
+        <th>品牌网址</th>
+        <th>排序</th>
+        <th>操作</th>
+    </tr>
+    <foreach name="brands" item="brand">
+        <tr>
+            <td>{$brand.brand_name}</td>
+            <td><img src="{$brand.brand_logo}" alt="{$brand.brand_name}" title="{$brand.brand_name}"></td>
+            <td>{$brand.site_url}</td>
+            <td>{$brand.sort_order}</td>
+            <td>
+                [<a href="{:U(CONTROLLER_NAME.'/edit',array('brand_id'=>$brand['brand_id']))}">编辑</a>]
+                [<a href="{:U(CONTROLLER_NAME.'/delete',array('brand_id'=>$brand['brand_id']))}">删除</a>]
+            </td>
+        </tr>
+    </foreach>
+    </tbody>
+</table>
+<div class="page">{$show}</div>
+</body>
+</html>

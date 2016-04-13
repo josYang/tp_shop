@@ -12,5 +12,14 @@ class GoodsController extends CommonController{
     public function index(){
         $this->display();
     }
+
+    public function add (){
+        if(IS_POST){
+            dump($_POST);
+            return;
+        }
+        $this->title = '添加商品';
+        $this->display('goods_form');
+    }
 }
 ?>

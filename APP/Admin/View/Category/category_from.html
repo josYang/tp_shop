@@ -50,7 +50,7 @@
         <tr>
             <th>所属分类</th>
             <td>
-                <select onchange="changeCat(this)">
+                <select name="parent_id">
                     <option value="0">顶级分类</option>
                     <foreach name="parent_cate" item="v">
                         <option value="{$v.cat_id}"<if condition="$cate['parent_id'] eq $v['cat_id']">selected</if>>{$v.html}{$v.cat_name}</option>

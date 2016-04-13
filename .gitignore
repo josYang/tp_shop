@@ -2,3 +2,4 @@
 .idea/
 APP/Common/Conf/config.php
 APP/Runtime/
+Data/Uploads/
