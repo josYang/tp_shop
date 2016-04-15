@@ -14,16 +14,11 @@ use Think\Upload;
 
 class BrandController extends CommonController{
     private $uploadconf = array(
-        'mimes'         =>  array(), //允许上传的文件MiMe类型
         'maxSize'       =>  1024*500, //上传的文件大小限制 (0-不做限制)
         'exts'          =>  array('jpg','png','gif','jpeg'), //允许上传的文件后缀
-        'autoSub'       =>  true, //自动子目录保存文件
-        'subName'       =>  array('date', 'Y-m-d'), //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组
         'rootPath'      =>  './Data/Uploads/', //保存根路径
         'savePath'      =>  './image/brand/', //保存路径
         'saveName'      =>  array('time', ''), //上传文件命名规则，[0]-函数名，[1]-参数，多个参数使用数组
-        'saveExt'       =>  '', //文件保存后缀，空则使用原后缀
-        'replace'       =>  false, //存在同名是否覆盖
     );
     public function index(){
         $db = M('brand');
@@ -109,7 +104,9 @@ class BrandController extends CommonController{
             $thumb = dirname($logo).'/thumb_'.$info['savename'];
             $image = new Image();
             $image->open($logo)->thumb(80,40,Image::IMAGE_THUMB_FIXED)->save($thumb);
-            unlink($logo);
+            if(is_file($logo)){
+                unlink($logo);
+            }
             return substr($thumb,1);
         }else{
             return '';

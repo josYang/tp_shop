@@ -12,14 +12,16 @@ use Think\Page;
 
 class AttributeController extends CommonController{
     public function index(){
-        $cat_id =  I('get.cat_id',0,'intval');
-        $attr_db = D('Attribute');
-        $total = $attr_db->total($cat_id);
-        $page = new Page($total,C('SYSTEM.page_size'));
+        $cat_id     =  I('get.cat_id',0,'intval');
+        $attr_db    = D('Attribute');
+        $total      = $attr_db->total($cat_id);
+        $page       = new Page($total,C('SYSTEM.page_size'));
+
         $this->attrs = $attr_db->getAttrs($cat_id,$page->firstRow.','.$page->listRows);
         $this->show = $page->show();
         $this->cat_id = $cat_id;
         $this->input_type_list = array('手工录入','从列表中选择','多行文本框');
+
         $this->display();
     }
 

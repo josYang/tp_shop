@@ -5,9 +5,40 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>{$title}</title>
     <css file="__PUBLIC__/Css/public.css" />
+    <js file="__PUBLIC__/Js/jquery-1.12.1.min.js" />
     <js file="__ROOT__/Data/kindeditor/kindeditor-all-min.js" />
     <js file="__ROOT__/Data/kindeditor/lang/zh-CN.js" />
     <script type="text/javascript">
+        $(document).ready(function () {
+            $('#goods_type').change(function () {
+                var option_val = $(this).val();
+                if (option_val != 0){
+                    $.ajax({
+                        url : '{:U(CONTROLLER_NAME."/getGoodsAttr")}',
+                        type : 'post',
+                        data : {
+                            cat_id : option_val,
+                            goods_id : {$goods.goods_id|default=0}
+                        },
+                        dataType : 'json',
+                        success : function (json) {
+                            if(json['error']){
+                                alert(json['message'])
+                            }else{
+                                $('#attrTable').html(json['content'])
+                                $('#tbody-goodsAttr').css('display','')
+                            }
+                        },
+                        error : function (xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText)
+                        }
+                    })
+                }else {
+                    $('#attrTable').html('')
+                    $('#tbody-goodsAttr').css('display','none')
+                }
+            })
+        })
         KindEditor.ready(function (k) {
             window.editor = k.create('textarea[name="goods_desc"]',{
                 width : '100%',
@@ -24,7 +55,7 @@
     </script>
 </head>
 <body>
-<form action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)}">
+<form action="{:U('__ACTION__')}" method="post" enctype="multipart/form-data">
     <table class="table">
         <thead>
             <col style="width: 15%" />
@@ -46,6 +77,9 @@
             <td>
                 <select name="cat_id">
                     <option value="0">请选择所属分类</option>
+                    <foreach name="categorys" item="category">
+                        <option value="{$category.cat_id}">{$category.html}{$category.cat_name}</option>
+                    </foreach>
                 </select>
             </td>
         </tr>
@@ -54,6 +88,9 @@
             <td>
                 <select name="brand_id">
                     <option value="0">请选择所属品牌</option>
+                    <foreach name="brands" item="brand">
+                        <option value="{$brand.brand_id}">{$brand.brand_name}</option>
+                    </foreach>
                 </select>
             </td>
             <th>商品价格</th>
@@ -68,7 +105,7 @@
             </td>
             <th>商品关键字</th>
             <td>
-                <input type="text" name="keywords">
+                <input type="text" name="keywords">( * 多个用英文逗号,隔开)
             </td>
         </tr>
         <tr>
@@ -78,26 +115,30 @@
             </td>
             <th>加入推荐</th>
             <td>
-                <label><input type="checkbox" name="is_best">精品</label>
-                <label><input type="checkbox" name="is_new">新品</label>
-                <label><input type="checkbox" name="is_hot">热品</label>
+                <label><input type="checkbox" name="is_best" value="1">精品</label>
+                <label><input type="checkbox" name="is_new" value="1">新品</label>
+                <label><input type="checkbox" name="is_hot" value="1">热品</label>
             </td>
         </tr>
         <tr>
             <th>商品图片</th>
             <td>
-                <input type="file" name="goods_img">
+                <input type="file" name="goods_img" style="display: none;">
+                <span id="upload_img" class="bt2" style="display: inline">上传图片</span><span id="select_img" class="bt2" style="display: inline">选择图片</span>
             </td>
-            <th>加入推荐</th>
+            <th>商品类型</th>
             <td>
                 <select name="goods_type" id="goods_type">
                     <option value="0">请选择商品类型</option>
+                    <foreach name="types" item="type">
+                        <option value="{$type.cat_id}">{$type.cat_name}</option>
+                    </foreach>
                 </select>
             </td>
         </tr>
         <tr id="tbody-goodsAttr" style="display:none">
             <td colspan="4">
-                <table class="table">
+                <table class="table" style="width: 100%">
                     <tbody  id="attrTable"></tbody>
                 </table>
             </td>
@@ -118,8 +159,28 @@
                 <textarea name="goods_shipai"></textarea>
             </td>
         </tr>
+        <tr>
+            <td colspan="4" align="center">
+                <input type="hidden" name="goods_id" value="{$goods.goods_id|default=0}">
+                <input type="submit" value="{$submit}" class="bt2">
+            </td>
+        </tr>
         </tbody>
     </table>
 </form>
+<script type="text/javascript">
+    function addSpec(obj){
+        var tr = $(obj).parentsUntil().eq(1);
+        var clone_tr = tr.clone();
+        clone_tr.children('th').children('a').attr('onclick','removeSpec(this)').text('[-]');
+        tr.after(clone_tr)
+    }
+    function removeSpec(obj){
+        $(obj).parentsUntil().eq(1).remove()
+    }
+    $('#upload_img').click(function () {
+        $('input[name="goods_img"]').trigger('click')
+    })
+</script>
 </body>
 </html>
