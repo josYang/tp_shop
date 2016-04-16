@@ -20,6 +20,7 @@
             <a href="#">选择按钮</a>
         </div>
         <div class="exit">
+            <a href="<?php echo U('/');?>" target="_blank">网站首页</a>
             <a href="<?php echo U(MODULE_NAME.'/Login/logout');?>" target="_self">退出登录</a>
         </div>
     </div>
@@ -30,6 +31,10 @@
             <dd><a href="<?php echo U(MODULE_NAME.'/Goods/index');?>">产品列表</a></dd>
             <dd><a href="<?php echo U(MODULE_NAME.'/GoodsType/index');?>">产品类型列表</a></dd>
             <dd><a href="<?php echo U(MODULE_NAME.'/Brand/index');?>">产品品牌列表</a></dd>
+        </dl>
+        <dl>
+        <dt>文章管理</dt>
+            <dd><a href="<?php echo U(MODULE_NAME.'/ArticleCat/index');?>">文章分类列表</a></dd>
         </dl>
         <dl>
         <dt>RBAC</dt>

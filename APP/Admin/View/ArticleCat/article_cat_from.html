@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>{$title}</title>
+    <css file="__PUBLIC__/Css/public.css" />
+</head>
+<body>
+<form action="{:U('__ACTION__')}" method="post">
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="text-align: left"><a href="{:U(CONTROLLER_NAME.'/index')}">返回列表</a></th>
+            <th>{$title}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>分类名称</td>
+            <td><input type="text" name="cat_name" value="{$cat.cat_name|default=''}"></td>
+        </tr>
+        <tr>
+            <td>所属分类</td>
+            <td>
+                <select name="parent_id">
+                    <option value="0">顶级分类</option>
+                    <foreach name="parent_cats" item="parent">
+                        <option value="{$parent.cat_id}" <if condition="$cat['parent_id'] eq $parent['cat_id']">selected</if>>{$parent.html}{$parent.cat_name}</option>
+                    </foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>分类排序</td>
+            <td><input type="text" name="sort_order" value="{$cat.sort_order|default=50}"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="hidden" name="cat_id" value="{$cat.cat_id}">
+                <input type="submit" class="bt2" value="{$submit}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>
