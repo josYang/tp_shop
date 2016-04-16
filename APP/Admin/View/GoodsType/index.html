@@ -29,7 +29,7 @@
             <td>
                 [<a href="{:U(MODULE_NAME.'/Attribute/index',array('cat_id'=>$type['cat_id']))}">属性列表</a>]
                 [<a href="{:U(CONTROLLER_NAME.'/edit',array('id'=>$type['cat_id']))}">修改</a>]
-                [<a href="{:U(CONTROLLER_NAME.'/delete',array('id'=>$type['cat_id']))}">删除</a>]
+                [<a href="{:U(CONTROLLER_NAME.'/delete',array('id'=>$type['cat_id']))}" onclick="return confirm('确定删除？？')">删除</a>]
             </td>
         </tr>
     </foreach>

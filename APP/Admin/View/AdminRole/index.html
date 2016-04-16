@@ -37,7 +37,7 @@
         <td>
             [<a href="{:U(MODULE_NAME.'/AdminAccess'.'/index',array('id'=>$role['id']))}">配置权限</a>]
             [<a href="{:U(CONTROLLER_NAME.'/edit',array('id'=>$role['id']))}">修改</a>]
-            [<a href="{:U(CONTROLLER_NAME.'/delete',array('id'=>$role['id']))}">删除</a>]
+            [<a href="{:U(CONTROLLER_NAME.'/delete',array('id'=>$role['id']))}" onclick="return confirm('确定删除？？')">删除</a>]
         </td>
     </tr>
     </foreach>

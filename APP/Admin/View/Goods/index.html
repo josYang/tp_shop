@@ -63,7 +63,7 @@
             <td>
                 [<a href="{:U(CONTROLLER_NAME.'/edit',array('gid'=>$goods['goods_id']))}">修改商品</a>]
                 [<a href="{:U(MODULE_NAME.'/GoodsGallery/index',array('gid'=>$goods['goods_id']))}">管理商品相册</a>]
-                [<a href="{:U(CONTROLLER_NAME.'/delete',array('gid'=>$goods['goods_id']))}">删除商品</a>]
+                [<a href="{:U(CONTROLLER_NAME.'/delete',array('gid'=>$goods['goods_id']))}" onclick="return confirm('确定删除？？')">删除商品</a>]
             </td>
         </tr>
     </foreach>

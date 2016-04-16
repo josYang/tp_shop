@@ -63,6 +63,57 @@ class GoodsController extends CommonController{
         if(IS_POST){
             $image = $this->upload($_FILES['goods_img']);
             $data = array(
+                'goods_name'    => I('post.goods_name','','htmlentities'),
+                'cat_id'        => I('post.cat_id',0,'intval'),
+                'brand_id'      => I('post.brand_id',0,'intval'),
+                'market_price'  => I('post.market_price',0,'intval'),
+                'sort_order'    => I('post.sort_order',50,'intval'),
+                'keywords'      => I('post.keywords','','htmlentities'),
+                'goods_brief'   => I('post.goods_brief','','htmlentities'),
+                'is_best'       => I('post.is_best',0,'intval'),
+                'is_new'        => I('post.is_new',0,'intval'),
+                'is_hot'        => I('post.is_hot',0,'intval'),
+                'click_count'   => 1,
+                'add_time'      => date('Y-m-d H:i:s'),
+                'goods_thumb'   => $image['thumb'],
+                'goods_img'     => $image['water'],
+                'goods_type'    => I('post.goods_type',0,'intval'),
+                'goods_desc'    => I('post.goods_desc','','htmlentities'),
+                'goods_shipai'  => I('post.goods_shipai','','htmlentities'),
+            );
+            $goods_id = M('goods')->add($data);
+
+            if(is_array($_POST['attr_id_list']) && is_array($_POST['attr_value_list']) && is_array($_POST['attr_price_list'])){
+                $goods_attr = array();
+                for($i=0;$i<count($_POST['attr_id_list']);$i++){
+                    $goods_attr[] = array(
+                        'goods_id'   => $goods_id,
+                        'attr_id'    => $_POST['attr_id_list'][$i],
+                        'attr_value' => $_POST['attr_value_list'][$i],
+                        'attr_price' => $_POST['attr_price_list'][$i],
+                    );
+                }
+                M('goods_attr')->addAll($goods_attr);
+            }
+
+            $this->success('添加成功',U(CONTROLLER_NAME.'/index'));
+            return;
+        }
+        $this->title = '添加商品';
+        $this->submit = '保存添加';
+        $this->getForm();
+        $this->display('goods_form');
+    }
+
+    public function edit(){
+        $goods_db = M('goods');
+
+        if(IS_POST){
+            $goods_id = I('post.goods_id',0,'intval');
+            $image = $this->upload($_FILES['goods_img']);
+            $where = 'goods_id=' . $goods_id;
+            $data = array(
+                'goods_id' => $goods_id,
                 'goods_name' => I('post.goods_name','','htmlentities'),
                 'cat_id' => I('post.cat_id',0,'intval'),
                 'brand_id' => I('post.brand_id',0,'intval'),
@@ -73,34 +124,64 @@ class GoodsController extends CommonController{
                 'is_best' => I('post.is_best',0,'intval'),
                 'is_new' => I('post.is_new',0,'intval'),
                 'is_hot' => I('post.is_hot',0,'intval'),
-                'click_count' => 1,
-                'add_time' => date('Y-m-d H:i:s'),
-                'goods_thumb' => $image['thumb'],
-                'goods_img' => $image['water'],
                 'goods_type' => I('post.goods_type',0,'intval'),
                 'goods_desc' => I('post.goods_desc','','htmlentities'),
                 'goods_shipai' => I('post.goods_shipai','','htmlentities'),
             );
-            $goods_id = M('goods')->add($data);
+            if(!empty($image['water']) && !empty($image['thumb'])){
+                $data['goods_img'] = $image['water'];
+                $data['goods_thumb'] = $image['thumb'];
+                $goods_img = ROOT_PATH.$goods_db->where($where)->getField('goods_img');
+                $goods_thumb = ROOT_PATH.$goods_db->where($where)->getField('goods_thumb');
+                if(is_file($goods_img)) unlink($goods_img);
+                if(is_file($goods_thumb)) unlink($goods_thumb);
+            }
+            $goods_db->save($data);
             if(is_array($_POST['attr_id_list']) && is_array($_POST['attr_value_list']) && is_array($_POST['attr_price_list'])){
+                $attr_db = M('goods_attr');
+                $attr_db->where($where)->delete();
                 $goods_attr = array();
                 for($i=0;$i<count($_POST['attr_id_list']);$i++){
                     $goods_attr[] = array(
-                        'goods_id' => $goods_id,
-                        'attr_id' => $_POST['attr_id_list'][$i],
-                        'attr_value' => $_POST['attr_value_list'][$i],
-                        'attr_price' => $_POST['attr_price_list'][$i],
+                        'goods_id'      => $goods_id,
+                        'attr_id'       => $_POST['attr_id_list'][$i],
+                        'attr_value'    => $_POST['attr_value_list'][$i],
+                        'attr_price'    => $_POST['attr_price_list'][$i],
                     );
                 }
-                M('goods_attr')->addAll($goods_attr);
+                $attr_db->addAll($goods_attr);
             }
-            $this->success('添加成功',U(CONTROLLER_NAME.'/index'));
+            $this->success('修改成功',U(CONTROLLER_NAME.'/index'));
             return;
         }
-        $this->title = '添加商品';
-        $this->submit = '保存添加';
+
+        $this->goods = $goods_db->field('add_time,click_count,goods_thumb',true)->find(I('get.gid',0,'intval'));
+
+        $this->title    = '修改商品';
+        $this->submit   = '保存修改';
+
         $this->getForm();
         $this->display('goods_form');
+    }
+
+    public function delete(){
+        $goods_id = I('get.gid',0,'intval');
+        if($goods_id > 0){
+            $goods_db   = M('goods');
+            $where      = 'goods_id=' . $goods_id;
+            $goods_img  = ROOT_PATH.$goods_db->where($where)->getField('goods_img');
+            $goods_thumb = ROOT_PATH.$goods_db->where($where)->getField('goods_thumb');
+
+            if(is_file($goods_img)) unlink($goods_img);
+            if(is_file($goods_thumb)) unlink($goods_thumb);
+
+            $goods_db->delete($goods_id);
+            M('goods_attr')->where($where)->delete();
+            M('goods_gallery')->where($where)->delete();
+            $this->success('删除成功',U(CONTROLLER_NAME.'/index'));
+        }else{
+            $this->error('操作有误');
+        }
     }
 
     public function getGoodsAttr(){
@@ -111,15 +192,19 @@ class GoodsController extends CommonController{
             $attr = $this->get_attr_list($goods_id,$cat_id);
             $html = '<tr><th colspan="2" style="text-align: center">商品属性</th></tr>';
             $spec = 0;
+
             foreach ($attr AS $key => $val){
                 $html .= "<tr><th style='width: 40%'>";
+
                 if ($val['attr_type'] == 1 || $val['attr_type'] == 2) {
                     $html .= ($spec != $val['attr_id']) ?
                         "<a href='javascript:;' onclick='addSpec(this)'>[+]</a>" :
                         "<a href='javascript:;' onclick='removeSpec(this)'>[-]</a>";
                     $spec = $val['attr_id'];
                 }
+
                 $html .= "$val[attr_name]</th><td><input type='hidden' name='attr_id_list[]' value='$val[attr_id]' />";
+
                 if ($val['attr_input_type'] == 0) {
                     $html .= '<input name="attr_value_list[]" type="text" value="' .htmlspecialchars($val['attr_value']). '" size="40" /> ';
                 } elseif ($val['attr_input_type'] == 2) {
@@ -137,13 +222,16 @@ class GoodsController extends CommonController{
                             '<option value="' . $opt . '">' . $opt . '</option>' :
                             '<option value="' . $opt . '" selected="selected">' . $opt . '</option>';
                     }
+
                     $html .= '</select> ';
                 }
+
                 $html .= ($val['attr_type'] == 1 || $val['attr_type'] == 2) ?
                     '属性价格： <input type="text" name="attr_price_list[]" value="' . $val['attr_price'] . '" size="5" maxlength="10" />' :
                     ' <input type="hidden" name="attr_price_list[]" value="0" />';
                 $html .= '</td></tr>';
             }
+
             $json['error'] = $cat_id==0 ? true : false;
             $json['message'] = $cat_id==0 ? '警告：类型传值有误！' : '';
             $json['content'] = $html;

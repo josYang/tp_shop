@@ -30,7 +30,7 @@
             <td>{$brand.sort_order}</td>
             <td>
                 [<a href="{:U(CONTROLLER_NAME.'/edit',array('brand_id'=>$brand['brand_id']))}">编辑</a>]
-                [<a href="{:U(CONTROLLER_NAME.'/delete',array('brand_id'=>$brand['brand_id']))}">删除</a>]
+                [<a href="{:U(CONTROLLER_NAME.'/delete',array('brand_id'=>$brand['brand_id']))}" onclick="return confirm('确定删除？？')">删除</a>]
             </td>
         </tr>
     </foreach>

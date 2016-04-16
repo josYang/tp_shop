@@ -38,7 +38,7 @@
             <td>{$cate.sort_order}</td>
             <td>
                 [<a href="{:U(CONTROLLER_NAME.'/edit',array('id'=>$cate['cat_id']))}">修改</a>]
-                [<a href="{:U(CONTROLLER_NAME.'/delete',array('id'=>$cate['cat_id']))}">删除</a>]
+                [<a href="{:U(CONTROLLER_NAME.'/delete',array('id'=>$cate['cat_id']))}" onclick="return confirm('确定删除？？')">删除</a>]
             </td>
         </tr>
     </foreach>

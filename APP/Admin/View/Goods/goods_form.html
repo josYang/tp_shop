@@ -38,6 +38,9 @@
                     $('#tbody-goodsAttr').css('display','none')
                 }
             })
+            <if condition="isset($goods['goods_id']) && $goods['goods_id'] neq 0">
+                    $('#goods_type').trigger('change')
+            </if>
         })
         KindEditor.ready(function (k) {
             window.editor = k.create('textarea[name="goods_desc"]',{
@@ -71,14 +74,14 @@
         <tr>
             <th>商品名称</th>
             <td>
-                <input type="text" name="goods_name">
+                <input type="text" name="goods_name" value="{$goods.goods_name|default=''}">
             </td>
             <th>所属分类</th>
             <td>
                 <select name="cat_id">
                     <option value="0">请选择所属分类</option>
                     <foreach name="categorys" item="category">
-                        <option value="{$category.cat_id}">{$category.html}{$category.cat_name}</option>
+                        <option value="{$category.cat_id}" <if condition="$category['cat_id'] eq $goods['cat_id']">selected</if>>{$category.html}{$category.cat_name}</option>
                     </foreach>
                 </select>
             </td>
@@ -89,49 +92,54 @@
                 <select name="brand_id">
                     <option value="0">请选择所属品牌</option>
                     <foreach name="brands" item="brand">
-                        <option value="{$brand.brand_id}">{$brand.brand_name}</option>
+                        <option value="{$brand.brand_id}" <if condition="$brand['brand_id'] eq $goods['brand_id']">selected</if>>{$brand.brand_name}</option>
                     </foreach>
                 </select>
             </td>
             <th>商品价格</th>
             <td>
-                <input type="text" name="market_price">
+                <input type="text" name="market_price" value="{$goods.market_price|default=''}">
             </td>
         </tr>
         <tr>
             <th>商品排序</th>
             <td>
-                <input type="text" name="sort_order">
+                <input type="text" name="sort_order" value="{$goods.sort_order|default=50}">
             </td>
             <th>商品关键字</th>
             <td>
-                <input type="text" name="keywords">( * 多个用英文逗号,隔开)
+                <input type="text" name="keywords" value="{$goods.keywords|default=''}">( * 多个用英文逗号,隔开)
             </td>
         </tr>
         <tr>
             <th>商品简介</th>
             <td>
-                <textarea name="goods_brief" cols="40" rows="9"></textarea>
+                <textarea name="goods_brief" cols="40" rows="9">{$goods.goods_brief|default=''}</textarea>
             </td>
             <th>加入推荐</th>
             <td>
-                <label><input type="checkbox" name="is_best" value="1">精品</label>
-                <label><input type="checkbox" name="is_new" value="1">新品</label>
-                <label><input type="checkbox" name="is_hot" value="1">热品</label>
+                <label><input type="checkbox" name="is_best" value="1" <if condition="$goods['is_best']">checked</if>>精品</label>
+                <label><input type="checkbox" name="is_new" value="1" <if condition="$goods['is_new']">checked</if>>新品</label>
+                <label><input type="checkbox" name="is_hot" value="1" <if condition="$goods['is_hot']">checked</if>>热品</label>
             </td>
         </tr>
         <tr>
             <th>商品图片</th>
             <td>
-                <input type="file" name="goods_img" style="display: none;">
-                <span id="upload_img" class="bt2" style="display: inline">上传图片</span><span id="select_img" class="bt2" style="display: inline">选择图片</span>
+                <input type="file" name="goods_img">
+                <if condition="!empty($goods['goods_img'])">
+                    <a href="{$goods.goods_img}" class="correct" target="_blank">✓</a>
+                <else/>
+                    <span class="error">✗</span>
+                </if>
+                <span id="select_img" class="bt2">选择图片</span>
             </td>
             <th>商品类型</th>
             <td>
                 <select name="goods_type" id="goods_type">
                     <option value="0">请选择商品类型</option>
                     <foreach name="types" item="type">
-                        <option value="{$type.cat_id}">{$type.cat_name}</option>
+                        <option value="{$type.cat_id}" <if condition="$type['cat_id'] eq $goods['goods_type']">selected</if>>{$type.cat_name}</option>
                     </foreach>
                 </select>
             </td>
@@ -148,7 +156,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <textarea name="goods_desc"></textarea>
+                <textarea name="goods_desc">{$goods.goods_desc|default=''}</textarea>
             </td>
         </tr>
         <tr>
@@ -156,7 +164,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <textarea name="goods_shipai"></textarea>
+                <textarea name="goods_shipai">{$goods.goods_shipai|default=''}</textarea>
             </td>
         </tr>
         <tr>
@@ -178,9 +186,6 @@
     function removeSpec(obj){
         $(obj).parentsUntil().eq(1).remove()
     }
-    $('#upload_img').click(function () {
-        $('input[name="goods_img"]').trigger('click')
-    })
 </script>
 </body>
 </html>

@@ -62,9 +62,7 @@ class BrandController extends CommonController{
             if(!empty($thumb)){
                 $data['brand_logo'] = $thumb;
                 $brand_logo = ROOT_PATH.$db->where('brand_id=' . $brand_id)->getField('brand_logo');
-                if(is_file($brand_logo)){
-                    unlink($brand_logo);
-                }
+                if(is_file($brand_logo)) unlink($brand_logo);
             }
             $db->save($data);
             $this->success('修改成功',U(CONTROLLER_NAME.'/index'));
