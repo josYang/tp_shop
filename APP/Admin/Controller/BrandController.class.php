@@ -13,13 +13,8 @@ use Think\Page;
 use Think\Upload;
 
 class BrandController extends CommonController{
-    private $uploadconf = array(
-        'maxSize'       =>  1024*500, //上传的文件大小限制 (0-不做限制)
-        'exts'          =>  array('jpg','png','gif','jpeg'), //允许上传的文件后缀
-        'rootPath'      =>  './Data/Uploads/', //保存根路径
-        'savePath'      =>  './image/brand/', //保存路径
-        'saveName'      =>  array('time', ''), //上传文件命名规则，[0]-函数名，[1]-参数，多个参数使用数组
-    );
+    private $uploadconf = array();
+
     public function index(){
         $db = M('brand');
         $count = $db->count();
@@ -28,6 +23,7 @@ class BrandController extends CommonController{
         $this->brands = $db->field(array('brand_id','brand_name','brand_logo','site_url','sort_order'))->order('sort_order ASC')->limit($page->firstRow.','.$page->listRows)->select();
         $this->display();
     }
+
     public function add(){
         if(IS_POST){
             $thumb = $this->upload($_FILES['brand_logo']);
@@ -96,9 +92,18 @@ class BrandController extends CommonController{
      */
     private function upload($file){
         if($file['error'] === 0){
-            $upload = new Upload($this->uploadconf);
+            //上传图片配置
+            $config = array(
+                'maxSize'  => C('UPLOAD.imageSize'),
+                'exts'     => C('UPLOAD.exts'),
+                'rootPath' => C('UPLOAD.rootPath'),
+                'savePath' => C('UPLOAD.brandImgSavePath'),
+                'saveName' => C('UPLOAD.saveName'),
+            );
+
+            $upload = new Upload($config);
             $info = $upload->uploadOne($file);
-            $logo = $this->uploadconf['rootPath'].substr($info['savepath'],2).$info['savename'];
+            $logo = $config['rootPath'].substr($info['savepath'],2).$info['savename'];
             $thumb = dirname($logo).'/thumb_'.$info['savename'];
             $image = new Image();
             $image->open($logo)->thumb(80,40,Image::IMAGE_THUMB_FIXED)->save($thumb);

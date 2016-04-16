@@ -24,4 +24,9 @@ function node_merge($node,$access = null,$pid = 0){
     }
     return $arr;
 }
+
+function save_name($file_name,$fn){
+    $file_name = explode('.',$file_name);
+    return $fn().rand().$file_name[0];
+}
 ?>

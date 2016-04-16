@@ -7,19 +7,12 @@
  * Time: 13:17
  */
 namespace Admin\Controller;
-use Admin\Controller;
+use Admin\Controller\CommonController;
 use Think\Image;
 use Think\Page;
 use Think\Upload;
 
 class GoodsController extends CommonController{
-    private $upload_conf = array(
-        'maxSize'       =>  1024*1024*2, //上传的文件大小限制 (0-不做限制)
-        'exts'          =>  array('png','gif','jpg','jpeg'), //允许上传的文件后缀
-        'rootPath'      =>  './Data/Uploads/', //保存根路径
-        'savePath'      =>  './image/goods/', //保存路径
-        'saveName'      =>  array('time', ''), //上传文件命名规则，[0]-函数名，[1]-参数，多个参数使用数组
-    );
     public function index(){
         $cat_id     = I('get.cat_id',0,'intval');
         $brand_id   = I('get.brand_id',0,'intval');
@@ -251,9 +244,18 @@ class GoodsController extends CommonController{
 
     private function upload($file){
         if($file['error']==0){
-            $upload = new Upload($this->upload_conf);
+            //图片上传配置
+            $config = array(
+                'maxSize'  => C('UPLOAD.imageSize'),
+                'exts'     => C('UPLOAD.exts'),
+                'rootPath' => C('UPLOAD.rootPath'),
+                'savePath' => C('UPLOAD.goodsImgSavePath'),
+                'saveName' => C('UPLOAD.saveName'),
+            );
+
+            $upload = new Upload($config);
             $info = $upload->uploadOne($file);
-            $goods_img = $this->upload_conf['rootPath'].substr($info['savepath'],2).$info['savename'];
+            $goods_img = $config['rootPath'].substr($info['savepath'],2).$info['savename'];
             $water = dirname($goods_img).'/water_'.$info['savename'];
             $thumb = dirname($goods_img).'/thumb_'.$info['savename'];
             $image = new Image();
@@ -276,6 +278,7 @@ class GoodsController extends CommonController{
 
     private function getForm(){
         import('Class.Category',APP_PATH);
+        $this->img_path = C('UPLOAD.rootPath').substr(C('UPLOAD.goodsImgSavePath'),2);
         $this->types = M('goods_type')->field(array('cat_id','cat_name'))->select();
         $this->brands = M('brand')->field(array('brand_id','brand_name'))->select();
         $categorys = M('category')->field(array('cat_id','cat_name','parent_id'))->order('sort_order ASC')->select();
