@@ -35,6 +35,7 @@
         <dl>
         <dt>文章管理</dt>
             <dd><a href="<?php echo U(MODULE_NAME.'/ArticleCat/index');?>">文章分类列表</a></dd>
+            <dd><a href="<?php echo U(MODULE_NAME.'/Article/index');?>">文章列表</a></dd>
         </dl>
         <dl>
         <dt>RBAC</dt>
