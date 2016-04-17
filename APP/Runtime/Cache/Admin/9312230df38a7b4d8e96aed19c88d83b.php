@@ -8,8 +8,9 @@
     <script type="text/javascript" src="/APP/Admin/View/Public/Js/jquery-1.12.1.min.js"></script>
     <script type="text/javascript" src="/APP/Admin/View/Public/Js/user_from.js"></script>
     <script type="text/javascript">
-        var action = '<?php echo (ACTION_NAME); ?>';
-        var url = '<?php echo U(MODULE_NAME."/Login/checkusername");?>';
+        var action  = '<?php echo (ACTION_NAME); ?>';
+        var url     = '/Admin/AdminUser';
+        var module  = '<?php echo (CONTROLLER_NAME); ?>';
     </script>
 </head>
 <body>
@@ -46,6 +47,10 @@
             </td>
         </tr>
         <tr>
+            <th>邮箱地址</th>
+            <td><input type="text" name="email" value="<?php echo ((isset($email) && ($email !== ""))?($email):''); ?>"></td>
+        </tr>
+        <tr>
             <th>新密码</th>
             <td><input type="password" name="new_password"></td>
         </tr>
@@ -55,7 +60,7 @@
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <input type="submit" name="send" value="<?php echo ($send_submit); ?>">
+                <input type="submit"  class="bt2" name="send" value="<?php echo ($send_submit); ?>">
             </td>
         </tr>
         <?php if(ACTION_NAME == 'edit'): ?><tr>

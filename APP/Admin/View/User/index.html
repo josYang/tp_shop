@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>会员列表</title>
+    <css file="__PUBLIC__/Css/public.css" />
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th colspan="4">会员列表</th>
+        <th><a href="{:U(CONTROLLER_NAME.'/add')}">添加会员</a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>用户名</th>
+        <th>手机号码</th>
+        <th>状态</th>
+        <th>注册时间</th>
+        <th>操作</th>
+    </tr>
+    <foreach name="users" item="user">
+        <tr>
+            <td>{$user.username}</td>
+            <td>{$user.phone}</td>
+            <td>{$user['status']?'启用':'禁用'}</td>
+            <td>{$user.add_time}</td>
+            <td>
+                [<a href="{:U(CONTROLLER_NAME.'/edit',array('uid'=>$user['user_id']))}">修改</a>]
+                [<a href="{:U(CONTROLLER_NAME.'/delete',array('uid'=>$user['user_id']))}" onclick="return confirm('确定删除？？')">删除</a>]
+            </td>
+        </tr>
+    </foreach>
+    </tbody>
+</table>
+<div class="page">{$show}</div>
+</body>
+</html>

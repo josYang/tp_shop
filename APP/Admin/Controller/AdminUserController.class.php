@@ -24,12 +24,13 @@ class AdminUserController extends CommonController{
                 $this->error('密码和确认密码不一致');
             }
             $data = array(
-                'username' => $_POST['username'],
-                'password' => I('post.new_password','','md5'),
-                'add_time' => date('Y-m-d H:i:s'),
+                'username'  => I('post.username','','htmlentities'),
+                'password'  => I('post.new_password','','md5'),
+                'email'     =>I('post.email','','htmlentities'),
+                'add_time'  => date('Y-m-d H:i:s'),
                 'last_time' => date('Y-m-d H:i:s'),
-                'last_ip' => get_client_ip(),
-                'status' => I('status','','intval')
+                'last_ip'   => get_client_ip(),
+                'status'    => I('status',0,'intval')
             );
             $user_id = D('AdminUser')->addUser($data);
             //管理员分配角色
@@ -51,13 +52,14 @@ class AdminUserController extends CommonController{
         $this->title = '修改管理员';
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $model = D('AdminUser');
-            $userinfo = $model->getUser($_POST['id']);
+            $userinfo = $model->getUser($_POST['user_id']);
             if($userinfo['username'] == C('RBAC_SUPERADMIN') && !$_SESSION['superadmin']){
                 $this->error('无权修改');
             }
             $data = array(
                 'id'=>$userinfo['id'],
                 'status'=>I('post.status','','intval'),
+                'email'=>I('post.email','','htmlentities'),
             );
             if(!empty($_POST['new_password']) || !empty($_POST['confirm_password'])){
                 if($_POST['new_password'] == $_POST['confirm_password']){
@@ -102,6 +104,34 @@ class AdminUserController extends CommonController{
 
     }
 
+    /**
+     * 验证用户名是否存在
+     */
+    public function checkUsername(){
+        if(IS_AJAX){
+            $json = array();
+            if(!empty(D('AdminUser')->checkUserName(I('post.username','','htmlspecialchars')))){
+                $json['isset'] = true;
+            }else{
+                $json['isset'] = false;
+            }
+            $this->ajaxReturn($json);
+        }
+    }
+
+    public function checkEmail(){
+        if(IS_AJAX){
+            $json = array();
+            $user_id = M('admin_user')->where(array('email'=>I('post.email','','htmlentities')))->getField('user_id');
+            if($user_id != null){
+                $json['isset'] = $user_id == I('post.user_id',0,'intval') ? false : true;
+            }else{
+                $json['isset'] = false;
+            }
+            $this->ajaxReturn($json);
+        }
+    }
+
     private function getFrom(){
         if(ACTION_NAME == 'edit'){
             $userInfo           = D('AdminUser')->getUser(I('get.id','','intval'));
@@ -109,6 +139,7 @@ class AdminUserController extends CommonController{
             $this->username     = $userInfo['username'];
             $this->add_time     = $userInfo['add_time'];
             $this->last_time    = $userInfo['last_time'];
+            $this->email        = $userInfo['email'];
             $this->last_ip      = $userInfo['last_ip'];
             $this->status       = $userInfo['status'];
             $this->send_submit  = '确认修改';

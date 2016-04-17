@@ -43,6 +43,10 @@
             <dd><a href="<?php echo U(MODULE_NAME.'/AdminRole/index');?>">角色管理</a></dd>
             <dd><a href="<?php echo U(MODULE_NAME.'/AdminNode/index');?>">节点管理</a></dd>
         </dl>
+        <dl>
+            <dt>会员管理</dt>
+            <dd><a href="<?php echo U(MODULE_NAME.'/User/index');?>">会员列表</a></dd>
+        </dl>
     </div>
     <div id="right">
         <iframe name="iframe" src="<?php echo U(CONTROLLER_NAME.'/show');?>"></iframe>

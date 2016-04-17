@@ -12,7 +12,17 @@ use Admin\Controller\CommonController;
 class ArticleController extends CommonController
 {
     public function index(){
-        $this->articles = D('ArticleView')->select();
+        $cat_id = I('get.cat_id',0,'intval');
+        $title  = I('get.title','','htmlentities');
+        $where  = array();
+
+        if($cat_id > 0) $where['article.`cat_id`'] = $cat_id;
+        if(!empty($title)) $where['title'] = array('LIKE','%' . $title . '%');
+
+        $this->articles = D('ArticleView')->where($where)->select();
+        $this->title    = $title;
+        $this->cat_id   = $cat_id;
+        $this->getFrom();
         $this->display();
     }
 

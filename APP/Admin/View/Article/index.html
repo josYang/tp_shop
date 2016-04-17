@@ -16,6 +16,22 @@
     </thead>
     <tbody>
     <tr>
+        <td colspan="5">
+            <form action="{:U('__ACTION__')}">
+                <span>筛选:</span>
+                <select name="cat_id">
+                    <option value="0">全部分类</option>
+                    <foreach name="cats" item="cat">
+                        <option value="{$cat.cat_id}" <if condition="$cat_id eq $cat['cat_id']">selected</if>>{$cat.html}{$cat.cat_name}</option>
+                    </foreach>
+                </select>
+                <span>文章标题：</span>
+                <input type="text" name="title" value="{$title|default=''}">
+                <input type="submit" value="搜索">
+            </form>
+        </td>
+    </tr>
+    <tr>
         <th>文章标题</th>
         <th>文章分类</th>
         <th>文章类型</th>

@@ -8,8 +8,9 @@
     <js file="__PUBLIC__/Js/jquery-1.12.1.min.js" />
     <js file="__PUBLIC__/Js/user_from.js" />
     <script type="text/javascript">
-        var action = '{$Think.ACTION_NAME}';
-        var url = '{:U(MODULE_NAME."/Login/checkusername")}';
+        var action  = '{$Think.ACTION_NAME}';
+        var url     = '__CONTROLLER__';
+        var module  = '{$Think.CONTROLLER_NAME}';
     </script>
 </head>
 <body>
@@ -27,7 +28,6 @@
             <if condition="ACTION_NAME eq 'add'">
                 <td><input type="text" name="username"></td>
                 <else/>
-                <input type="hidden" name="id" value="{$id}">
                 <td>{$username}</td>
             </if>
         </tr>
@@ -54,6 +54,10 @@
             </td>
         </tr>
         <tr>
+            <th>邮箱地址</th>
+            <td><input type="text" name="email" value="{$email|default=''}"></td>
+        </tr>
+        <tr>
             <th>新密码</th>
             <td><input type="password" name="new_password"></td>
         </tr>
@@ -63,6 +67,7 @@
         </tr>
         <tr>
             <td colspan="2" align="center">
+                <input type="hidden" name="user_id" value="{$id|default=0}">
                 <input type="submit"  class="bt2" name="send" value="{$send_submit}">
             </td>
         </tr>
