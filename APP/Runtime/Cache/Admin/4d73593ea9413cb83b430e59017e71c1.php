@@ -47,6 +47,10 @@
             <dt>会员管理</dt>
             <dd><a href="<?php echo U(MODULE_NAME.'/User/index');?>">会员列表</a></dd>
         </dl>
+        <dl>
+            <dt>网站设置</dt>
+            <dd><a href="<?php echo U(MODULE_NAME.'/System/index');?>">系统设置</a></dd>
+        </dl>
     </div>
     <div id="right">
         <iframe name="iframe" src="<?php echo U(CONTROLLER_NAME.'/show');?>"></iframe>

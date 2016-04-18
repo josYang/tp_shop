@@ -6,12 +6,10 @@
  * Time: 13:41
  */
 return array(
-    'mimes'         =>  array(), //允许上传的文件MiMe类型
     'maxSize'       =>  0, //上传的文件大小限制 (0-不做限制)
     'imageSize'     =>  1024*1024*2, //上传的文件大小限制 (0-不做限制)
     'exts'          =>  array('png','gif','jpeg','jpg'), //允许上传的文件后缀
     'autoSub'       =>  true, //自动子目录保存文件
-    'subName'       =>  array('date', 'Y-m-d'), //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组
     'rootPath'      =>  './Data/Uploads/', //保存根路径
     'goodsImgSavePath'      =>  './image/goods/', //商品图保存路径
     'brandImgSavePath'      =>  './image/brand/', //品牌logo保存路径
@@ -21,7 +19,5 @@ return array(
     'replace'       =>  false, //存在同名是否覆盖
     'hash'          =>  true, //是否生成hash编码
     'callback'      =>  false, //检测文件是否存在回调，如果存在返回文件信息数组
-    'driver'        =>  '', // 文件上传驱动
-    'driverConfig'  =>  array(), // 上传驱动配置
 )
 ?>

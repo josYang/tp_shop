@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>系统配置</title>
+    <css file="__PUBLIC__/Css/public.css" />
+</head>
+<body>
+<form action="{:U('__ACTION__')}" method="post" enctype="multipart/form-data">
+    <table class="table">
+        <thead>
+        <tr>
+            <col style="width: 40%">
+            <col>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th colspan="2">系统设置</th>
+        </tr>
+        <tr>
+            <th>网站名称</th>
+            <td><input type="text" name="web_title" value="{:C('SYSTEM.web_title')}"></td>
+        </tr>
+        <tr>
+            <th>网站关键字</th>
+            <td><input type="text" name="keyword" value="{:C('SYSTEM.keyword')}"></td>
+        </tr>
+        <tr>
+            <th>网站简介</th>
+            <td><textarea name="description" cols="40" rows="9">{:C('SYSTEM.description')}</textarea></td>
+        </tr>
+        <tr>
+            <th>数据分页大小</th>
+            <td><input type="text" name="page_size" value="{:C('SYSTEM.page_size')}"></td>
+        </tr>
+        <tr>
+            <th>商品图缩略图宽度</th>
+            <td><input type="text" name="goods_thumb_width" value="{:C('SYSTEM.goods_thumb_width')}"></td>
+        </tr>
+        <tr>
+            <th>商品图缩略图高度</th>
+            <td><input type="text" name="goods_thumb_height" value="{:C('SYSTEM.goods_thumb_height')}"></td>
+        </tr>
+        <tr>
+            <th>水印图</th>
+            <td>
+                <input type="file" name="water">
+                <if condition="C('SYSTEM.water') neq ''">
+                <a href="{:substr(C('SYSTEM.water'),1)}" target="_blank">查看水印图</a>
+                </if>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" class="bt2" value="保存修改">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>
