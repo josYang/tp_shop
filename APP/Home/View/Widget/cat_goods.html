@@ -7,7 +7,7 @@
                 <div class="item-content">
                     <span class="item-thumb"><a href="{:U('/'.$goods['goods_id'])}"><img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" class="goodsimg" /></a></span>
            <span class="item-info">
-             <span class="item-title"><a href="{:U('/'.$goods['goods_id'])}" title="{$goods.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:mb_substr($goods['goods_name'],0,50)}</p></a></span>
+             <span class="item-title"><a href="{:U('/'.$goods['goods_id'])}" title="{$goods.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:sub_str($goods['goods_name'])}</p></a></span>
                      <font class="shop_s">￥{$goods.market_price}</font>
                     </span>
                 </div>

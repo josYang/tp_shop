@@ -85,7 +85,7 @@
                                         <img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" class="goodsimg" />
                                     </a>
                                 </div>
-                                <div class="p-name"><a href="{:U('/'.$goods['goods_id'])}" title="{$goods.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:mb_substr($goods['goods_name'],0,50)}</p></a></div>
+                                <div class="p-name"><a href="{:U('/'.$goods['goods_id'])}" title="{$goods.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:sub_str($goods['goods_name'])}</p></a></div>
                                 <strong>￥{$goods.market_price}</strong>
                             </div>
                         </li>

@@ -67,6 +67,28 @@ class WidgetWidget extends Controller
     }
 
     public function left_goods($type,$cid){
+        import('Class.Category',APP_PATH);
+        $cats = M('category')->field('cat_id,parent_id')->select();
+        $pids = \Category::getChildsId($cats,$cid);
+        $pids[] = $cid;
+        $where = array(
+            'cat_id' => array('IN',$pids)
+        );
+        switch($type){
+            case 'hot':
+                $where['is_hot'] = 1;
+                break;
+            case 'best':
+                $where['is_best'] = 1;
+                break;
+            case 'new':
+                $where['is_new'] = 1;
+                break;
+        }
+        $this->goods_list = M('goods')
+            ->field('goods_id,goods_name,market_price,goods_thumb')
+            ->where($where)
+            ->select();
         $this->display('Widget:left_goods');
     }
 }

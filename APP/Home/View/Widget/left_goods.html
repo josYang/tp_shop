@@ -1,9 +1,12 @@
 <div class="ab-goods">
     <h3>推广产品</h3>
-    <!--循环开始-->
+    <foreach name="goods_list" item="goods">
     <div class="clearfix">
-        <a href="goods.php?id=1"><img src="images/201507/thumb_img/1_thumb_G_1435951716188.jpg" alt="IBM X3650M4 79152TT E5-2603v2/四核1.8GHz/2*8GB内存/无硬盘/2.5英寸/DVD-RW/550W电源/4口千兆网卡/2U机架式服务器" class="goodsimg" height="180px" width="180px" /></a><br />
-        <p><a href="goods.php?id=1" title="IBM X3650M4 79152TT E5-2603v2/四核1.8GHz/2*8GB内存/无硬盘/2.5英寸/DVD-RW/550W电源/4口千兆网卡/2U机架式服务器"><p style="word-wrap: break-word;word-break: break-all;">IBM X3650M4 79152TT E5-2603v2/四核1.8GHz/2*8GB...</a></p></p>
-        <font class="f1">￥13000</font>
+        <a href="{:U('/'.$goods['goods_id'])}">
+            <img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" class="goodsimg" height="180px" width="180px" />
+        </a><br />
+        <p><a href="{:U('/'.$goods['goods_id'])}" title="{$goods.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:sub_str($goods['goods_name'])}</a></p></p>
+        <font class="f1">￥{$goods.market_price}</font>
     </div>
+    </foreach>
 </div>
