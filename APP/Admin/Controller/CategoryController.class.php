@@ -14,8 +14,12 @@ class CategoryController extends CommonController{
      */
     public function index(){
         import('Class.Category',APP_PATH);
+        $g_db = M('goods');
         $cart = M('category')->order('sort_order ASC')->select();
-        $this->cates = \Category::unlimitedForLevel($cart,'&nbsp;-');
+        foreach ($cart as &$item) {
+            $item['goods_count'] = $g_db->where('cat_id='.$item['cat_id'])->count();
+        }
+        $this->cates = \Category::unlimitedForLevel($cart,'-&nbsp;');
         $this->display();
     }
 

@@ -10,10 +10,11 @@
 <table class="table">
     <thead>
     <tr>
-        <th colspan="5">商品分类列表</th>
+        <th colspan="6">商品分类列表</th>
         <th><a href="{:U(CONTROLLER_NAME.'/add')}">添加分类</a></th>
     </tr>
     <tr>
+        <th>分类ID</th>
         <th>分类名称</th>
         <th>商品数量</th>
         <th>启用状态</th>
@@ -25,8 +26,9 @@
     <tbody>
     <foreach name="cates" item="cate">
         <tr>
+            <td>{$cate.cat_id}</td>
             <td>{$cate.html}{$cate.cat_name}</td>
-            <td></td>
+            <td>{$cate.goods_count}</td>
             <td>
                 <if condition="$cate['status'] eq 2">
                     启用
