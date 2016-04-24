@@ -24,7 +24,6 @@ return array(
 
     //拓展配置
     'LOAD_EXT_CONFIG' => array(
-        'SYSTEM'=>'system',
         'UPLOAD'=>'upload',
     ),
 

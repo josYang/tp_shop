@@ -1,0 +1,49 @@
+<div class="Z_MenuList Z_MenuLis"<if condition="CONTROLLER_NAME neq 'Index'">style="display: none"</if>>
+    <ul class="Z_MenuList_ul">
+        <foreach name="categorys" item="category">
+        <li class="list-item{$key}">
+            <h3><a href="{:U('/c_'.$category['cat_id'])}">{$category.cat_name}</a></h3>
+            <p>
+                <foreach name="category.child" item="value">
+                <foreach name="value.child" item="val">
+                <a href="{:U('/c_'.$val['cat_id'])}">{$val.cat_name}</a>
+                </foreach>
+                </foreach>
+            </p>
+        </li>
+        </foreach>
+    </ul>
+</div>
+<div class="Z_SubList">
+    <foreach name="categorys" item="category">
+    <div  class="item fore{$key}" onMouseOver="this.className='item fore{$key} hover'" onmouseout="this.className='item fore{$key}'"  id="allser{$key}">
+        <div class="subView">
+            <ul class="Z_SubList_ul">
+                <li class="subItem">
+                    <foreach name="category.child" item="value">
+                    <div style="padding-top:10px; float:left; width:500px;">
+                        <h4 class="subItem-title"><a href="{:U('/c_'.$value['cat_id'])}">{$value.cat_name}</a></h4>
+                        <p class="subItem-cat">
+                            <foreach name="value.child" item="val">
+                            <a href="{:U('/c_'.$val['cat_id'])}">{$val.cat_name}</a>
+                            </foreach>
+                        </p>
+                    </div>
+                    </foreach>
+                </li>
+            </ul>
+            <dl class="dlbanner_zdy">
+                <dt class="titlemb">热卖产品</dt>
+                <dd>
+                    <div class="object_banner1">
+                        <ul>
+                            <li><a href="/" ><img src="__PUBLIC__/images/IBM X3100M4 -01.jpg" height="184px" width="212px"></a></li>
+                            <li><a href="/" ><img src="__PUBLIC__/images/IBM X3100M4 -02.jpg" height="184px" width="212px"></a></li>
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    </foreach>
+</div>

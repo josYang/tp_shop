@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{:C('SYSTEM.web_title')}</title>
+    <meta name="renderer" content="webkit" />
+    <meta name="description" content="{:C('SYSTEM.description')}" />
+    <meta name="keywords" content="{:C('SYSTEM.keyword')}" />
+    <css file="__PUBLIC__/css/css.css" />
+    <js file="__PUBLIC__/js/jquery.mi.js" />
+</head>
+<body>
+<script type="text/javascript">
+    $(function() {
+        var bBtn = false;
+        var bW=false;
+        var navW=0;
+        $('#Z_TypeList').hover(function() {
+                    $('.Z_MenuList').queue(function(next) {
+                        $(this).css({
+                            'display': 'block',
+                            'overflow':'hidden',
+                        });
+                        next();
+                    }).animate({
+                                'height': '=450px'
+                            },
+                            300,
+                            function() {
+                                $('ul.Z_MenuList_ul>li').each(function() {
+
+                                    $(this).hover(function() {
+
+                                                $(this).queue(function(next) {
+
+                                                    var ins = $(this).index();
+                                                    $(this).addClass('menuItemColor');
+                                                    $('.subView').css({
+                                                        'width': 0,
+                                                        'display': 'none'
+                                                    });
+
+                                                    function toNavW(){
+                                                        if (!bBtn) {
+                                                            if(parseInt($('header').width())>=1190){
+                                                                bW=true;
+                                                            }else{
+                                                                bW=false;
+                                                            }
+
+                                                            navW=bW?975:765;
+
+                                                            $('.Z_SubList').addClass('box-shadow');
+                                                            $('.Z_SubList').stop().css({
+                                                                'display': 'block'
+                                                            }).animate({
+                                                                'width': navW
+                                                            });
+                                                            $('.subView').eq(ins).stop().css({
+                                                                'display': 'block'
+
+                                                            }).animate({
+                                                                        'width': navW
+                                                                    },
+                                                                    function() {
+                                                                        bBtn = true;
+                                                                    });
+                                                        } else {
+                                                            $('.subView').eq(ins).stop().css({
+                                                                'display': 'block'
+                                                            }).animate({
+                                                                        'width': navW
+                                                                    },
+                                                                    0);
+                                                        }
+                                                    }
+                                                    toNavW();
+                                                    $(document).bind('ready',toNavW);
+                                                    $(window).bind('resize',function(){
+                                                        $(document).unbind('ready',toNavW);
+                                                        $(document).bind('ready',toNavW);
+                                                    });
+                                                    next();
+                                                });
+                                                //$(this).find('h3,p a').css('color', '#fff');
+                                            },
+                                            function() {
+                                                $(this).removeClass('menuItemColor');
+                                            });
+                                });
+                            });
+                },
+                function() {
+                    $(this).queue(function(next) {
+                        bBtn = false;
+                        $(this).find('.Z_MenuList').stop().css({
+                            'height': 450,
+                            'display': 'block'
+                        });
+                        $('.subView').css({
+                            'width': 0,
+                            'display': 'none'
+                        });
+                        $('.Z_SubList').removeClass('box-shadow');
+                        $('.Z_SubList').css({
+                            'width': 0,
+                            'display': 'none'
+                        });
+                        $('ul.Z_MenuList_ul>li').each(function() {
+                            $(this).removeClass('menuItemColor');
+                            //$(this).find('h3').css('color', '#000');
+                            //$(this).find('p a').css('color', '#888');
+                        })
+                        next();
+                    });
+                });
+    });
+    document.ondragstart=function (){return false;};
+</script>
+<include file="Common:header" />
+<section>
+    <div class="f_l" id="focus">
+        <div class="home-slider">
+            <div id="J_homeSlider" class="xm-slider">
+                <div class="slide">
+                    <a href="#" data-stat-aid='AA10161' data-stat-pid='1_1_1_1' ><img src="__PUBLIC__/images/3650/388G9.jpg" data-src-r="__PUBLIC__/images/3650/388G9.jpg" data-src-r-2x="__PUBLIC__/images/3650/388G9.jpg"  srcset="__PUBLIC__/images/3650/388G9.jpg" /></a>
+                </div>
+                <div class="slide">
+                    <a href="#" data-stat-aid='AA10161' data-stat-pid='1_1_1_1' ><img src="__PUBLIC__/images/3650/DL580-1.jpg" data-src-r="__PUBLIC__/images/3650/DL580-1.jpg" data-src-r-2x="__PUBLIC__/images/3650/DL580-1.jpg"  srcset="__PUBLIC__/images/3650/DL580-1.jpg" /></a>
+                </div>
+                <div class="slide">
+                    <a href="#" data-stat-aid='AA10161' data-stat-pid='1_1_1_1' ><img src="__PUBLIC__/images/3650/IBMSystemx3650m5-18.jpg" data-src-r="__PUBLIC__/images/3650/IBMSystemx3650m5-18.jpg" data-src-r-2x="__PUBLIC__/images/3650/IBMSystemx3650m5-18.jpg"  srcset="__PUBLIC__/images/3650/IBMSystemx3650m5-18.jpg" /></a>
+                </div>
+                <div class="slide">
+                    <a href="#" data-stat-aid='AA10161' data-stat-pid='1_1_1_1' ><img src="__PUBLIC__/images/3650/x385-3.jpg" data-src-r="__PUBLIC__/images/3650/x385-3.jpg" data-src-r-2x="__PUBLIC__/images/3650/x385-3.jpg"  srcset="__PUBLIC__/images/3650/x385-3.jpg" /></a>
+                </div>
+            </div>
+        </div>
+        <js file="__PUBLIC__/js/base.min.js" />
+        <js file="__PUBLIC__/js/index.min.js" />
+    </div>
+    <div class="cat_box">
+        {:W('Widget/choose',array('hot'))}
+        {:W('Widget/cat_goods',array(1))}
+    </div>
+</section>
+<include file="Common:footer" />
+</body>
+</html>

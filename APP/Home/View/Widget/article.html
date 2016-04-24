@@ -1,0 +1,8 @@
+<dl>
+    <dt class="footer_dl">{$art_cart_name}</dt>
+    <foreach name="articles" item="article">
+    <dd>
+        <p><a href="{:U('/a_'.$article['article_id'])}" title="{$article.title}">{$article.title}</a></p>
+    </dd>
+    </foreach>
+</dl>

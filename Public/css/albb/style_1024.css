@@ -1,0 +1,196 @@
+/* Nav */
+
+.nav{
+	font-size:14px;
+	line-height:20px;
+	background:url(http://docs.alibabagroup.com/assets2/images/cn/global/nav_bg.png) repeat-x;
+	width:100%;
+	text-align:center;
+	position:relative;
+	height:68px;
+	display:block!important;
+	
+	/* remove absolute header start */
+	position:absolute;
+	top:95px;
+	z-index:9999;
+	/* remove absolute header end */
+	
+	font-weight:400;
+}
+.nav .menu{
+	text-transform:uppercase;
+	width:960px;
+	height:68px;
+	margin:auto;
+	padding-left:61px;
+}
+.nav .menu > li{
+	cursor:pointer;
+	text-decoration:none;
+	color:#fff;
+	float:left;
+	
+	background-image:url(http://docs.alibabagroup.com/assets2/images/cn/global/nav_arrow.png);
+	background-position: right top;
+	background-repeat:no-repeat;
+	/*padding:0px 30px;*/
+	background-color:#FF6600;
+}
+.nav .menu > li span{
+	display:block;
+	padding:28px 88px 20px 55px;
+	background-image:url(http://docs.alibabagroup.com/assets2/images/cn/global/nav_arrow_left.png);
+	background-repeat:no-repeat;
+	background-position:left;
+}
+.nav .menu > li > a{
+	display:block;
+	padding:28px 88px 20px 55px;
+	text-decoration:none;
+	color:inherit;
+	background-image:url(http://docs.alibabagroup.com/assets2/images/cn/global/nav_arrow_left.png);
+	background-repeat:no-repeat;
+	background-position:left;
+}
+
+.nav .menu > li.hover, .nav .menu > li.selected{
+	color:#f36f21;
+	background-color:#EFEDCB;
+	background-image:url(http://docs.alibabagroup.com/assets2/images/cn/global/nav_arrow_hover.png);
+}
+
+.nav .menu > li.hover
+{
+	opacity:0.1;
+}
+.nav .submenuWrapper{
+	position:absolute;
+	height:172px;
+	width:100%;
+	left:0px;
+	top:68px;
+	background:url(http://docs.alibabagroup.com/assets2/images/cn/global/nav_bg.png) bottom repeat-x;
+	z-index:9999;
+	display:none;
+}
+.nav .submenuContainer{
+	text-align:left;	
+	width:960px;
+	margin:auto;
+	padding:25px 0 0 117px;
+}
+/*.nav .menu > li:hover .submenuWrapper{visibility:visible;}*/
+.nav .submenu{
+	display:inline-block;
+	vertical-align:top;
+	width:auto;
+	margin-right:80px;
+	line-height:17px;
+}
+.nav .submenu li{margin-bottom:18px;}
+.nav .submenu a{
+	color:#333333;
+	text-decoration:none;
+	text-transform:none;
+}
+.nav .submenu a:hover{text-decoration:underline;}
+
+.nav_fixed
+{
+	position: fixed;
+	top:-1px;
+	left:0;
+}
+
+.nav_static
+{
+	position: absolute;
+	top:95px;
+	left:0;
+}
+
+.wrapperNavOn
+{
+	margin-top:172px;
+}
+
+.wrapperNavOff
+{
+	margin-top:0;
+}
+
+
+/* Desktop break */
+.desktopBr
+{
+	display:block;
+}
+.desktopBr:after
+{
+	content:"\00a0";
+}
+
+/* horizontal scroll Nav */
+#leftScrollBtn, #rightScrollBtn
+{
+	width:50px;
+	height:92px;
+	background-image:url(http://docs.alibabagroup.com/assets2/images/cn/global/scrollbtn_bg.png);
+	background-repeat:no-repeat;
+	position:absolute;
+	display:block;
+}
+
+#yearNavMobile
+{
+	display:none;
+}
+
+.mobilePointer
+{
+	display:none;
+}
+
+.navigation
+{
+	width:auto!important;
+}
+
+/* Home */
+.homeBanner
+{
+	display:none;
+}
+
+#desktopBanner
+{
+	display:block;
+	background-color:#EFEFCE;
+}
+
+/* set dlBlock title height */
+.title1line .dlBlock .title
+{
+	height:35px;
+}
+
+.title2line .dlBlock .title
+{
+	height:50px;
+}
+
+.title3line .dlBlock .title
+{
+	height:65px;
+}
+
+#about_board
+{
+	padding-left:10px;
+}
+
+#about_senior
+{
+	padding-bottom:100px;	
+}

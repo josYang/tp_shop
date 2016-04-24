@@ -1,0 +1,21 @@
+<div class="box_1">
+    <div class="itemTit {$choose_id}" id="item{$choose_id}">
+        <h3><span>{$label}</span></h3>
+    </div>
+    <div class="centerPadd">
+        <div class="goodsBox">
+            <foreach name="chooses" item="choose">
+            <div class="goodsItem">
+                <div class="item-content">
+                    <span class="{$choose_id}"></span>
+                    <span class="item-thumb"><a href="{:U('/'.$choose['goods_id'])}"><img src="{$choose.goods_thumb}" alt="{$choose.goods_name}" class="goodsimg" /></a></span>
+            <span class="item-info">
+           <span class="item-title"><a href="{:U('/'.$choose['goods_id'])}" title="{$choose.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:mb_substr($choose['goods_name'],0,50)}</p></a></span>
+           <font class="shop_s">￥{$choose.market_price}</font>
+           </span>
+                </div>
+            </div>
+            </foreach>
+        </div>
+    </div>
+</div>

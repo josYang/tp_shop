@@ -1,0 +1,112 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>IBM产品中心_自定义名称</title>
+    <meta name="renderer" content="webkit" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="ibm" />
+    <css file="__PUBLIC__/css/css.css" />
+    <js file="__PUBLIC__/js/jquery-1.9.1.min.js" />
+    <js file="__PUBLIC__/js/jsdaima.js" />
+</head>
+<body>
+<include file="Common:header" />
+<section>
+    <div id="position">
+        <a href=".">首页</a> <code>&gt;</code> <a href="category.php?id=1">IBM产品中心</a>  </div>
+    <div class="section">
+        <div class="left">
+            {:W('Widget/left_goods',array('hot',1))}
+        </div>
+        <div class="right">
+            <div class="selector">
+                <h3 class="s-title"><span>商品筛选</span><b>共找到{$count}件商品</b></h3>
+                <if condition="isset($brands[1])">
+                <div class="sl-wrap">
+                    <strong>品牌：</strong>
+                    <foreach name="brands" item="brand">
+                        <if condition="$brand['selected']">
+                            <span>{$brand.brand_name}</span>
+                        <else/>
+                            <a href="{$brand.url}">{$brand.brand_name}</a>
+                        </if>
+                    </foreach>
+                </div>
+                </if>
+                <if condition="isset($price_grade[1])">
+                <div class="sl-wrap">
+                    <strong>价格：</strong>
+                    <foreach name="price_grade" item="grade">
+                        <if condition="$grade['selected']">
+                            <span>{$grade.price_range}</span>
+                            <else/>
+                            <a href="{$grade.url}">{$grade.price_range}</a>
+                        </if>
+                    </foreach>
+                </div>
+                </if>
+                <foreach name="filter_attr_list" item="filter_attr">
+                <div class="sl-wrap">
+                    <strong>{$filter_attr.filter_attr_name}：</strong>
+                    <foreach name="filter_attr.attr_list" item="attr">
+                        <if condition="$attr['selected']">
+                            <span>{$attr.attr_value}</span>
+                            <else/>
+                            <a href="{$attr.url}">{$attr.attr_value}</a>
+                        </if>
+                    </foreach>
+                </div>
+                </foreach>
+            </div>
+            <div class="goods_list">
+                <div class="f-line">
+                    <form method="GET" class="sort" name="listform">
+                        <span>排序方式：</span>
+                        <a href="{$add_time_sort}">
+                            <img src="__PUBLIC__/images/goods_id_<if condition='$sort eq "add_time"'>{$order}<else/>default</if>.gif" alt="按上架时间排序">
+                        </a>
+                        <a href="{$market_price_sort}">
+                            <img src="__PUBLIC__/images/market_price_<if condition='$sort eq "market_price"'>{$order}<else/>default</if>.gif" alt="按价格排序">
+                        </a>
+                        <a href="{$click_count_sort}">
+                            <img src="__PUBLIC__/images/click_count_<if condition='$sort eq "click_count"'>{$order}<else/>default</if>.gif" alt="根据点击数排序">
+                        </a>
+                    </form>
+                </div>
+                <div class="goods-list-v1">
+                    <ul>
+                        <foreach name="goods_list" item="goods">
+                        <li>
+                            <div class="gl-i-wrap">
+                                <div class="p-img">
+                                    <a href="{:U('/'.$goods['goods_id'])}" target="_blank">
+                                        <img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" class="goodsimg" />
+                                    </a>
+                                </div>
+                                <div class="p-name"><a href="{:U('/'.$goods['goods_id'])}" title="{$goods.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:mb_substr($goods['goods_name'],0,50)}</p></a></div>
+                                <strong>￥{$goods.market_price}</strong>
+                            </div>
+                        </li>
+                        </foreach>
+                    </ul>
+                </div>
+            </div>
+            <div id="pager" class="pagebar">
+                {$page}
+            </div>
+            <script type="Text/Javascript" language="JavaScript">
+                <!--
+                function selectPage(sel)
+                {
+                    sel.form.submit();
+                }
+                //-->
+            </script>
+        </div>
+    </div>
+</section>
+<include file="Common:footer" />
+</body>
+</html>

@@ -1,0 +1,51 @@
+<div id="top">
+    <a name="top"></a>
+    <div id="top_nav">
+        <font id="ECS_MEMBERZONE">
+            <a href="user.php">登陆</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="user.php?act=register">注册</a>
+        </font>
+    </div>
+    <div id="logo">
+        <a href="/" name="top"><img src="__PUBLIC__/images/logo.gif" /></a>
+    </div>
+    <div id="search">
+        <form id="searchForm" name="searchForm" method="get" action="{:U('/search')}" onSubmit="return checkSearchForm()" class="f_r" />
+        <input name="keywords" type="text" id="keyword" value="" class="B_input" />
+        <input name="imageField" type="submit" value="搜索" class="go" />
+        </form>
+        <div class="keys">
+            <script type="text/javascript">
+
+                <!--
+                function checkSearchForm()
+                {
+                    if(document.getElementById('keyword').value)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        alert("请输入搜索关键词！");
+                        return false;
+                    }
+                }
+                -->
+
+            </script>
+            热搜：
+            {:W('Widget/hotSearch')}
+        </div>
+    </div>
+    <div class="top_box">
+        <a href="message.php">咨询服务</a>
+    </div>
+</div>
+<div class="header_nav relative">
+    <div class="header_nav_subnav1">
+        <div id="Z_TypeList" class="Z_TypeList">
+            <h1 class="title"><a>产品中心</a></h1>
+            {:W('Widget/nav')}
+        </div>
+    </div>
+</div>

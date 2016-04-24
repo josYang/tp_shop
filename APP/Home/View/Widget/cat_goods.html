@@ -1,0 +1,18 @@
+<div class="box_1">
+    <h3><span><a href="{:U('/c_'.$category_id)}" class="f6">{$category_name}</a></span></h3>
+    <div class="centerPadd">
+        <div class="goodsBox">
+            <foreach name="goods_list" item="goods">
+            <div class="goodsItem">
+                <div class="item-content">
+                    <span class="item-thumb"><a href="{:U('/'.$goods['goods_id'])}"><img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" class="goodsimg" /></a></span>
+           <span class="item-info">
+             <span class="item-title"><a href="{:U('/'.$goods['goods_id'])}" title="{$goods.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:mb_substr($goods['goods_name'],0,50)}</p></a></span>
+                     <font class="shop_s">￥{$goods.market_price}</font>
+                    </span>
+                </div>
+            </div>
+            </foreach>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,0 @@
-<?php	return array ( 'web_title' => '自定义名称', 'keyword' => '网站关键字', 'description' => '网站简介', 'page_size' => 20, 'goods_thumb_width' => 400, 'goods_thumb_height' => 400, 'water' => './Public/water.png', );?>
