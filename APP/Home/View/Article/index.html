@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="SKYPE_TOOLBAR" content ="SKYPE_TOOLBAR_PARSER_COMPATIBLE"/>
+    <link rel= "shortcut icon" media="all" type="image/x-icon" href="/favicon.ico?v=938481982" />
+    <link rel= "icon" media="all" type="image/vnd.microsoft.icon" href="/favicon.ico?v=1832015105" />
+    <title>{$article.title}_{:C('SYSTEM.web_title')}</title>
+    <css file="__PUBLIC__/css/albb/reset.css" />
+    <css file="__PUBLIC__/css/albb/style.css" />
+    <!--[if lt IE 9]>
+    <link href="http://docs.alibabagroup.com/assets2/css/cn/style_1024.css?2015060116" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <css file="__PUBLIC__/css/albb/style_1024.css" />
+    <js file="__PUBLIC__/js/albb/jquery.min.js" />
+    <js file="__PUBLIC__/js/albb/jquery-ui.min.js" />
+    <!--<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53a28d3b0c39e878"></script>-->
+    <js file="__PUBLIC__/js/albb/common.js" />
+    </head>
+<body>
+<literal>
+<script type=text/javascript>var dmtrack_c='{-}'; var dmtrack_pageid='77bc823aac147de71433146474'; sk_dmtracking();</script> <noscript><img src="http://dmtracking2.alibaba.com/b.jpg?cD0wJnU9ey93d3cuYWxpYmFiYWdyb3VwLmNvbS9jbi9hYm91dC9zdXN0YWluYWJpbGl0eS5waHB9Jm09e0dFVH0mcz17MjAwfSZyPXstfSZhPXstfSZiPXstfSZjPXstfQ==&ver=40&pageid=77bc823aac147de71433146474&time=1433146474" width="1" height="1" style="display:none"></noscript>
+</literal>
+<div class="headerWrapper">
+    <div class="header clearfix">
+        <div class="logo"><a href="/index.php"><img src="__PUBLIC__/images/logo.gif"></a></div>
+        <div class="fright">
+            <div class="search">
+                <div class="searchWrapper">
+                    <form class="jqtransform" method="get" action="{:U('__MODULE__/Search')}" name="searchForm">
+                        <input type="hidden" name="filter" value="0" />
+                        <input type="hidden" name="lang" value="cn" />
+                        <input type="text" id="keyword" name="keywords" placeholder="搜索方卓产品">
+                        <button name="imageField" type="submit" id="submitSearch">搜索</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="nav">
+    <ul class="menu">
+        {:W('Article/nav',array(1,4))}
+        {:W('Article/nav',array(3,4))}
+        {:W('Article/nav',array(4,4))}
+        {:W('Article/nav',array(5,4))}
+        <div class="submenuWrapperBg"></div>
+    </ul>
+</div>
+<div class="wrapper"><div class="container nopadding" id="sustainability">
+    <div class="container">
+        <h1 class="title">{$article.title}</h1>
+        {:htmlspecialchars_decode($article['content'])}
+    </div>
+</div>
+    <div class="push"></div>
+</div>
+<div class="footerWrapper">
+    <div class="footer">
+        <div style="width:100%; background:#fff;">
+            <div class="footer_img">
+                <div class="foot_img_box">创造更多的价值</div>
+                <div class="foot_img_box foot_img_box_ma">提供更好的服务</div>
+                <div class="foot_img_box">争取更优的价格</div>
+            </div>
+        </div>
+        <div class="sitemap">
+            {:W('Article/footer',array(1,4))}
+            {:W('Article/footer',array(3,4))}
+            {:W('Article/footer',array(4,4))}
+            {:W('Article/footer',array(5,4))}
+            <div class="footer_div">
+                <p class="phone">{:C('SYSTEM.phone')}</p>
+                <p>7 × 24小时服务</p>
+                <a title="QQ在线咨询" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin={:C('SYSTEM.qq')}&amp;site=qq&amp;menu=yes">QQ在线咨询</a>
+            </div>
+        </div>
+        <div class="copyright">
+            版权所有：{:C('SYSTEM.copyright')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客服专线：{:C('SYSTEM.phone')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备案号：{:C('SYSTEM.icp')}</div>
+    </div>
+</div>
+</body>
+</html>

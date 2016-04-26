@@ -1,0 +1,11 @@
+<li><span>{$art_cart_name}</span>
+    <div class="submenuWrapper">
+        <div class="submenuContainer">
+            <ul class="submenu">
+                <foreach name="articles" item="article">
+                <li><a href="{:U('/c_'.$article['article_id'])}" title="{$article.title}">{$article.title}</a></li>
+                </foreach>
+            </ul>
+        </div>
+    </div>
+</li>

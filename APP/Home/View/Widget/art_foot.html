@@ -1,0 +1,8 @@
+<div class="col col2">
+    <span class="section">{$art_cart_name}</span>
+    <foreach name="articles" item="article">
+    <ul>
+        <li><a href="{:U('/c_'.$article['article_id'])}" title="{$article.title}">{$article.title}</a></li>
+    </ul>
+    </foreach>
+</div>
