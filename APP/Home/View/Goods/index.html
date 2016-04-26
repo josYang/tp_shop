@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{$goods.goods_name}_{:C('SYSTEM.web_title')}</title>
+    <meta name="renderer" content="webkit" />
+    <meta name="description" content="{$goods.goods_brief}" />
+    <meta name="keywords" content="{$goods.keywords}" />
+    <css file="__PUBLIC__/css/css.css"/>
+    <js file="__PUBLIC__/js/jquery-1.9.1.min.js" />
+    <script type="text/javascript">
+        $(function() {
+            window.__Object_toJSONString = Object.prototype.toJSONString;
+            delete Object.prototype.toJSONString;
+        });
+    </script>
+    <js file="__PUBLIC__/js/jsdaima.js" />
+    <js file="__PUBLIC__/js/jquery.jqzoom.js" />
+    <js file="__PUBLIC__/js/base.js" />
+</head>
+<body>
+<include file="Common:header"/>
+<section>
+    <div id="position">
+        {:W('Widget/position')}
+    </div>
+    <div id="product-buy">
+
+        <div style="float:left;width:382px;">
+            <div id="preview" class="spec-preview"> <span class="jqzoom"><img alt="{$goods.goods_name}" jqimg="{$goods.goods_img}" src="{$goods.goods_img}" width="380px" height="380px" /></span> </div>
+            <div class="spec-scroll"> <a class="prev">&lt;</a> <a class="next">&gt;</a>
+                <div class="items">
+                    <ul>
+                        <foreach name="gallerys" item="gallery">
+                        <li><img alt="{$gallery.img_title}" bimg="{$gallery.img_url}" src="{$gallery.thumb_url}" onmousemove="preview(this);"></li>
+                        </foreach>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="product-list">
+        <h3>{$goods.goods_name}</h3>
+        <ul>
+            <li class="product-list-li">{$goods.goods_brief}</li>
+            <li class="product-list-li1">参考价：<b class="product_b">￥{$goods.market_price}</b></li>
+            <li class="product-list_li2">客服专线：<b>{:C('SYSTEM.phone')}</b></li>
+            <li class="product-list_li3">
+                <a class="product-list_li3_a" href="{:U('__MODULE__/Message')}">咨询服务</a>
+                <a style="background-color:#ff4a00;border-color:#ff4a00; border-radius:5px;color:#fff; width:90px; line-height:35px; text-align:center; float:right;display: block; position:relative; right:300px; top:6px;" href="http://wpa.qq.com/msgrd?v=3&uin={:C('SYSTEM.qq')}&site=qq&menu=yes" target="_blank" title="QQ在线咨询">QQ咨询</a>
+            </li>
+            <li>分享到：<div class="bshare-custom" style="display:inline">
+                <a title="分享到QQ空间" class="bshare-qzone"></a>
+                <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+                <a title="分享到人人网" class="bshare-renren"></a>
+                <a title="分享到腾讯微博" class="bshare-qqmb"></a>
+                <a title="分享到网易微博" class="bshare-neteasemb"></a>
+                <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div>
+                <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+                <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+            </li>
+            <li>
+                <a class="product-list_li3_a2" href="javascript:collect(25)">添加收藏</a>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div id="div_div">
+        <script type="text/javascript">
+            function setTab(name,cursel){
+                cursel_0=cursel;
+                for(var i=1; i<=links_len; i++){
+                    var menu = document.getElementById(name+i);
+                    var menudiv = document.getElementById("con_"+name+"_"+i);
+                    if(i==cursel){
+                        menu.className="off";
+                        menudiv.style.display="block";
+                    }
+                    else{
+                        menu.className="";
+                        menudiv.style.display="none";
+                    }
+                }
+            }
+            var name_0='one';
+            var cursel_0=1;
+            var ScrollTime=3000;//循环周期（毫秒）
+            var links_len,iIntervalId;
+            onload=function(){
+                var links = document.getElementById("tab1").getElementsByTagName('li');
+                links_len=links.length;
+                for(var i=0; i<links_len; i++){
+                    links[i].onmouseover=function(){
+                        clearInterval(iIntervalId);
+                        this.onmouseout=function(){
+                            iIntervalId = setInterval(Next,ScrollTime);
+                        };
+                    };
+                }
+                document.getElementById("con_"+name_0+"_"+links_len).parentNode.onmouseover=function(){
+                    clearInterval(iIntervalId);
+                    this.onmouseout=function(){
+                        iIntervalId = setInterval(Next,ScrollTime);
+                    };
+                };
+                setTab(name_0,cursel_0);
+                iIntervalId = setInterval(Next,ScrollTime);
+            };
+        </script>
+        <div class="tab1" id="tab1">
+            <div class="menu" id="apDiv2">
+                <ul>
+                    <li id="one1" onclick="setTab('one',1)">产品特点</li>
+                    <li id="one2" onclick="setTab('one',2)">规格参数</li>
+                    <li id="one3" onclick="setTab('one',3)">报价清单</li>
+                </ul>
+            </div>
+            <div class="menudiv">
+                <div id="con_one_1"><h4>{:htmlspecialchars_decode($goods['goods_desc'])}</h4></div>
+                <div id="con_one_2" style="display:none;"><h4 id="Ptable">
+                    <table cellpadding="0" cellspacing="1" width="100%" border="0" class="Ptable">
+                        <tbody>
+                        <foreach name="properties" item="property_group">
+                        <tr>
+                            <th class="tdTitle" colspan="2">{$key}</th>
+                        </tr>
+                        <tr></tr>
+                        <foreach name="property_group" item="property">
+                        <tr>
+                            <td class="tdTitle">{$property.name}</td>
+                            <td>{$property.value}</td>
+                        </tr>
+                        </foreach>
+                        </foreach>
+                        </tbody>
+                    </table>
+                </h4></div>
+                <div id="con_one_3" style="display:none;"><h4>{:htmlspecialchars_decode($goods['goods_shipai'])}</h4></div>
+            </div>
+        </div>
+</section>
+<script type="text/javascript">
+    var isTagName = function(e, whitelists) {
+        e = e || window.event;
+        var target = e.target || e.srcElement;
+        Array.prototype.contains = function(elem){
+            for (var i in this){
+                if (this[i].toString().toUpperCase() == elem.toString().toUpperCase()) return true;
+            }
+            return false;
+        };
+        if (whitelists && !whitelists.contains(target.tagName)) {
+            return false;
+        }
+        return true;
+    };
+    document.body.oncontextmenu=function(e){
+        return isTagName(e, ['A','TEXTAREA','DIV','LI','H3','INPUT','DT','DD','B']);
+    };
+</script>
+<include file="Common:footer"/>
+</body>
+</html>

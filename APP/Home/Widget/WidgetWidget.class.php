@@ -77,12 +77,15 @@ class WidgetWidget extends Controller
         switch($type){
             case 'hot':
                 $where['is_hot'] = 1;
+                $this->label = '热卖产品';
                 break;
             case 'best':
                 $where['is_best'] = 1;
+                $this->label = '新品推荐';
                 break;
             case 'new':
                 $where['is_new'] = 1;
+                $this->label = '新品推荐';
                 break;
         }
         $this->goods_list = M('goods')
@@ -90,5 +93,29 @@ class WidgetWidget extends Controller
             ->where($where)
             ->select();
         $this->display('Widget:left_goods');
+    }
+
+    public function position(){
+        $id = I('get.id',0,'intval');
+        import('Class.Category',APP_PATH);
+        $cat_arr = M('category')->field('cat_name,parent_id,cat_id')->order('sort_order ASC')->select();
+        $html = '<a href="/">首页</a>&nbsp;';
+        switch (CONTROLLER_NAME){
+            case 'Category':
+                $position = \Category::getParents($cat_arr,$id);
+                foreach ($position as $item) {
+                    $html .= '<code>&gt;</code>&nbsp;<a href="' . U('/c_'.$item['cat_id']) . '">' . $item['cat_name'] . '</a>';
+                }
+                break;
+            case 'Goods':
+                $goods = M('goods')->field('cat_id,goods_name')->find($id);
+                $position = \Category::getParents($cat_arr,$goods['cat_id']);
+                foreach ($position as $item) {
+                    $html .= '<code>&gt;</code>&nbsp;<a href="' . U('/c_'.$item['cat_id']) . '">' . $item['cat_name'] . '</a>';
+                }
+                $html .= '<code>&gt;</code>&nbsp;<a href="' . U('/c_'.$goods['goods_id']) . '">' . sub_str($goods['goods_name']) . '</a>';
+                break;
+        }
+        return $html;
     }
 }

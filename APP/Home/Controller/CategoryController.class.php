@@ -221,8 +221,9 @@ class CategoryController extends Controller
             'price_min' => $price_min,
             'price_max' => $price_max,
             'order'     => $order,
-            'p'         => I('get.p',1,'intval')
+//            'p'         => I('get.p',1,'intval')
         );
+        if(!empty($_GET['p'])) $url_info['p'] = I('get.p',1,'intval');
 
         $n_order = $order == 'DESC' ? 'ASC' : 'DESC';
 
@@ -232,6 +233,8 @@ class CategoryController extends Controller
 
         $this->sort = $sort;
         $this->order = $order;
+
+        $this->cart = $cat;
 
         $this->display();
     }
