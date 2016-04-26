@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>相册列表</title>
+    <css file="__PUBLIC__/Css/public.css" />
+    <js file="__PUBLIC__/Js/jquery-1.12.1.min.js" />
+</head>
+<body>
+<form action="{:U('__ACTION__')}" method="post" enctype="multipart/form-data">
+    <table class="table">
+        <thead>
+        <tr>
+            <th colspan="2">轮播图相册列表</th>
+        </tr>
+        </thead>
+        <tbody>
+        <if condition="$gallerys">
+            <tr>
+                <td colspan="2">
+                    <foreach name="gallerys" item="gallery">
+                        <div id="gallery_{$gallery.id}" style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;">
+                            <a href="javascript:;" onclick="if (confirm('您确实要删除该图片吗？')) dropImg('{$gallery.id}')">[-]</a>
+                            <br />
+                            <a href="{$gallery.img_url}" target="_blank" title="{$gallery.title}">
+                                <img src="{$gallery.img_url}" width="400" height="400" border="0">
+                            </a>
+                            <br />
+                            <label>描述：<input type="text" value="{$gallery.title}" size="15" name="set_title[{$gallery.id}]"></label><br />
+                            <label>连接地址：<input type="text" value="{$gallery.link}" size="15" name="set_link[{$gallery.id}]"></label><br />
+                            <label>排序：<input type="text" value="{$gallery.sort}" size="15" name="set_sort[{$gallery.id}]"><label><br />
+                            <label>状态：</label>
+                            <select name="set_status[{$gallery.id}]">
+                                <option value="2" <if condition="$gallery.status eq 2">selected</if>>启用</option>
+                                <option value="1" <if condition="$gallery.status eq 1">selected</if>>禁用</option>
+                            </select>
+                        </div>
+                    </foreach>
+                </td>
+            </tr>
+        </if>
+        <tr>
+            <td colspan="2">
+                <a href="javascript:;" onclick="addImg(this)">[+]</a>
+                <label>图片描述 <input type="text" name="title[]" size="20"></label>
+                <label>上传文件 <input type="file" name="img_url[]"></label>
+                <label>连接地址：<input type="text" size="15" name="link[]"></label>
+                <label>排序：<input type="text" size="15" name="sort[]"><label>
+                <label>状态：</label>
+                <select name="status[]">
+                    <option value="2">启用</option>
+                    <option value="1">禁用</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" class="bt2">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<script type="text/javascript">
+    function addImg(obj){
+        var td = $(obj).parent('td').parent('tr');
+        var clone = td.clone();
+        clone.children('td').children('a').attr('onclick','removeImg(this)').text('[-]');
+        td.after(clone)
+    }
+    function removeImg(obj){
+        $(obj).parent('td').parent('tr').remove()
+    }
+    function dropImg(img_id){
+        $.ajax({
+            url : '{:U(CONTROLLER_NAME."/delete")}',
+            type : 'get',
+            data : {
+                img_id : img_id
+            },
+            dataType : 'json',
+            success : function(json){
+                if(!json['error']){
+                    $('#gallery_'+img_id).remove()
+                }
+                alert(json['message'])
+            },
+            error : function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText)
+            }
+        })
+    }
+</script>
+</body>
+</html>
