@@ -10,8 +10,8 @@
         <a href="/" name="top"><img src="__PUBLIC__/images/logo.gif" /></a>
     </div>
     <div id="search">
-        <form id="searchForm" name="searchForm" method="get" action="{:U('__MODULE__/Search')}" onSubmit="return checkSearchForm()" class="f_r" />
-        <input name="keywords" type="text" id="keyword" value="" class="B_input" />
+        <form id="searchForm" name="searchForm" method="get" action="{:U('__MODULE__/Search/index')}" onSubmit="return checkSearchForm()" class="f_r" />
+        <input name="keywords" type="text" id="keyword" value="{$keywords|default=''}" class="B_input" />
         <input name="imageField" type="submit" value="搜索" class="go" />
         </form>
         <div class="keys">
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="top_box">
-        <a href="message.php">咨询服务</a>
+        <a href="{:U('__MODULE__/Message/index')}">咨询服务</a>
     </div>
 </div>
 <div class="header_nav relative">

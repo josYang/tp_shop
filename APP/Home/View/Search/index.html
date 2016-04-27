@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>商品搜索_X3650M4_自定义名称</title>
+    <meta name="renderer" content="webkit" />
+    <meta name="description" content="{:C('SYSTEM.description')}" />
+    <meta name="keywords" content="{$keywords}" />
+    <css file="__PUBLIC__/css/css.css" />
+    <js file="__PUBLIC__/js/jquery-1.9.1.min.js" />
+    <js file="__PUBLIC__/js/jsdaima.js" />
+</head>
+<body>
+<include file="Common:header" />
+<section>
+    <div id="position">
+        <a href="/">首页</a> <code>&gt;</code>商品搜索_{$keywords}</div>
+    <div class="section">
+        <div class="left">
+            {:W('Widget/left_goods',array('hot',1,10))}
+        </div>
+        <div class="right">
+            <div class="goods_list">
+                <h3>搜索结果：</h3>
+                <div class="goods-list-v1">
+                    <ul>
+                        <foreach name="goods_list" item="goods">
+                            <li>
+                                <div class="gl-i-wrap">
+                                    <div class="p-img">
+                                        <a href="{:U('/'.$goods['goods_id'])}" target="_blank">
+                                            <img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" class="goodsimg" />
+                                        </a>
+                                    </div>
+                                    <div class="p-name"><a href="{:U('/'.$goods['goods_id'])}" title="{$goods.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:sub_str($goods['goods_name'])}</p></a></div>
+                                    <strong>￥{$goods.market_price}</strong>
+                                </div>
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+            </div>
+            <div id="pager" class="pagebar">
+                {$page}
+            </div>
+        </div>
+    </div>
+</section>
+<include file="Common:footer" />
+</body>
+</html>

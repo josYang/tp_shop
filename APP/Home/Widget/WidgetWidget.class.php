@@ -22,7 +22,7 @@ class WidgetWidget extends Controller
         $hot_searchs = explode(',', C('SYSTEM.hot_search'));
         $html = '';
         foreach($hot_searchs as $val){
-            $html .= '<a href=" ' . U('/search',array('keywords'=>$val)) . ' ">' . $val . '</a>&nbsp;|&nbsp;';
+            $html .= '<a href=" ' . U(__MODULE__.'/Search/index',array('keywords'=>$val)) . ' ">' . $val . '</a>&nbsp;|&nbsp;';
         }
         return $html;
     }
@@ -66,7 +66,7 @@ class WidgetWidget extends Controller
         $this->display('Widget:article');
     }
 
-    public function left_goods($type,$cid){
+    public function left_goods($type,$cid,$num){
         import('Class.Category',APP_PATH);
         $cats = M('category')->field('cat_id,parent_id')->select();
         $pids = \Category::getChildsId($cats,$cid);
@@ -91,6 +91,7 @@ class WidgetWidget extends Controller
         $this->goods_list = M('goods')
             ->field('goods_id,goods_name,market_price,goods_thumb')
             ->where($where)
+            ->limit('0,'.$num)
             ->select();
         $this->display('Widget:left_goods');
     }
