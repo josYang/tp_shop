@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>用户中心_自定义名称</title>
+    <js file="__PUBLIC__/js/user.js" />
+    <js file="__PUBLIC__/js/transport.js" />
+    <css file="__PUBLIC__/css/style.css" />
+    <css file="__PUBLIC__/css/denglu.css" />
+    <script type="text/javascript" src="__PUBLIC__/js/zzsc.js"></script>
+</head>
+<body>
+
+
+<div class="w">
+    <div id="logo">
+        <a href="/"><img width="170" height="60" src="__PUBLIC__/images/logo.gif"></a>
+        <b class="b1"></b>
+    </div>
+</div>
+<div id="content">
+    <div class="login-wrap">
+        <div class="w">
+            <div class="login-form">
+                <div class="login-box">
+                    <div class="mt">
+                        <h1>会员登陆</h1>
+                        <div class="extra-r">
+                            <div class="regist-link">
+                                <a href="{:U('__CONTROLLER__/register')}"><b></b>立即注册</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="msg-wrap">
+                        <div class="msg-warn"><b></b>公共场所不建议自动登录，以防账号丢失</div>
+                        <div class="msg-error hide" style="display: none;"><b></b></div>
+                    </div>
+                    <div class="mc">
+                        <div class="form">
+                            <form name="formLogin" action="{:U('__ACTION__')}" method="post" onSubmit="return userLogin()">
+                                <div class="item item-fore1">
+                                    <label class="login-label name-label" for="loginname"></label>
+                                    <input id="loginname" class="itxt" type="text" placeholder="用户名/已验证手机或邮箱" autocomplete="off" tabindex="1" name="username">
+                                </div>
+                                <div id="entry" class="item item-fore2">
+                                    <label class="login-label pwd-label" for="nloginpwd"></label>
+                                    <input id="nloginpwd" class="itxt itxt-error" type="password" placeholder="密码" autocomplete="off" tabindex="2" name="password">
+                                </div>
+                                <div class="item item-fore3">
+                                    <div class="safe">
+                                        <span>
+                                        	<input id="remember" class="jdcheckbox" type="checkbox" clstag="pageclick|keycount|20150112ABD|6" tabindex="3" name="remember" value="1">
+                                            <label for="remember">请保存我这次的登录信息。</label>
+                                        </span>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="item item-fore5">
+                                    <div class="login-btn">
+                                        <input type="submit" name="submit" value="登    录" class="btn-img btn-entry" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="login-banner" style="background-color:">
+            <div id="banner-bg" class="i-inner">
+
+                <div id="playBox">
+                    <div class="pre"></div>
+                    <div class="next"></div>
+                    <div class="smalltitle">
+                        <ul>
+                            <li class="thistitle"></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <ul class="oUlplay">
+                        <li><a href="/" target="_blank"><img src="__PUBLIC__/images/1.jpg"></a></li>
+                        <li><a href="/" target="_blank"><img src="__PUBLIC__/images/2.jpg"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="w">
+    <div id="footer-2013">
+        <div class="links">
+        </div>
+        <div class="copyright">
+            版权所有：{:C('SYSTEM.copyright')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客服专线：{:C('SYSTEM.phone')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备案号：{:C('SYSTEM.icp')}</div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var process_request = "正在处理您的请求...";
+    var username_empty = "- 用户名不能为空。";
+    var username_shorter = "- 用户名长度不能少于 3 个字符。";
+    var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+    var password_empty = "- 登录密码不能为空。";
+    var password_shorter = "- 登录密码不能少于 6 个字符。";
+    var confirm_password_invalid = "- 两次输入密码不一致";
+    var email_empty = "- Email 为空";
+    var email_invalid = "- Email 不是合法的地址";
+    var agreement = "- 您没有接受协议";
+    var msn_invalid = "- msn地址不是一个有效的邮件地址";
+    var qq_invalid = "- QQ号码不是一个有效的号码";
+    var home_phone_invalid = "- 家庭电话不是一个有效号码";
+    var office_phone_invalid = "- 办公电话不是一个有效号码";
+    var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+    var msg_un_blank = "* 用户名不能为空";
+    var msg_un_length = "* 用户名最长不得超过7个汉字";
+    var msg_un_format = "* 用户名含有非法字符";
+    var msg_un_registered = "* 用户名已经存在,请重新输入";
+    var msg_can_rg = "* 可以注册";
+    var msg_email_blank = "* 邮件地址不能为空";
+    var msg_email_registered = "* 邮箱已存在,请重新输入";
+    var msg_email_format = "* 邮件地址不合法";
+    var msg_blank = "不能为空";
+    var no_select_question = "- 您没有完成密码提示问题的操作";
+    var passwd_balnk = "- 密码中不能包含空格";
+    var username_exist = "用户名 %s 已经存在";
+</script>
+</html>

@@ -29,6 +29,7 @@ class SystemController extends CommonController
                 'web_title'         => I('post.web_title','','htmlentities'),
                 'keyword'           => I('post.keyword','','htmlentities'),
                 'description'       => I('post.description','','htmlentities'),
+                'instructions'      => I('post.instructions','','htmlentities'),
                 'hot_search'        => I('post.hot_search','','htmlentities'),
                 'copyright'         => I('post.copyright','','htmlentities'),
                 'icp'               => I('post.icp','','htmlentities'),

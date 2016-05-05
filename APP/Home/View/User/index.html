@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <title>用户中心_{:C('SYSTEM.web_title')}</title>
+    <css file="__PUBLIC__/css/css.css" />
+</head>
+<body>
+<include file="Common:header" />
+<section>
+    <div class="block clearfix">
+        <div class="left_2">
+            <include file="Common:user_menu" />
+        </div>
+        <div class="right_2">
+            <div class="box">
+                <div class="userCenterBox" style="_height:1%;">
+
+                    <font class="f5"><b class="f4">{$_COOKIE['username']}</b> 欢迎您回到 {:C('SYSTEM.web_title')}！</font>
+                    <div style="line-height:40px; background:#fafafa; border-bottom:1px solid #dfdfdf; padding-left:20px;border-top:1px solid #dfdfdf;">用户须知</div>
+                    <div style="padding:10px 20px;">{:html_entity_decode(C('SYSTEM.instructions'))}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<include file="Common:footer">
+</html>

@@ -23,6 +23,7 @@
             <div class="goods_list">
                 <h3>搜索结果：</h3>
                 <div class="goods-list-v1">
+                    <if condition="$goods_list">
                     <ul>
                         <foreach name="goods_list" item="goods">
                             <li>
@@ -38,6 +39,9 @@
                             </li>
                         </foreach>
                     </ul>
+                    <else/>
+                        <h3>为查找到{$keywords}相关的产品</h3>
+                    </if>
                 </div>
             </div>
             <div id="pager" class="pagebar">

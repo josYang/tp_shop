@@ -1,0 +1,110 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <title>用户中心_自定义名称</title>
+    <css file="__PUBLIC__/css/css.css" />
+    <js file="__PUBLIC__/js/user.js" />
+    <js file="__PUBLIC__/js/utils.js" />
+</head>
+<body>
+<include file="Common:header" />
+<section>
+    <div class="block clearfix">
+        <div class="left_2">
+            <include file="Common:user_menu" />
+        </div>
+        <div class="right_2">
+            <div class="box">
+                <div class="userCenterBox" style="_height:1%;">
+                    <script type="text/javascript">
+                    var bonus_sn_empty = "请输入您要添加的红包号码！";
+                    var bonus_sn_error = "您输入的红包号码格式不正确！";
+                    var email_empty = "请输入您的电子邮件地址！";
+                    var email_error = "您输入的电子邮件地址格式不正确！";
+                    var old_password_empty = "请输入您的原密码！";
+                    var new_password_empty = "请输入您的新密码！";
+                    var confirm_password_empty = "请输入您的确认密码！";
+                    var both_password_error = "您现两次输入的密码不一致！";
+                    var msg_blank = "不能为空";
+                    var phone_empty = "手机号不能为空";
+                    var phone_error = "手机号格式不正确";
+                    var no_select_question = "- 您没有完成密码提示问题的操作";
+                </script>
+                    <h5><span>个人资料</span></h5>
+                    <form name="formEdit" action="{:U('__ACTION__')}" method="post" onSubmit="return userEdit()">
+                        <table width="100%" border="1" cellpadding="5" cellspacing="1" class="formEdit">
+                            <tr>
+                                <td width="28%" align="right" bgcolor="#FFFFFF">用户名：</td>
+                                <td width="72%" align="left" bgcolor="#FFFFFF">{$user.username}</td>
+                            </tr>
+                            <tr>
+                                <td width="28%" align="right" bgcolor="#FFFFFF">电子邮件地址： </td>
+                                <td width="72%" align="left" bgcolor="#FFFFFF">
+                                    <input name="email" type="text" value="{$user.email}" size="25" class="inputBg" /><span style="color:#FF0000"> *</span></td>
+                            </tr>
+                            <tr>
+                                <td width="28%" align="right" bgcolor="#FFFFFF" >QQ：</td>
+                                <td width="72%" align="left" bgcolor="#FFFFFF">
+                                    <input name="qq" type="text" class="inputBg" value="{$user.qq}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="28%" align="right" bgcolor="#FFFFFF" id="phone">手机：</td>
+                                <td width="72%" align="left" bgcolor="#FFFFFF">
+                                    <input name="phone" type="text" class="inputBg" value="{$user.phone}"/><span style="color:#FF0000"> *</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td align="left" bgcolor="#FFFFFF">
+                                    <input name="submit" type="submit" value="确认修改" class="bnt_blue_1" style="border:none;" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    <form name="formPassword" action="{:U('__ACTION__')}" method="post" onSubmit="return editPassword()" >
+                        <table width="100%" border="1" cellpadding="5" cellspacing="1">
+                            <tr>
+                                <td width="28%" align="right" bgcolor="#FFFFFF">原密码：</td>
+                                <td width="76%" align="left" bgcolor="#FFFFFF">
+                                    <input name="old_password" type="password" size="25"  class="inputBg" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="28%" align="right" bgcolor="#FFFFFF">新密码：</td>
+                                <td align="left" bgcolor="#FFFFFF">
+                                    <input name="new_password" type="password" size="25"  class="inputBg" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="28%" align="right" bgcolor="#FFFFFF">确认密码：</td>
+                                <td align="left" bgcolor="#FFFFFF">
+                                    <input name="comfirm_password" type="password" size="25"  class="inputBg" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td align="left" bgcolor="#FFFFFF">
+                                    <input name="act" type="hidden" value="edit_password" />
+                                    <input name="submit" type="submit" class="bnt_blue_1" style="border:none;" value="确认修改" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<include file="Common:footer" />
+</body>
+<script type="text/javascript">
+    var msg_title_empty = "咨询标题为空";
+    var msg_content_empty = "内容为空";
+    var msg_title_limit = "咨询标题不能超过200个字";
+</script>
+</html>

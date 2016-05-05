@@ -1,0 +1,10 @@
+<div class="userMenu">
+    <h3>个人中心</h3>
+    <ul>
+        <li><a href="{:U('__CONTROLLER__/index')}" <if condition="ACTION_NAME eq 'index'">class="curs"</if>>欢迎页</a></li>
+        <li><a href="{:U('__CONTROLLER__/profile')}" <if condition="ACTION_NAME eq 'profile'">class="curs"</if>>用户信息</a></li>
+        <li><a href="{:U('__CONTROLLER__/address_list')}" <if condition="ACTION_NAME eq 'address_list'">class="curs"</if>>收货地址</a></li>
+        <li><a href="{:U('__CONTROLLER__/collection_list')}" <if condition="ACTION_NAME eq 'collection_list'">class="curs"</if>>我的收藏</a></li>
+        <li><a href="{:U('__CONTROLLER__/message_list')}" <if condition="ACTION_NAME eq 'message_list'">class="curs"</if>>我的咨询</a></li>
+    </ul>
+</div>

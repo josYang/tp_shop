@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>用户中心_自定义名称</title>
+    <css file="__PUBLIC__/css/denglu.css" />
+    <css file="__PUBLIC__/css/style.css" />
+    <js file="__PUBLIC__/js/jquery.min.js" />
+    <js file="__PUBLIC__/js/user.js" />
+    <js file="__PUBLIC__/js/utils.js" />
+    <script type="text/javascript">
+        var is_registered_url = '{:U("__CONTROLLER__/is_registered")}';
+        var check_email_url = '{:U("__CONTROLLER__/check_email")}';
+        var check_phone_url = '{:U("__CONTROLLER__/check_phone")}';
+    </script>
+</head>
+<body>
+<div style="background: #F2F2F2">
+    <div class="w">
+        <div id="logo">
+            <a href="/"><img width="170" height="60" src="__PUBLIC__/images/logo.gif"></a>
+            <b class="b2"></b>
+        </div>
+    </div>
+    <div id="content">
+        <div class="w reg-bor-top">
+        <p class="tr login-bor">
+            <a href="{:U('__MODULE__/User/login')}">我已有账号，我要登录</a></p>
+        <div class="tab-cont cont-marg">
+            <form name="formUser" onsubmit="return register();" class="acc-form pt50 pb85" method="post" action="{:U('__ACTION__')}">
+                <div class="reg-switch-wrap">
+                    <dl>
+                        <dt>用户名称：</dt>
+                        <dd>
+                            <input name="username" type="text" id="username" onblur="is_registered(this.value);" class="ui-text"/>
+                            <span id="username_notice" style="color:#FF0000"> *</span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>手机：</dt>
+                        <dd>
+                            <input name="phone" id="phone" type="text" onblur="checkPhone(this.value);" class="ui-text" />
+                            <span id="phone_notice" style="color:#FF0000"> *</span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>邮箱地址：</dt>
+                        <dd>
+                            <input name="email" type="text" id="email" onblur="checkEmail(this.value);"  class="ui-text"/>
+                            <span id="email_notice" style="color:#FF0000"> *</span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>设置密码：</dt>
+                        <dd>
+                            <input name="password" type="password" id="password1" onblur="check_password(this.value);" onkeyup="checkIntensity(this.value)" class="ui-text" />
+                            <span style="color:#FF0000" id="password_notice"> *</span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>密码强度：</dt>
+                        <dd>
+                            <table width="235px" border="0" cellspacing="0" cellpadding="1">
+                                <tr align="center">
+                                    <td width="33%" id="pwd_lower">弱</td>
+                                    <td width="33%" id="pwd_middle">中</td>
+                                    <td width="33%" id="pwd_high">强</td>
+                                </tr>
+                            </table>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>确认密码：</dt>
+                        <dd>
+                            <input name="confirm_password" type="password" id="conform_password" onblur="check_conform_password(this.value);"  class="ui-text" />
+                            <span style="color:#FF0000" id="conform_password_notice"> *</span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>QQ：</dt>
+                        <dd>
+                            <input name="qq" type="text" class="ui-text" />
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>&nbsp;</dt>
+                        <dd>
+                            <input name="Submit" type="submit" value="立即注册" class="us_Submit_reg">
+                        </dd>
+                    </dl>
+                </div>
+            </form>
+            <div class="vip-check-link">
+                广告图位
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="w">
+        <div id="footer-2013">
+            <div class="links">
+            </div>
+            <div class="copyright">
+                版权所有：{:C('SYSTEM.copyright')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客服专线：{:C('SYSTEM.phone')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备案号：{:C('SYSTEM.icp')}</div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var process_request = "正在处理您的请求...";
+    var username_empty = "- 用户名不能为空。";
+    var username_shorter = "- 用户名长度不能少于 3 个字符。";
+    var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+    var password_empty = "- 登录密码不能为空。";
+    var password_shorter = "- 登录密码不能少于 6 个字符。";
+    var confirm_password_invalid = "- 两次输入密码不一致";
+    var email_empty = "- Email 为空";
+    var email_invalid = "- Email 不是合法的地址";
+//    var agreement = "- 您没有接受协议";
+    var msn_invalid = "- msn地址不是一个有效的邮件地址";
+    var qq_invalid = "- QQ号码不是一个有效的号码";
+    var home_phone_invalid = "- 家庭电话不是一个有效号码";
+    var office_phone_invalid = "- 办公电话不是一个有效号码";
+    var mobile_phone_empty = "- 手机号码不得为空";
+    var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+    var mobile_phone_registered = "* 手机号码已存在,请重新输入";
+    var msg_un_blank = "* 用户名不能为空";
+    var msg_un_length = "* 用户名最长不得超过7个汉字";
+    var msg_un_format = "* 用户名含有非法字符";
+    var msg_un_registered = "* 用户名已经存在,请重新输入";
+    var msg_can_rg = "* 可以注册";
+    var msg_email_blank = "* 邮件地址不能为空";
+    var msg_email_registered = "* 邮箱已存在,请重新输入";
+    var msg_email_format = "* 邮件地址不合法";
+    var msg_blank = "不能为空";
+    var no_select_question = "- 您没有完成密码提示问题的操作";
+    var passwd_balnk = "- 密码中不能包含空格";
+    var username_exist = "用户名 %s 已经存在";
+</script>
+</html>

@@ -26,8 +26,9 @@ class UserController extends CommonController
             $data = array(
                 'username'  => I('post.username','','htmlentities'),
                 'phone'     => I('post.phone','','htmlentities'),
+                'qq'        => I('post.qq','','htmlentities'),
                 'email'     => I('post.email','','htmlentities'),
-                'status'     => I('post.status',0,'intval'),
+                'status'    => I('post.status',0,'intval'),
                 'add_time'  => date('Y-m-d H:i:s'),
                 'last_time' => date('Y-m-d H:i:s'),
                 'last_ip'   => get_client_ip(),
@@ -58,6 +59,7 @@ class UserController extends CommonController
             $data = array(
                 'user_id'  => I('post.user_id',0,'intval'),
                 'phone'     => I('post.phone','','htmlentities'),
+                'qq'        => I('post.qq','','htmlentities'),
                 'email'     => I('post.email','','htmlentities'),
                 'status'     => I('post.status',0,'intval'),
             );

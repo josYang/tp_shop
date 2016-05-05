@@ -119,4 +119,19 @@ class WidgetWidget extends Controller
         }
         return $html;
     }
+
+    public function user(){
+        if(isset($_COOKIE['user_id']) && isset($_COOKIE['username'])){
+            $user_info = M('users')->find($_COOKIE['user_id']);
+            if($user_info['username'] == $_COOKIE['username']){
+                $this->username = $user_info['username'];
+                $this->display('Widget:user');
+            }else{
+                setcookie('username',null,time()-1);
+                setcookie('user_id',null,time()-1);
+            }
+        }else{
+            $this->display('Widget:login');
+        }
+    }
 }
