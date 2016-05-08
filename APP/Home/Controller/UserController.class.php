@@ -13,8 +13,9 @@ class UserController extends Controller
 {
     private function checkLogin(){
         $user_info = M('users')->find($_COOKIE['user_id']);
-        if(empty($user_info) && $user_info['username'] != $_COOKIE['username']){
-            $this->error('账号有误，请重新登陆');
+        if(empty($_COOKIE['username']) || empty($_COOKIE['user_id']) || empty($user_info) || $user_info['username'] != $_COOKIE['username']){
+            $this->success('账号有误，请重新登陆',U(__CONTROLLER__.'/login'));
+            exit;
         }
     }
     public function index(){
@@ -61,11 +62,100 @@ class UserController extends Controller
 
     public function address_list(){
         $this->checkLogin();
+        $ud_db = M('user_address');
         if(IS_POST){
-            dump($_POST);
+            $act = I('post.act','','htmlentities');
+            if($act == 'add'){
+                $data = array(
+                    'user_id' => $_COOKIE['user_id'],
+                    'consignee' => I('post.consignee','','htmlentities'),
+                    'email' => I('post.email','','htmlentities'),
+                    'country' => I('post.country',0,'intval'),
+                    'province' => I('post.province',0,'intval'),
+                    'city' => I('post.city',0,'intval'),
+                    'district' => I('post.district',0,'intval'),
+                    'address' => I('post.address',0,'htmlentities'),
+                    'zipcode' => I('post.zipcode',0,'intval'),
+                    'tel' => I('post.tel',0,'htmlentities'),
+                    'mobile' => I('post.mobile',0,'intval'),
+                    'best_time' => I('post.best_time','','htmlentities'),
+                );
+                $ud_db->add($data);
+                $this->success('添加成功',U(__ACTION__));
+            }elseif($act == 'edit'){
+                $data = array(
+                    'address_id' => I('post.address_id',0,'intval'),
+                    'user_id' => $_COOKIE['user_id'],
+                    'consignee' => I('post.consignee','','htmlentities'),
+                    'email' => I('post.email','','htmlentities'),
+                    'country' => I('post.country',0,'intval'),
+                    'province' => I('post.province',0,'intval'),
+                    'city' => I('post.city',0,'intval'),
+                    'district' => I('post.district',0,'intval'),
+                    'address' => I('post.address',0,'htmlentities'),
+                    'zipcode' => I('post.zipcode',0,'intval'),
+                    'tel' => I('post.tel',0,'htmlentities'),
+                    'mobile' => I('post.mobile',0,'intval'),
+                    'best_time' => I('post.best_time','','htmlentities'),
+                );
+                $ud_db->save($data);
+                $this->success('修改成功',U(__ACTION__));
+            }
             return;
         }
+        $consignee_list = $ud_db
+            ->where('`user_id`='.$_COOKIE['user_id'])
+            ->select();
+        $r_db = M('region');
+        foreach ($consignee_list as &$item) {
+            $item['country_list'] = $r_db
+                ->field('region_id,region_name')
+                ->where(array('parent_id' => 0, 'region_type' => 0))
+                ->select();
+            $item['province_list'] = $r_db
+                ->field('region_id,region_name')
+                ->where(array('parent_id' => $item['country'], 'region_type' => 1))
+                ->select();
+            $item['city_list'] = $r_db
+                ->field('region_id,region_name')
+                ->where(array('parent_id' => $item['province'], 'region_type' => 2))
+                ->select();
+            $item['district_list'] = $r_db
+                ->field('region_id,region_name')
+                ->where(array('parent_id' => $item['city'], 'region_type' => 3))
+                ->select();
+        }
+        $this->countrys = $r_db
+            ->field('region_id,region_name')
+            ->where(array('parent_id' => 0, 'region_type' => 0))
+            ->select();
+        $this->provinces = $r_db
+            ->field('region_id,region_name')
+            ->where(array('parent_id' => 1, 'region_type' => 1))
+            ->select();
+        $this->consignee_list = $consignee_list;
         $this->display();
+    }
+
+    public function delress(){
+        $this->checkLogin();
+        $rid = I('get.address_id',0,'intval');
+        $db = M('user_address');
+        $user_id = $db->where('`address_id`='.$rid)->getField('user_id');
+        if(!empty($rid) && !empty($user_id) && $user_id == $_COOKIE['user_id']){
+            $db->delete($rid);
+            $this->success('删除成功',U(__CONTROLLER__.'/address_list'));
+        }else{
+            $this->error('操作有误');
+        }
+    }
+
+    public function collection_list(){}
+
+    public function logout(){
+        setcookie('username','',time() - 1);
+        setcookie('user_id','',time() - 1);
+        $this->redirect(U(MODULE_NAME.'/Index/index'));
     }
 
     public function register(){
@@ -116,6 +206,19 @@ class UserController extends Controller
             return;
         }
         $this->display();
+    }
+
+    public function region(){
+        $json = array();
+        $type = I('post.type',0,'intval');
+        $json['regions'] = M('region')
+            ->field('region_id, region_name')
+            ->where(array('region_type'=>$type,'parent_id'=>I('post.parent',0,'intval')))
+            ->select();
+        $json['type'] = $type;
+        $json['target'] = !empty($_POST['target']) ? stripslashes(trim($_POST['target'])) : '';
+        $json['target']  = htmlspecialchars($json['target']);
+        $this->ajaxReturn($json);
     }
 
     public function is_registered(){

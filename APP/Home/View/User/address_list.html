@@ -5,7 +5,16 @@
     <meta name="Keywords" content="" />
     <meta name="Description" content="" />
     <title>用户中心_自定义名称</title>
+    <script type="text/javascript">
+        var url = '{:U("__CONTROLLER__/region")}';
+    </script>
     <css file="__PUBLIC__/css/css.css" />
+    <js file="__PUBLIC__/js/jquery.min.js" />
+    <js file="__PUBLIC__/js/user.js" />
+    <js file="__PUBLIC__/js/utils.js" />
+    <js file="__PUBLIC__/js/shopping_flow.js" />
+    <js file="__PUBLIC__/js/region.js" />
+</head>
 <body>
 <include file="Common:header" />
 <section>
@@ -17,6 +26,76 @@
             <div class="box">
                 <div class="userCenterBox" style="_height:1%;">
                     <h5><span>收货人信息</span></h5>
+                    <foreach name="consignee_list" item="consignee">
+                    <form action="{:U('__ACTION__')}" method="post" name="theForm" onsubmit="return checkConsignee(this)" style="margin-bottom:10px;">
+                        <table width="100%" border="0" cellpadding="5" cellspacing="1">
+                            <tr>
+                                <td align="right" bgcolor="#ffffff">配送区域：</td>
+                                <td colspan="3" align="left" bgcolor="#ffffff">
+                                    <select name="country" id="selCountries_{$consignee.address_id}" onchange="region.changed(this, 1, 'selProvinces_{$consignee.address_id}')">
+                                        <option value="0">请选择国家</option>
+                                        <foreach name="consignee.country_list" item="country">
+                                        <option value="{$country.region_id}" <if condition="$consignee['country'] eq $country['region_id']">selected</if>>{$country.region_name}</option>
+                                        </foreach>
+                                    </select>
+                                    <select name="province" id="selProvinces_{$consignee.address_id}" onchange="region.changed(this, 2, 'selCities_{$consignee.address_id}')">
+                                        <option value="0">请选择省</option>
+                                        <foreach name="consignee.province_list" item="province">
+                                        <option value="{$province.region_id}" <if condition="$consignee['province'] eq $province['region_id']">selected</if>>{$province.region_name}</option>
+                                        </foreach>
+                                    </select>
+                                    <select name="city" id="selCities_{$consignee.address_id}" onchange="region.changed(this, 3, 'selDistricts_{$consignee.address_id}')">
+                                        <option value="0">请选择市</option>
+                                        <foreach name="consignee.city_list" item="city">
+                                            <option value="{$city.region_id}" <if condition="$consignee['city'] eq $city['region_id']">selected</if>>{$city.region_name}</option>
+                                        </foreach>
+                                    </select>
+                                    <select name="district" id="selDistricts_{$consignee.address_id}" >
+                                        <option value="0">请选择区</option>
+                                        <foreach name="consignee.district_list" item="district">
+                                            <option value="{$district.region_id}" <if condition="$consignee['district'] eq $district['region_id']">selected</if>>{$district.region_name}</option>
+                                        </foreach>
+                                    </select>
+                                    (必填) </td>
+                            </tr>
+                            <tr>
+                                <td align="right" bgcolor="#ffffff">收货人姓名：</td>
+                                <td align="left" bgcolor="#ffffff">
+                                    <input name="consignee" type="text" class="inputBg" id="consignee_{$consignee.address_id}" value="{$consignee.consignee}" />(必填)
+                                </td>
+                                <td align="right" bgcolor="#ffffff">电子邮件地址：</td>
+                                <td align="left" bgcolor="#ffffff"><input name="email" type="text" class="inputBg" id="email_{$consignee.address_id}" value="{$consignee.email}" />
+                                    (必填)</td>
+                            </tr>
+                            <tr>
+                                <td align="right" bgcolor="#ffffff">详细地址：</td>
+                                <td align="left" bgcolor="#ffffff"><input name="address" type="text" class="inputBg" id="address_{$consignee.address_id}" value="{$consignee.address}" />
+                                    (必填)</td>
+                                <td align="right" bgcolor="#ffffff">邮政编码：</td>
+                                <td align="left" bgcolor="#ffffff"><input name="zipcode" type="text" class="inputBg" id="zipcode_{$consignee.address_id}" value="{$consignee.zipcode}" /></td>
+                            </tr>
+                            <tr>
+                                <td align="right" bgcolor="#ffffff">手机：</td>
+                                <td align="left" bgcolor="#ffffff"><input name="tel" type="text" class="inputBg" id="tel_{$consignee.address_id}" value="{$consignee.tel}" />
+                                    (必填)</td>
+                                <td align="right" bgcolor="#ffffff">座机：</td>
+                                <td align="left" bgcolor="#ffffff"><input name="mobile" type="text" class="inputBg" id="mobile_{$consignee.address_id}" value="{$consignee.mobile}" /></td>
+                            </tr>
+                            <tr>
+                                <td align="right" bgcolor="#ffffff">最佳送货时间：</td>
+                                <td align="left" bgcolor="#ffffff"><input name="best_time" type="text"  class="inputBg" id="best_time_{$consignee.address_id}" value="{$consignee.best_time}" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" align="center" bgcolor="#ffffff">
+                                    <input type="submit" name="submit" class="bnt_blue_1" value="确认修改" />
+                                    <input name="button" type="button" class="bnt_blue"  onclick="if (confirm('你确认要删除该收货地址吗？'))location.href='{:U(\'__CONTROLLER__/delress\',array(\'address_id\'=>$consignee[\'address_id\']))}'" value="删除" />
+                                    <input type="hidden" name="act" value="edit" />
+                                    <input name="address_id" type="hidden" value="{$consignee.address_id}" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    </foreach>
                     <form action="{:U('__ACTION__')}" method="post" name="theForm" onsubmit="return checkConsignee(this)" style="margin-bottom:10px;">
                         <table width="100%" border="0" cellpadding="5" cellspacing="1">
                             <tr>
@@ -24,200 +103,54 @@
                                 <td colspan="3" align="left" bgcolor="#ffffff">
                                     <select name="country" id="selCountries_0" onchange="region.changed(this, 1, 'selProvinces_0')">
                                         <option value="0">请选择国家</option>
-                                        <option value="1" selected>中国</option>
+                                        <foreach name="countrys" item="country">
+                                        <option value="{$country.region_id}" <if condition="$country['region_id'] eq 1">selected</if>>{$country.region_name}</option>
+                                        </foreach>
                                     </select>
                                     <select name="province" id="selProvinces_0" onchange="region.changed(this, 2, 'selCities_0')">
                                         <option value="0">请选择省</option>
-                                        <option value="2" >北京</option>
-                                        <option value="3" >安徽</option>
-                                        <option value="4" >福建</option>
-                                        <option value="5" >甘肃</option>
-                                        <option value="6" >广东</option>
-                                        <option value="7" >广西</option>
-                                        <option value="8" >贵州</option>
-                                        <option value="9" >海南</option>
-                                        <option value="10" >河北</option>
-                                        <option value="11" >河南</option>
-                                        <option value="12" >黑龙江</option>
-                                        <option value="13" >湖北</option>
-                                        <option value="14" selected>湖南</option>
-                                        <option value="15" >吉林</option>
-                                        <option value="16" >江苏</option>
-                                        <option value="17" >江西</option>
-                                        <option value="18" >辽宁</option>
-                                        <option value="19" >内蒙古</option>
-                                        <option value="20" >宁夏</option>
-                                        <option value="21" >青海</option>
-                                        <option value="22" >山东</option>
-                                        <option value="23" >山西</option>
-                                        <option value="24" >陕西</option>
-                                        <option value="25" >上海</option>
-                                        <option value="26" >四川</option>
-                                        <option value="27" >天津</option>
-                                        <option value="28" >西藏</option>
-                                        <option value="29" >新疆</option>
-                                        <option value="30" >云南</option>
-                                        <option value="31" >浙江</option>
-                                        <option value="32" >重庆</option>
-                                        <option value="33" >香港</option>
-                                        <option value="34" >澳门</option>
-                                        <option value="35" >台湾</option>
+                                        <foreach name="provinces" item="province">
+                                            <option value="{$province.region_id}" <if condition="$province['region_id'] eq 1">selected</if>>{$province.region_name}</option>
+                                        </foreach>
                                     </select>
                                     <select name="city" id="selCities_0" onchange="region.changed(this, 3, 'selDistricts_0')">
                                         <option value="0">请选择市</option>
-                                        <option value="197" selected>长沙</option>
-                                        <option value="198" >张家界</option>
-                                        <option value="199" >常德</option>
-                                        <option value="200" >郴州</option>
-                                        <option value="201" >衡阳</option>
-                                        <option value="202" >怀化</option>
-                                        <option value="203" >娄底</option>
-                                        <option value="204" >邵阳</option>
-                                        <option value="205" >湘潭</option>
-                                        <option value="206" >湘西</option>
-                                        <option value="207" >益阳</option>
-                                        <option value="208" >永州</option>
-                                        <option value="209" >岳阳</option>
-                                        <option value="210" >株洲</option>
                                     </select>
-                                    <select name="district" id="selDistricts_0" >
+                                    <select name="district" id="selDistricts_0" style="display:none">
                                         <option value="0">请选择区</option>
-                                        <option value="1647" >岳麓区</option>
-                                        <option value="1648" selected>芙蓉区</option>
-                                        <option value="1649" >天心区</option>
-                                        <option value="1650" >开福区</option>
-                                        <option value="1651" >雨花区</option>
-                                        <option value="1652" >开发区</option>
-                                        <option value="1653" >浏阳市</option>
-                                        <option value="1654" >长沙县</option>
-                                        <option value="1655" >望城县</option>
-                                        <option value="1656" >宁乡县</option>
                                     </select>
                                     (必填) </td>
                             </tr>
                             <tr>
                                 <td align="right" bgcolor="#ffffff">收货人姓名：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="consignee" type="text" class="inputBg" id="consignee_0" value="杨修武" />
+                                <td align="left" bgcolor="#ffffff"><input name="consignee" type="text" class="inputBg" id="consignee_0" value="" />
                                     (必填) </td>
                                 <td align="right" bgcolor="#ffffff">电子邮件地址：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="email" type="text" class="inputBg" id="email_0" value="924053410@qq.com" />
+                                <td align="left" bgcolor="#ffffff"><input name="email" type="text" class="inputBg" id="email_0" value="" />
                                     (必填)</td>
                             </tr>
                             <tr>
                                 <td align="right" bgcolor="#ffffff">详细地址：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="address" type="text" class="inputBg" id="address_0" value="凯通国际城9栋1单元2715" />
+                                <td align="left" bgcolor="#ffffff"><input name="address" type="text" class="inputBg" id="address_0" value="" />
                                     (必填)</td>
                                 <td align="right" bgcolor="#ffffff">邮政编码：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="zipcode" type="text" class="inputBg" id="zipcode_0" value="410000" /></td>
+                                <td align="left" bgcolor="#ffffff"><input name="zipcode" type="text" class="inputBg" id="zipcode_0" value="" /></td>
                             </tr>
                             <tr>
-                                <td align="right" bgcolor="#ffffff">电话：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="tel" type="text" class="inputBg" id="tel_0" value="18890370751" />
-                                    (必填)</td>
                                 <td align="right" bgcolor="#ffffff">手机：</td>
+                                <td align="left" bgcolor="#ffffff"><input name="tel" type="text" class="inputBg" id="tel_0" value="" />
+                                    (必填)</td>
+                                <td align="right" bgcolor="#ffffff">座机：</td>
                                 <td align="left" bgcolor="#ffffff"><input name="mobile" type="text" class="inputBg" id="mobile_0" value="" /></td>
                             </tr>
                             <tr>
-                                <td align="right" bgcolor="#ffffff">标志建筑：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="sign_building" type="text" class="inputBg" id="sign_building_0" value="" /></td>
                                 <td align="right" bgcolor="#ffffff">最佳送货时间：</td>
                                 <td align="left" bgcolor="#ffffff"><input name="best_time" type="text"  class="inputBg" id="best_time_0" value="" /></td>
                             </tr>
                             <tr>
-                                <td colspan="4" align="center" bgcolor="#ffffff">                    <input type="submit" name="submit" class="bnt_blue_1" value="确认修改" />
-                                    <input name="button" type="button" class="bnt_blue"  onclick="if (confirm('你确认要删除该收货地址吗？'))location.href='user.php?act=drop_consignee&id=1'" value="删除" />
-                                    <input type="hidden" name="act" value="act_edit_address" />
-                                    <input name="address_id" type="hidden" value="1" />
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                    <form action="{:U('__ACTION__')}" method="post" name="theForm" onsubmit="return checkConsignee(this)" style="margin-bottom:10px;">
-                        <table width="100%" border="0" cellpadding="5" cellspacing="1">
-                            <tr>
-                                <td align="right" bgcolor="#ffffff">配送区域：</td>
-                                <td colspan="3" align="left" bgcolor="#ffffff">
-                                    <select name="country" id="selCountries_1" onchange="region.changed(this, 1, 'selProvinces_1')">
-                                        <option value="0">请选择国家</option>
-                                        <option value="1" selected>中国</option>
-                                    </select>
-                                    <select name="province" id="selProvinces_1" onchange="region.changed(this, 2, 'selCities_1')">
-                                        <option value="0">请选择省</option>
-                                        <option value="2" >北京</option>
-                                        <option value="3" >安徽</option>
-                                        <option value="4" >福建</option>
-                                        <option value="5" >甘肃</option>
-                                        <option value="6" >广东</option>
-                                        <option value="7" >广西</option>
-                                        <option value="8" >贵州</option>
-                                        <option value="9" >海南</option>
-                                        <option value="10" >河北</option>
-                                        <option value="11" >河南</option>
-                                        <option value="12" >黑龙江</option>
-                                        <option value="13" >湖北</option>
-                                        <option value="14" >湖南</option>
-                                        <option value="15" >吉林</option>
-                                        <option value="16" >江苏</option>
-                                        <option value="17" >江西</option>
-                                        <option value="18" >辽宁</option>
-                                        <option value="19" >内蒙古</option>
-                                        <option value="20" >宁夏</option>
-                                        <option value="21" >青海</option>
-                                        <option value="22" >山东</option>
-                                        <option value="23" >山西</option>
-                                        <option value="24" >陕西</option>
-                                        <option value="25" >上海</option>
-                                        <option value="26" >四川</option>
-                                        <option value="27" >天津</option>
-                                        <option value="28" >西藏</option>
-                                        <option value="29" >新疆</option>
-                                        <option value="30" >云南</option>
-                                        <option value="31" >浙江</option>
-                                        <option value="32" >重庆</option>
-                                        <option value="33" >香港</option>
-                                        <option value="34" >澳门</option>
-                                        <option value="35" >台湾</option>
-                                    </select>
-                                    <select name="city" id="selCities_1" onchange="region.changed(this, 3, 'selDistricts_1')">
-                                        <option value="0">请选择市</option>
-                                    </select>
-                                    <select name="district" id="selDistricts_1" style="display:none">
-                                        <option value="0">请选择区</option>
-                                    </select>
-                                    (必填) </td>
-                            </tr>
-                            <tr>
-                                <td align="right" bgcolor="#ffffff">收货人姓名：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="consignee" type="text" class="inputBg" id="consignee_1" value="" />
-                                    (必填) </td>
-                                <td align="right" bgcolor="#ffffff">电子邮件地址：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="email" type="text" class="inputBg" id="email_1" value="2802513334@qq.com" />
-                                    (必填)</td>
-                            </tr>
-                            <tr>
-                                <td align="right" bgcolor="#ffffff">详细地址：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="address" type="text" class="inputBg" id="address_1" value="" />
-                                    (必填)</td>
-                                <td align="right" bgcolor="#ffffff">邮政编码：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="zipcode" type="text" class="inputBg" id="zipcode_1" value="" /></td>
-                            </tr>
-                            <tr>
-                                <td align="right" bgcolor="#ffffff">电话：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="tel" type="text" class="inputBg" id="tel_1" value="" />
-                                    (必填)</td>
-                                <td align="right" bgcolor="#ffffff">手机：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="mobile" type="text" class="inputBg" id="mobile_1" value="" /></td>
-                            </tr>
-                            <tr>
-                                <td align="right" bgcolor="#ffffff">标志建筑：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="sign_building" type="text" class="inputBg" id="sign_building_1" value="" /></td>
-                                <td align="right" bgcolor="#ffffff">最佳送货时间：</td>
-                                <td align="left" bgcolor="#ffffff"><input name="best_time" type="text"  class="inputBg" id="best_time_1" value="" /></td>
-                            </tr>
-                            <tr>
-                                <td colspan="4" align="center" bgcolor="#ffffff">                    <input type="submit" name="submit" class="bnt_blue_2"  value="新增收货地址"/>
-                                    <input type="hidden" name="act" value="act_edit_address" />
-                                    <input name="address_id" type="hidden" value="" />
+                                <td colspan="4" align="center" bgcolor="#ffffff">
+                                    <input type="submit" name="submit" class="bnt_blue_2"  value="新增收货地址"/>
+                                    <input type="hidden" name="act" value="add" />
                                 </td>
                             </tr>
                         </table>
@@ -231,8 +164,28 @@
 <include file="Common:footer" />
 </body>
 <script type="text/javascript">
-    var msg_title_empty = "咨询标题为空";
-    var msg_content_empty = "内容为空";
-    var msg_title_limit = "咨询标题不能超过200个字";
+    var consignee_not_null = "收货人姓名不能为空！";
+    var country_not_null = "请您选择收货人所在国家！";
+    var province_not_null = "请您选择收货人所在省份！";
+    var city_not_null = "请您选择收货人所在城市！";
+    var district_not_null = "请您选择收货人所在区域！";
+    var invalid_email = "您输入的邮件地址不是一个合法的邮件地址。";
+    var address_not_null = "收货人的详细地址不能为空！";
+    var tele_not_null = "手机不能为空！";
+    var shipping_not_null = "请您选择配送方式！";
+    var payment_not_null = "请您选择支付方式！";
+    var goodsattr_style = "1";
+    var tele_invaild = "手机号码不有效的号码";
+    var zip_not_num = "邮政编码只能填写数字";
+    var mobile_invaild = "座机号码不是合法号码";
+
+    onload = function() {
+        if (!document.all)
+        {
+            document.forms['theForm'].reset();
+        }
+    }
+
 </script>
+
 </html>
