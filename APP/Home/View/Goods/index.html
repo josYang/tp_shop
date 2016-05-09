@@ -59,7 +59,7 @@
                 <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
             </li>
             <li>
-                <a class="product-list_li3_a2" href="javascript:collect(25)">添加收藏</a>
+                <a class="product-list_li3_a2" href="javascript:collect({$goods.goods_id})">添加收藏</a>
             </li>
         </ul>
     </div>
@@ -105,6 +105,32 @@
                 setTab(name_0,cursel_0);
                 iIntervalId = setInterval(Next,ScrollTime);
             };
+            function collect(goods_id) {
+                $.ajax({
+                    url : '{:U("__MODULE__/User/add_collection")}',
+                    type : 'post',
+                    dataType : 'json',
+                    data : {
+                        goods_id : goods_id
+                    },
+                    success : function (json) {
+                        if (json.login){
+                            if(json.success){
+                                alert('收藏成功！')
+                            }else{
+                                alert('收藏失败，请稍后重试')
+                            }
+                        }else{
+                            if (confirm('请先登录！\n是否现在登录？')){
+                                location = '{:U("__MODULE__/User/login")}';
+                            }
+                        }
+                    },
+                    error : function (xhr, ajaxOptions, thrownError) {
+                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
+                })
+            }
         </script>
         <div class="tab1" id="tab1">
             <div class="menu" id="apDiv2">

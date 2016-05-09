@@ -150,12 +150,53 @@ class UserController extends Controller
         }
     }
 
-    public function collection_list(){}
+    public function collection_list(){
+        $this->checkLogin();
+        $goods_id = M('collect_goods')->where('user_id='.$_COOKIE['user_id'])->getField('goods_id',true);
+        $this->goods_list = D('CollectionView')
+            ->order('rec_time DESC')
+            ->where('g.goods_id IN('.implode(',',$goods_id).')')
+            ->select();
+        $this->display();
+    }
+
+    public function del_collection(){
+        $this->checkLogin();
+        M('collect_goods')
+            ->where(array('user_id'=>$_COOKIE['user_id'],'goods_id'=>I('get.goods_id',0,'intval')))
+            ->delete();
+        $this->success('删除成功',U(__CONTROLLER__.'/collection_list'));
+    }
+
+    public function add_collection(){
+        $json = array();
+        if (empty($_COOKIE['user_id']) || empty($_COOKIE['username'])){
+            $json['login'] = false;
+        }else{
+            $username = M('users')->where(array('user_id='.$_COOKIE['user_id']))->getField('username');
+            if ($username != $_COOKIE['username']){
+                $json['login'] = false;
+            }else{
+                $json['login'] = true;
+                $rec_id = M('collect_goods')->add(array(
+                    'user_id' => $_COOKIE['user_id'],
+                    'goods_id' => I('post.goods_id',0,'intval'),
+                    'rec_time' => date('Y-m-d H:i:s'),
+                ));
+                $json['success'] = !empty($rec_id) && $rec_id > 0 ? true : false;
+            }
+        }
+        $this->ajaxReturn($json);
+    }
+
+    public function message_list(){
+        $this->show('会员留言');
+    }
 
     public function logout(){
         setcookie('username','',time() - 1);
         setcookie('user_id','',time() - 1);
-        $this->redirect(U(MODULE_NAME.'/Index/index'));
+        $this->redirect(U('/'));
     }
 
     public function register(){

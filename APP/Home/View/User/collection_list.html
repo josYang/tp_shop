@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <title>用户中心_自定义名称</title>
+    <css file="__PUBLIC__/css/css.css" />
+</head>
+<body>
+<include file="Common:header" />
+<section>
+    <div class="block clearfix">
+        <div class="left_2">
+            <include file="Common:user_menu" />
+        </div>
+        <div class="right_2">
+            <div class="box">
+                <div class="userCenterBox" style="_height:1%;">
+                    <h5><span>我的收藏</span></h5>
+                    <div class="xm-goods-list-wrap">
+                        <ul class="goodsBox">
+                            <foreach name="goods_list" item="goods">
+                            <li>
+                                <div class="xm-goods-item">
+                                    <div class="item-thumb">
+                                        <a href="{:U('/'.$goods['goods_id'])}"><img src="{$goods.goods_thumb}" width="220px" height="220px"></a>
+                                    </div>
+                                    <h3 class="item-title">
+                                        <a href="{:U('/'.$goods['goods_id'])}">{:sub_str($goods['goods_name'])}</a>
+                                    </h3>
+                                    <div class="item-star">
+                                        ￥{$goods.market_price}
+                                    </div>
+                                    <div class="item-actions">
+                                        <a class="btn-small" href="javascript:if (confirm('您确定要从收藏夹中删除选定的商品吗？')) location.href='{:U(\'__CONTROLLER__/del_collection\',array(\'goods_id\'=>$goods[\'goods_id\']))}'" class="f6">删除</a>
+                                    </div>
+                                </div>
+                            </li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<include file="Common:footer" />
+</body>
+</html>
