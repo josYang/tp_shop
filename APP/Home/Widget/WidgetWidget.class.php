@@ -56,7 +56,7 @@ class WidgetWidget extends Controller
         $cats = $cat_db->field('cat_id,parent_id')->select();
         $pids = \Category::getChildsId($cats,$cid);
         $pids[] = $cid;
-        $this->goods_list = M('goods')->where(array('parent_id'=>array('IN',$pids)))->field('goods_id,goods_name,market_price,goods_thumb')->select();
+        $this->goods_list = M('goods')->where(array('parent_id'=>array('IN',$pids)))->field('goods_id,cat_id,goods_name,market_price,goods_thumb')->select();
         $this->display('Widget:cat_goods');
     }
 

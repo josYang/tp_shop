@@ -889,7 +889,7 @@ footer{
 	color:#000;
 }
 .footer_img .foot_img_box_ma{
-	margin:0px 155px;
+	margin:0px 154px;
 }
 #footer{
 	float:left;
@@ -1129,7 +1129,7 @@ position:absolute；
 /* 商品列表样式 */
 .goods_list{
 	padding-bottom:30px;
-	float:right;
+	float:left;
 }
 .goods_list .f-line{
 	background:#f1f1f1 none repeat scroll 0 0;

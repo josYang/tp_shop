@@ -19,13 +19,13 @@
                 {
                     if(document.getElementById('keyword').value)
                     {
-                        return true;
+                        window.location = '/Home/Search/index/keywords/' + $('#keyword').val() + '.html';
                     }
                     else
                     {
                         alert("请输入搜索关键词！");
-                        return false;
                     }
+                    return false;
                 }
                 -->
 
