@@ -8,9 +8,9 @@
             <div class="goodsItem">
                 <div class="item-content">
                     <span class="{$choose_id}"></span>
-                    <span class="item-thumb"><a href="{:U('/'.$choose['goods_id'])}"><img src="{$choose.goods_thumb}" alt="{$choose.goods_name}" class="goodsimg" /></a></span>
+                    <span class="item-thumb"><a href="{:U('/'.$choose['goods_id'])}" target="_blank"><img src="{$choose.goods_thumb}" alt="{$choose.goods_name}" class="goodsimg" /></a></span>
             <span class="item-info">
-           <span class="item-title"><a href="{:U('/'.$choose['goods_id'])}" title="{$choose.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:sub_str($choose['goods_name'])}</p></a></span>
+           <span class="item-title"><a href="{:U('/'.$choose['goods_id'])}" target="_blank" title="{$choose.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:sub_str($choose['goods_name'])}</p></a></span>
            <font class="shop_s">￥{$choose.market_price}</font>
            </span>
                 </div>

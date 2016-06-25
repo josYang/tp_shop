@@ -2,10 +2,10 @@
     <h3>{$label}</h3>
     <foreach name="goods_list" item="goods">
     <div class="clearfix">
-        <a href="{:U('/'.$goods['goods_id'])}">
+        <a href="{:U('/'.$goods['goods_id'])}" target="_blank">
             <img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" class="goodsimg" height="180px" width="180px" />
         </a><br />
-        <p><a href="{:U('/'.$goods['goods_id'])}" title="{$goods.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:sub_str($goods['goods_name'])}</a></p></p>
+        <p><a href="{:U('/'.$goods['goods_id'])}" target="_blank" title="{$goods.goods_name}"><p style="word-wrap: break-word;word-break: break-all;">{:sub_str($goods['goods_name'])}</a></p></p>
         <font class="f1">￥{$goods.market_price}</font>
     </div>
     </foreach>

@@ -69,4 +69,27 @@ class GoodsController extends Controller
 
         $this->display();
     }
+
+    public function getPrice()
+    {
+        $json = array();
+        $json['price'] = 0;
+        $attr_db = M('goods_attr');
+        $goods_db = M('goods');
+
+        foreach ($_POST as $key=>$item) {
+            if($key == 'spec_goods_id'){
+                $json['price'] += $goods_db->where("`goods_id`={$item}")->getField('market_price');
+            }else{
+                if(is_array($item) && !empty($item)){
+                    foreach ($item as $goods_attr_id) {
+                        $json['price'] += $attr_db->where("`goods_attr_id` = {$goods_attr_id}")->getField('attr_price');
+                    }
+                }else{
+                    $json['price'] += $attr_db->where("`goods_attr_id` = {$item}")->getField('attr_price');
+                }
+            }
+        }
+        $this->ajaxReturn($json);
+    }
 }

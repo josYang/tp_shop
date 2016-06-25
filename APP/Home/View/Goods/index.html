@@ -39,7 +39,7 @@
             </div>
         </div>
         <div id="product-list">
-        <h3>{$goods.goods_name}</h3>
+        <h3 id="goods-name" title="{$goods.goods_name}">{$goods.goods_name}</h3>
         <ul>
             <li class="product-list-li">{$goods.goods_brief}</li>
             <li class="product-list-li1">参考价：<b class="product_b">￥{$goods.market_price}</b></li>
@@ -48,6 +48,25 @@
                 <a class="product-list_li3_a" href="{:U('__MODULE__/Message/index')}">咨询服务</a>
                 <a style="background-color:#ff4a00;border-color:#ff4a00; border-radius:5px;color:#fff; width:90px; line-height:35px; text-align:center; float:right;display: block; position:relative; right:300px; top:6px;" href="http://wpa.qq.com/msgrd?v=3&uin={:C('SYSTEM.qq')}&site=qq&menu=yes" target="_blank" title="QQ在线咨询">QQ咨询</a>
             </li>
+            <input type="radio" style="display: none;" name="spec_goods_id" checked value="{$goods.goods_id}">
+            <foreach name="specification" key="spec_key" item="spec">
+            <li class="product-list_li2">
+                {$spec.name}:
+                    <if condition="$spec['attr_type'] eq 1">
+                        <foreach name="spec.values" item="value" key="key">
+                            <label for="spec_value_{$value.id}">
+                            <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" <if condition="$key eq 0">checked</if> onclick="changePrice()" />
+                            {$value.label} [<if condition="$value['price'] gt 0">+<elseif condition="$value['price'] lt 0" />-</if>{$value.format_price}] </label>
+                        </foreach>
+                    <else/>
+                        <foreach name="spec.values" item="value" key="key">
+                            <label for="spec_value_{$value.id}">
+                                <input type="checkbox" name="spec_{$spec_key}[]" value="{$value.id}" id="spec_value_{$value.id}" onclick="changePrice()" />
+                                {$value.label} [<if condition="$value['price'] gt 0">+<elseif condition="$value['price'] lt 0" />-</if>{$value.format_price}] </label>
+                        </foreach>
+                    </if>
+            </li>
+            </foreach>
             <li>分享到：<div class="bshare-custom" style="display:inline">
                 <a title="分享到QQ空间" class="bshare-qzone"></a>
                 <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
@@ -165,6 +184,27 @@
         </div>
 </section>
 <script type="text/javascript">
+    function changePrice(){
+        $.ajax({
+            url: '{:U("__CONTROLLER__/getPrice")}',
+            type: 'post',
+            dataType: 'json',
+            data: $('input[name^="spec_"]:checked'),
+            beforeSend: function () {
+//                alert('开始前')
+            },
+            complete: function () {
+//                alert('完成后')
+            },
+            success: function(json){
+                $('.product_b').text('￥' + json['price']);
+            },
+            error : function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        })
+    }
+    changePrice();
     var isTagName = function(e, whitelists) {
         e = e || window.event;
         var target = e.target || e.srcElement;
