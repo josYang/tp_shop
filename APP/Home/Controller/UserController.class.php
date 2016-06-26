@@ -194,8 +194,8 @@ class UserController extends Controller
     }
 
     public function logout(){
-        setcookie('username','',time() - 1);
-        setcookie('user_id','',time() - 1);
+        setcookie('username','',time() - 1,'/');
+        setcookie('user_id','',time() - 1,'/');
         $this->redirect(U('/'));
     }
 
@@ -215,8 +215,8 @@ class UserController extends Controller
                 if($_POST['password'] == $_POST['confirm_password']){
                     $data['password'] = I('post.password','','md5');
                     $user_id = M('users')->add($data);
-                    setcookie('username',$data['username'],time() + 60*60);
-                    setcookie('user_id',$user_id,time() + 60*60);
+                    setcookie('username',$data['username'],time() + 60*60, '/');
+                    setcookie('user_id',$user_id,time() + 60*60, '/');
                     $this->success('添加成功',U(CONTROLLER_NAME.'/index'));
                 }else{
                     $this->error('密码不一致');
@@ -235,8 +235,8 @@ class UserController extends Controller
             if($user_info){
                 if(I('post.password','','md5') == $user_info['password']){
                     $time = isset($_POST['remember']) && $_POST['remember'] == 1 ? 60*60*24 : 60*60*24*7;
-                    setcookie('username',$user_info['username'],time() + $time);
-                    setcookie('user_id',$user_info['user_id'],time() + $time);
+                    setcookie('username',$user_info['username'],time() + $time, '/');
+                    setcookie('user_id',$user_info['user_id'],time() + $time, '/');
                     $this->success('登录成功',U(__CONTROLLER__.'/index'));
                 }else{
                     $this->error('密码错误！');
