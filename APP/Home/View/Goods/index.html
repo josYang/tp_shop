@@ -17,6 +17,9 @@
     <js file="__PUBLIC__/js/jsdaima.js" />
     <js file="__PUBLIC__/js/jquery.jqzoom.js" />
     <js file="__PUBLIC__/js/base.js" />
+    <style type="text/css">
+        /**/
+    </style>
 </head>
 <body>
 <include file="Common:header"/>
@@ -48,29 +51,30 @@
                 <a class="product-list_li3_a" href="{:U('__MODULE__/Message/index')}">咨询服务</a>
                 <a style="background-color:#ff4a00;border-color:#ff4a00; border-radius:5px;color:#fff; width:90px; line-height:35px; text-align:center; float:right;display: block; position:relative; right:300px; top:6px;" href="http://wpa.qq.com/msgrd?v=3&uin={:C('SYSTEM.qq')}&site=qq&menu=yes" target="_blank" title="QQ在线咨询">QQ咨询</a>
             </li>
-            <php>
-                /*
             <input type="radio" style="display: none;" name="spec_goods_id" checked value="{$goods.goods_id}">
-            <foreach name="specification" key="spec_key" item="spec">
-            <li class="product-list_li2">
-                {$spec.name}:
-                    <if condition="$spec['attr_type'] eq 1">
-                        <foreach name="spec.values" item="value" key="key">
-                            <label for="spec_value_{$value.id}">
-                            <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" <if condition="$key eq 0">checked</if> onclick="changePrice()" />
-                            {$value.label} [<if condition="$value['price'] gt 0">+<elseif condition="$value['price'] lt 0" />-</if>{$value.format_price}] </label>
-                        </foreach>
-                    <else/>
-                        <foreach name="spec.values" item="value" key="key">
-                            <label for="spec_value_{$value.id}">
-                                <input type="checkbox" name="spec_{$spec_key}[]" value="{$value.id}" id="spec_value_{$value.id}" onclick="changePrice()" />
-                                {$value.label} [<if condition="$value['price'] gt 0">+<elseif condition="$value['price'] lt 0" />-</if>{$value.format_price}] </label>
-                        </foreach>
-                    </if>
+            <li id="choose">
+                <foreach name="specification" key="spec_key" item="spec">
+                    <div class="choose-version">
+                        <div class="dt">{$spec.name}:</div>
+                        <div class="dd">
+                            <if condition="$spec['attr_type'] eq 1">
+                                <foreach name="spec.values" item="value" key="key">
+                                    <label class="item">
+                                        <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" <if condition="$key eq 0">checked</if> onclick="changePrice()" />
+                                        {$value.label} [&nbsp;<if condition="$value['price'] gt 0">+<elseif condition="$value['price'] lt 0" />-</if>{$value.format_price}&nbsp;] </label>
+                                </foreach>
+                                <else/>
+                                <foreach name="spec.values" item="value" key="key">
+                                    <label  class="item">
+                                        <input type="checkbox" name="spec_{$spec_key}[]" value="{$value.id}" id="spec_value_{$value.id}" onclick="changePrice()" />
+                                        {$value.label} [&nbsp;<if condition="$value['price'] gt 0">+<elseif condition="$value['price'] lt 0" />-</if>{$value.format_price}&nbsp;] </label>
+                                </foreach>
+                            </if>
+                        </div>
+                    </div>
+                </foreach>
             </li>
-            </foreach>
-                */
-            </php>
+            {/*
             <li>分享到：<div class="bshare-custom" style="display:inline">
                 <a title="分享到QQ空间" class="bshare-qzone"></a>
                 <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
@@ -81,6 +85,7 @@
                 <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
                 <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
             </li>
+            */}
             <li>
                 <a class="product-list_li3_a2" href="javascript:collect({$goods.goods_id})">添加收藏</a>
             </li>
@@ -191,6 +196,8 @@
 </section>
 <script type="text/javascript">
     function changePrice(){
+        $('input[name^="spec_"]').parent().removeClass('select');
+        $('input[name^="spec_"]:checked').parent().addClass('select');
         $.ajax({
             url: '{:U("__CONTROLLER__/getPrice")}',
             type: 'post',
@@ -210,7 +217,7 @@
             }
         })
     }
-//    changePrice();
+    changePrice();
     var isTagName = function(e, whitelists) {
         e = e || window.event;
         var target = e.target || e.srcElement;
