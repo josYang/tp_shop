@@ -77,6 +77,15 @@
             </td>
         </tr>
         <tr>
+            <th>LOGO图</th>
+            <td>
+                <input type="file" name="logo">
+                <if condition="C('SYSTEM.logo') neq ''">
+                    <a href="{:substr(C('SYSTEM.logo'),1)}" target="_blank">查看LOGO图</a>
+                </if>
+            </td>
+        </tr>
+        <tr>
             <td colspan="2" align="center">
                 <input type="submit" class="bt2" value="保存修改">
             </td>

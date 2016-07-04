@@ -51,6 +51,7 @@
                 <a class="product-list_li3_a" href="{:U('__MODULE__/Message/index')}">咨询服务</a>
                 <a style="background-color:#ff4a00;border-color:#ff4a00; border-radius:5px;color:#fff; width:90px; line-height:35px; text-align:center; float:right;display: block; position:relative; right:300px; top:6px;" href="http://wpa.qq.com/msgrd?v=3&uin={:C('SYSTEM.qq')}&site=qq&menu=yes" target="_blank" title="QQ在线咨询">QQ咨询</a>
             </li>
+            <php>/*</php>
             <input type="radio" style="display: none;" name="spec_goods_id" checked value="{$goods.goods_id}">
             <li id="choose">
                 <foreach name="specification" key="spec_key" item="spec">
@@ -74,6 +75,7 @@
                     </div>
                 </foreach>
             </li>
+            <php>*/</php>
             {/*
             <li>分享到：<div class="bshare-custom" style="display:inline">
                 <a title="分享到QQ空间" class="bshare-qzone"></a>
@@ -86,9 +88,11 @@
                 <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
             </li>
             */}
+            <php>/*</php>
             <li>
                 <a class="product-list_li3_a2" href="javascript:collect({$goods.goods_id})">添加收藏</a>
             </li>
+            <php>*/</php>
         </ul>
     </div>
     </div>
@@ -194,6 +198,7 @@
             </div>
         </div>
 </section>
+<php>/*</php>
 <script type="text/javascript">
     function changePrice(){
         $('input[name^="spec_"]').parent().removeClass('select');
@@ -236,6 +241,7 @@
         return isTagName(e, ['A','TEXTAREA','DIV','LI','H3','INPUT','DT','DD','B']);
     };
 </script>
+<php>*/</php>
 <include file="Common:footer"/>
 </body>
 </html>

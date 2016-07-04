@@ -14,13 +14,18 @@ use Think\Upload;
 
 class GoodsController extends CommonController{
     public function index(){
-        $cat_id     = I('get.cat_id',0,'intval');
-        $brand_id   = I('get.brand_id',0,'intval');
-        $intro_type = I('get.intro_type',0,'intval');
-        $keyword    = I('get.keyword','','htmlentities');
+        $cat_id     = I('post.cat_id',0,'intval');
+        $brand_id   = I('post.brand_id',0,'intval');
+        $intro_type = I('post.intro_type',0,'intval');
+        $keyword    = I('post.keyword','','htmlentities');
         $where      = array();
 
-        if($cat_id != 0) $where['cat_id'] = $cat_id;
+        import('Class.Category',APP_PATH);
+        $cats = M('category')->field('cat_id,parent_id')->select();
+        $pids = \Category::getChildsId($cats,$cat_id);
+        $pids[] = $cat_id;
+
+        if($cat_id != 0) $where['cat_id'] = array('IN',$pids);
 
         if($brand_id != 0) $where['brand_id'] = $brand_id;
         switch($intro_type){
