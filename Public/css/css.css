@@ -605,8 +605,8 @@ div.choose-version .dd .item input{display: none;}
 	letter-spacing:1px;
 }
 #product-list .product-list_li3{
-	background:url(../images/62004657994_1.png) no-repeat left;
-	padding-left:75px;
+	/*background:url(../images/62004657994_1.png) no-repeat left;*/
+	/*padding-left:75px;*/
 }
 #product-list .product-list_li2 p{
 	font-size:20px;
