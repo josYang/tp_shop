@@ -272,11 +272,14 @@ ol, ul{
 	display:block;
     line-height:2;
     padding:0px 10px 2px 8px;
+	float: left;
+	width: 228px;
 }
 .Z_TypeList .Z_MenuList ul li p a {
     color:#6d6d6d;
     padding:0px 3px 0px 0px;
 	font-size:13px;
+	float: left;
 }
 
 /* Z_SubList*/

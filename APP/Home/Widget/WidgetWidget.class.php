@@ -13,7 +13,7 @@ class WidgetWidget extends Controller
 {
     public function nav(){
         import('Class.Category',APP_PATH);
-        $categorys = M('category')->field('cat_id,cat_name,parent_id')->where(array('status'=>2))->order('sort_order ASC')->select();
+        $categorys = M('category')->field('cat_id,cat_name,parent_id,is_show')->where(array('status'=>2))->order('sort_order ASC')->select();
         $this->categorys = \Category::unlimitedForLayer($categorys);
         $this->display('Widget:nav');
     }

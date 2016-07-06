@@ -6,7 +6,9 @@
             <p>
                 <foreach name="category.child" item="value">
                 <foreach name="value.child" item="val">
+                <if condition="$val['is_show'] eq 2">
                 <a href="{:U('/c_'.$val['cat_id'])}">{$val.cat_name}</a>
+                </if>
                 </foreach>
                 </foreach>
             </p>

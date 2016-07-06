@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.09 (64 bit)
 MySQL - 5.5.49-0ubuntu0.14.04.1 : Database - shop
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -136,6 +137,7 @@ CREATE TABLE `shop_category` (
   `cat_name` varchar(255) NOT NULL COMMENT '分类名称',
   `parent_id` int(11) unsigned NOT NULL COMMENT '父ID',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '2' COMMENT '状态',
+  `is_show` tinyint(1) NOT NULL DEFAULT '2' COMMENT '是否显示在右侧',
   `filter_attr` varchar(255) NOT NULL COMMENT '筛选属性',
   `grade` tinyint(2) unsigned NOT NULL COMMENT '价格分级数',
   `sort_order` smallint(6) unsigned NOT NULL DEFAULT '50' COMMENT '排序',

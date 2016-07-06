@@ -69,6 +69,15 @@
             </td>
         </tr>
         <tr>
+            <th>是否显示在右侧栏目</th>
+            <td>
+                <select name="is_show">
+                    <option value="1"<if condition="$key eq $cate['is_show']">selected</if>>不显示</option>
+                    <option value="2"<if condition="$key eq $cate['is_show']">selected</if>>显示</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <th>筛选属性</th>
             <td>
                 <table width="100%" id="tbody-attr" align="center">

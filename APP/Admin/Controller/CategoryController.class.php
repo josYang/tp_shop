@@ -34,6 +34,7 @@ class CategoryController extends CommonController{
                 'sort_order'    => I('post.sort_order',50,'intval'),
                 'filter_attr'   => implode(',',$_POST['filter_attr']),
                 'status'        => I('post.status',50,'intval'),
+                'is_show'       => I('post.is_show',0,'intval'),
                 'grade'         => I('post.grade',50,'intval'),
             );
             M('category')->add($data);
@@ -63,6 +64,7 @@ class CategoryController extends CommonController{
                 'parent_id'     => I('post.parent_id',0,'intval'),
                 'filter_attr'   => implode(',',$_POST['filter_attr']),
                 'status'        => I('post.status',0,'intval'),
+                'is_show'       => I('post.is_show',0,'intval'),
                 'grade'         => I('post.grade',0,'intval'),
                 'sort_order'    => I('post.sort_order',50,'intval'),
             );
