@@ -75,7 +75,7 @@
     function dropImg(img_id){
         $.ajax({
             url : '{:U(CONTROLLER_NAME."/delete")}',
-            type : 'get',
+            type : 'post',
             data : {
                 img_id : img_id
             },

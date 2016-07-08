@@ -70,7 +70,7 @@ class SliderController extends CommonController
         $this->display();
     }
     public function delete(){
-        $img_id = I('get.img_id',0,'intval');
+        $img_id = I('post.img_id',0,'intval');
         $json = array();
         if($img_id > 0){
             $db = M('slider');
