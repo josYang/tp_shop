@@ -356,7 +356,7 @@ ol, ul{
 }
 .Z_SubList .subItem-title{
 	font-weight:normal;
-	font-size:14px;
+	font-size:17px;
 	padding-left:5px;
 	margin-top:8px;
 	display:block;
@@ -372,11 +372,11 @@ ol, ul{
 .Z_SubList .subItem-cat a{
 	padding:2px;
 	color:#414141;
-	margin:0 2px;
+	margin:0 7px;
 	font-family:\5b8b\4f53;
 	white-space:nowrap;
 	overflow:hidden;
-	font-size:14px;
+	font-size:17px;
 	float:left;
 }
 .Z_SubList .subItem-cat a:hover{
@@ -591,6 +591,11 @@ section{
 }
 #product-list li{
 	line-height:50px;
+	margin-bottom: 20px;
+}
+/* del  */
+#product-list .product-list-li1{
+	margin-bottom:10px;
 }
 #product-list li#choose{width: 100%;display: block;}
 li#choose div.choose-version{padding: 5px 0 5px 72px;}

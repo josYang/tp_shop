@@ -265,7 +265,7 @@ class GoodsController extends CommonController{
             $thumb = dirname($goods_img).'/thumb_'.$info['savename'];
             $image = new Image();
             $image->open($goods_img)->water(C('SYSTEM.water'),Image::IMAGE_WATER_SOUTHEAST)->save($water);
-            $image->open($water)->thumb(C('SYSTEM.goods_thumb_width'),C('SYSTEM.goods_thumb_height'),Image::IMAGE_THUMB_FIXED)->save($thumb);
+            $image->open($goods_img)->thumb(C('SYSTEM.goods_thumb_width'),C('SYSTEM.goods_thumb_height'),Image::IMAGE_THUMB_FIXED)->save($thumb);
             if(is_file($goods_img)){
                 unlink($goods_img);
             }
