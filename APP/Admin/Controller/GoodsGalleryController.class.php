@@ -37,8 +37,8 @@ class GoodsGalleryController extends CommonController{
                     $img_original   = $config['rootPath'].substr($info[$i]['savepath'],2).$info[$i]['savename'];
                     $img_water      = dirname($img_original).'/water_'.$info[$i]['savename'];
                     $img_thumb      = dirname($img_original).'/thumb_'.$info[$i]['savename'];
-                    $image->open($img_original)->water(C('SYSTEM.water'),Image::IMAGE_WATER_SOUTHEAST)->save($img_water);
-                    $image->open($img_water)->thumb(C('SYSTEM.goods_thumb_width'),C('SYSTEM.goods_thumb_height'),Image::IMAGE_THUMB_FIXED)->save($img_thumb);
+                    $image->open($img_original)->water(C('SYSTEM.water'),Image::IMAGE_WATER_CENTER)->save($img_water);
+                    $image->open($img_original)->thumb(C('SYSTEM.goods_thumb_width'),C('SYSTEM.goods_thumb_height'),Image::IMAGE_THUMB_FIXED)->save($img_thumb);
                     $data[] = array(
                         'goods_id'  => $goods_id,
                         'img_url'   => substr($img_water,1),
