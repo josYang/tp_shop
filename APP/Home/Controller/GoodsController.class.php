@@ -16,7 +16,7 @@ class GoodsController extends Controller
         $g_db = M('goods');
         $goods = $g_db->find($goods_id);
         if(empty($goods)) $this->error('页面不存在');
-        $this->gallerys = M('goods_gallery')->select();
+        $this->gallerys = M('goods_gallery')->where('goods_id='.$goods_id)->select();
 
         $grp = M()
             ->table('__GOODS_TYPE__ AS gt, __GOODS__ AS g')
